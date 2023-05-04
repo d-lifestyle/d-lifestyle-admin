@@ -2,7 +2,7 @@ import * as yup from "yup";
 import { LoginProps } from "../interface";
 
 export const LoginInitialValues: LoginProps = {
-     email: "abc@123.com",
+     email: "teamviewer993@gmail.com",
      password: "abc123",
 };
 

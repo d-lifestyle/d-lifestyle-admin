@@ -6,3 +6,4 @@ export * from "./category";
 export * from "./content";
 export * from "./analytics";
 export * from "./main-category";
+export * from "./admin";

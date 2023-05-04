@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineDatabase, AiOutlineHome } from "react-icons/ai";
 import { BsCardChecklist, BsWebcam } from "react-icons/bs";
 import { MdOutlineCategory, MdTravelExplore } from "react-icons/md";
-import { BiCarousel, BiCategoryAlt, BiJoystickAlt } from "react-icons/bi";
+import { BiCarousel, BiCategoryAlt, BiJoystickAlt, BiUserCheck } from "react-icons/bi";
 
 export interface DrawerItemsProps {
      handleCollapsible: () => void;
@@ -20,7 +20,6 @@ const iconSize: number = 22;
 
 export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCollapsible, user }) => {
      const { spacing } = useTheme();
-     console.log("from drawer", user);
      return (
           <Fragment>
                <Box px={spacing(2)} pb={spacing(5)}>
@@ -37,7 +36,7 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                          <ProfileCard
                               image="https://res.cloudinary.com/minimal-ui/image/upload/v1614655910/upload_minimal/avatar/minimal_avatar.jpg"
                               adminemail={user?.user?.email}
-                              adminname="Mistry Aakash"
+                              adminname={`${user?.user?.lname} ${user?.user?.fname}`}
                          />
                     </Link>
                     <Box mt={spacing(3)}>
@@ -78,6 +77,12 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                                    title="sub category"
                                    icon={<BiCategoryAlt size={iconSize} />}
                               />
+                         </List>
+                    </Box>
+                    <Box mt={spacing(3)}>
+                         <List disablePadding>
+                              <MenuTitle title="Admin connected users" />
+                              <MenuItem path="/manage/users" title="users" icon={<BiUserCheck size={iconSize} />} />
                          </List>
                     </Box>
                     <Box mt={spacing(3)}>

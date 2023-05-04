@@ -44,7 +44,6 @@ const CategorySlice = createSlice({
                state.error = action.payload as string;
           },
           [AddNewCategory.fulfilled.type]: (state, action) => {
-               console.log(action.payload);
                state.success = action.payload;
                state.loading = false;
                state.error = "";

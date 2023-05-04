@@ -6,3 +6,4 @@ export * from "./main-category.slice";
 export * from "./content";
 // auth
 export * from "./auth";
+export * from "./admin.slice";

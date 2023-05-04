@@ -11,24 +11,40 @@ class SubCategoryService {
      }
 
      public async AddSubCategory({ CategoryId, name }: NewSubCategoryProps) {
-          return await axios.post(`${process.env.REACT_APP_BACKEND}/sub-category`, {
-               CategoryId,
-               name,
-          });
+          return await axios.post(
+               `${process.env.REACT_APP_BACKEND}/sub-category`,
+               {
+                    CategoryId,
+                    name,
+               },
+               {
+                    withCredentials: true,
+               }
+          );
      }
 
      public async UpdateSubCategoryById({ id, data }: UpdateSubCategoryProps) {
-          return await axios.put(`${process.env.REACT_APP_BACKEND}/sub-category/${id}`, {
-               CategoryId: data.CategoryId,
-               name: data.name,
-          });
+          return await axios.put(
+               `${process.env.REACT_APP_BACKEND}/sub-category/${id}`,
+               {
+                    CategoryId: data.CategoryId,
+                    name: data.name,
+               },
+               {
+                    withCredentials: true,
+               }
+          );
      }
      public async DeleteSubCategoryById(id: string) {
-          return await axios.delete(`${process.env.REACT_APP_BACKEND}/sub-category/${id}`);
+          return await axios.delete(`${process.env.REACT_APP_BACKEND}/sub-category/${id}`, {
+               withCredentials: true,
+          });
      }
 
      public async GetSubCategoryWithCategoryId(id: string) {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category/category/${id}`);
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category/category/${id}`, {
+               withCredentials: true,
+          });
      }
 }
 

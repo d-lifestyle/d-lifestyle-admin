@@ -6,7 +6,6 @@ import { NewSubCategoryProps, UpdateSubCategoryProps } from "../../interface/sub
 const GetAllSubCategory = createAsyncThunk("subcategory/all", async (state, { rejectWithValue }) => {
      try {
           const data = await subCategory.GetSubCategory();
-          console.log(data.data.data);
           return data.data.data;
      } catch (err: any) {
           if (err.response) {
@@ -80,7 +79,6 @@ const SubCategoryWithCategoryId = createAsyncThunk(
      async (props: string, { rejectWithValue }) => {
           try {
                const data = await subCategory.GetSubCategoryWithCategoryId(props);
-               console.log("sub category", await data.data.data);
                return await data.data.data;
           } catch (err: any) {
                if (err.response) {

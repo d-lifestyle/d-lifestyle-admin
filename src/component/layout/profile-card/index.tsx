@@ -28,7 +28,9 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           >
                <Avatar src={image} alt={adminname} />
                <Box component="span">
-                    <Typography sx={{ fontSize: 14 }}>{adminname}</Typography>
+                    <Typography textTransform="capitalize" sx={{ fontSize: 14 }}>
+                         {adminname}
+                    </Typography>
                     <Typography variant="caption">{adminemail}</Typography>
                </Box>
           </Box>

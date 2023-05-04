@@ -20,51 +20,37 @@ export const AppTitleBar: React.FC<AppTitleBarProps> = ({
      const { palette } = useTheme();
      return (
           <React.Fragment>
-               <Typography
-                    variant="h3"
-                    sx={{ marginTop: 3, textTransform: "capitalize" }}
-               >
+               <Typography variant="h5" sx={{ marginTop: 3, textTransform: "capitalize" }}>
                     {title}
                </Typography>
                {breadcrubms && (
                     <Breadcrumbs
                          sx={{ marginTop: 2, textTransform: "capitalize" }}
-                         separator={
-                              <Circle
-                                   fontSize="small"
-                                   style={{ fontSize: 5 }}
-                              />
-                         }
+                         separator={<Circle fontSize="small" style={{ fontSize: 5 }} />}
                          aria-label="breadcrumb"
                     >
-                         {breadcrubms.map(
-                              ({ pagepath, activepage, activetitle }, i) => (
-                                   <Box key={i}>
-                                        {!activepage && (
-                                             <Link
-                                                  style={{
-                                                       textDecoration: "none",
-                                                       color: palette.grey[700],
-                                                       textTransform:
-                                                            "capitalize",
-                                                       fontWeight: 500,
-                                                  }}
-                                                  to={pagepath}
-                                             >
-                                                  {activetitle}
-                                             </Link>
-                                        )}
-                                        {activepage && (
-                                             <Box
-                                                  textTransform="capitalize"
-                                                  color={palette.grey[500]}
-                                             >
-                                                  {activetitle}
-                                             </Box>
-                                        )}
-                                   </Box>
-                              )
-                         )}
+                         {breadcrubms.map(({ pagepath, activepage, activetitle }, i) => (
+                              <Box key={i}>
+                                   {!activepage && (
+                                        <Link
+                                             style={{
+                                                  textDecoration: "none",
+                                                  color: palette.grey[700],
+                                                  textTransform: "capitalize",
+                                                  fontWeight: 500,
+                                             }}
+                                             to={pagepath}
+                                        >
+                                             <Typography variant="body2">{activetitle}</Typography>
+                                        </Link>
+                                   )}
+                                   {activepage && (
+                                        <Box textTransform="capitalize" color={palette.grey[500]}>
+                                             {activetitle}
+                                        </Box>
+                                   )}
+                              </Box>
+                         ))}
                     </Breadcrumbs>
                )}
           </React.Fragment>

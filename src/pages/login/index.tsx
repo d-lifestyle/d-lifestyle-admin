@@ -13,6 +13,7 @@ import { LoginProps } from "../../interface";
 import { useAuthSelector } from "../../features/slice";
 import AuthService from "../../services/auth.service";
 import { useAuth } from "../../context/auth.context";
+import { enqueueSnackbar } from "notistack";
 
 export const Login = () => {
      const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +25,6 @@ export const Login = () => {
      const LoginToAccount = async (e: LoginProps) => {
           try {
                const data = await AuthService.Login({ email: e.email, password: e.password });
-               console.log(data.data.data);
                localStorage.setItem("token", JSON.stringify(data.data.data));
                setUser(JSON.stringify(data.data.data));
                setAuthorization(true);
@@ -35,9 +35,9 @@ export const Login = () => {
                }
           } catch (err: any) {
                if (err.response) {
-                    console.log(err.response.data.message);
+                    enqueueSnackbar(err.response.data.message, { variant: "error" });
                } else {
-                    console.log(err.message);
+                    enqueueSnackbar(err.response.data.message, { variant: "error" });
                }
           }
      };

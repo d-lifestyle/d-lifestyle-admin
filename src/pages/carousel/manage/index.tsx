@@ -40,7 +40,6 @@ export const ManageCarousel = () => {
      useEffect(() => {
           (async () => {
                await getAllCarousel();
-               console.log("carousel data", await carousel);
           })();
      }, []);
 
@@ -79,7 +78,12 @@ export const ManageCarousel = () => {
                          },
                     ]}
                />
-               {!carousel.loading && carousel.data?.length && (
+               <Box mt={3} display="flex" flexDirection="row" gap={3} alignItems="center" justifyContent="end">
+                    <AppButton onClick={() => navigate("/add/carousel", { replace: true })}>
+                         Create new carousel
+                    </AppButton>
+               </Box>
+               {!carousel.loading && carousel.data?.length !== 0 && (
                     <Box>
                          <TableContainer component={Paper} sx={{ mt: 5 }}>
                               <Table aria-label="simple table">
@@ -93,65 +97,62 @@ export const ManageCarousel = () => {
                                         </TableRow>
                                    </TableHead>
                                    <TableBody>
-                                        {carousel?.data?.length !== 0 &&
-                                             carousel.data
-                                                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                                  .map(
-                                                       (
-                                                            { dataAlt, dataImage, _id, createdAt }: CarouselProps,
-                                                            i: number
-                                                       ) => (
-                                                            <TableRow
-                                                                 key={i + 1}
-                                                                 sx={{
-                                                                      "&:last-child td, &:last-child th": { border: 0 },
-                                                                 }}
-                                                            >
-                                                                 <TableCell scope="row" width={50}>
-                                                                      {i + 1}
-                                                                 </TableCell>
-                                                                 <TableCell align="left" width={150}>
-                                                                      <img
-                                                                           src={dataImage}
-                                                                           width="100%"
-                                                                           style={{
-                                                                                borderRadius: 10,
-                                                                                boxShadow: shadows[15],
-                                                                           }}
-                                                                           alt={dataAlt}
-                                                                      />
-                                                                 </TableCell>
-                                                                 <TableCell align="left" width={400}>
-                                                                      <Typography variant="h6" fontWeight="300">
-                                                                           {dataAlt}
-                                                                      </Typography>
-                                                                 </TableCell>
-                                                                 <TableCell align="left" width={300}>
-                                                                      <Typography
-                                                                           fontWeight="300"
-                                                                           variant="subtitle1"
-                                                                           textTransform="capitalize"
+                                        {carousel.data
+                                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                             .map(
+                                                  (
+                                                       { dataAlt, dataImage, _id, createdAt }: CarouselProps,
+                                                       i: number
+                                                  ) => (
+                                                       <TableRow
+                                                            key={i + 1}
+                                                            sx={{
+                                                                 "&:last-child td, &:last-child th": { border: 0 },
+                                                            }}
+                                                       >
+                                                            <TableCell scope="row" width={50}>
+                                                                 {i + 1}
+                                                            </TableCell>
+                                                            <TableCell align="left" width={150}>
+                                                                 <img
+                                                                      src={dataImage}
+                                                                      width="100%"
+                                                                      style={{
+                                                                           borderRadius: 10,
+                                                                           boxShadow: shadows[15],
+                                                                      }}
+                                                                      alt={dataAlt}
+                                                                 />
+                                                            </TableCell>
+                                                            <TableCell align="left" width={400}>
+                                                                 <Typography variant="h6" fontWeight="300">
+                                                                      {dataAlt}
+                                                                 </Typography>
+                                                            </TableCell>
+                                                            <TableCell align="left" width={300}>
+                                                                 <Typography
+                                                                      fontWeight="300"
+                                                                      variant="subtitle1"
+                                                                      textTransform="capitalize"
+                                                                 >
+                                                                      {moment(createdAt).format("lll")}
+                                                                 </Typography>
+                                                            </TableCell>
+                                                            <TableCell align="left">
+                                                                 <Box display="flex" flexDirection="row" gap={3}>
+                                                                      <AppButton>edit</AppButton>
+                                                                      <AppButton
+                                                                           onClick={() => deleteCarousel(_id as string)}
+                                                                           startIcon={<AiFillDelete />}
+                                                                           color="error"
                                                                       >
-                                                                           {moment(createdAt).format("lll")}
-                                                                      </Typography>
-                                                                 </TableCell>
-                                                                 <TableCell align="left">
-                                                                      <Box display="flex" flexDirection="row" gap={3}>
-                                                                           <AppButton>edit</AppButton>
-                                                                           <AppButton
-                                                                                onClick={() =>
-                                                                                     deleteCarousel(_id as string)
-                                                                                }
-                                                                                startIcon={<AiFillDelete />}
-                                                                                color="error"
-                                                                           >
-                                                                                delete
-                                                                           </AppButton>
-                                                                      </Box>
-                                                                 </TableCell>
-                                                            </TableRow>
-                                                       )
-                                                  )}
+                                                                           delete
+                                                                      </AppButton>
+                                                                 </Box>
+                                                            </TableCell>
+                                                       </TableRow>
+                                                  )
+                                             )}
                                    </TableBody>
                               </Table>
                               <TablePagination

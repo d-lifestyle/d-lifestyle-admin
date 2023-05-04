@@ -22,6 +22,7 @@ import {
 import { AccommodationProps, ToursTravelProps } from "../../../../interface";
 import moment from "moment";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { enqueueSnackbar } from "notistack";
 
 export const ManageToursTravel = () => {
      const navigate = useNavigate();
@@ -40,8 +41,13 @@ export const ManageToursTravel = () => {
      }, [dispatch]);
 
      const DeleteAccommodation = async (id: string) => {
-          await dispatch(DeleteToursTravelById(id));
+          const data = await dispatch(DeleteToursTravelById(id));
           await GetToursPackages();
+          if (data.type === "toursTravel/delete/fulfilled") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+          } else if ("toursTravel/delete/rejected") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+          }
      };
 
      const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -164,7 +170,7 @@ export const ManageToursTravel = () => {
                )}
                {toursPackages.loading && (
                     <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-                         <Typography mt={3} variant="h6">
+                         <Typography mt={3} variant="h6" color={palette.grey[500]}>
                               Searching data please wait...
                          </Typography>
                     </Box>

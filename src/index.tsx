@@ -7,13 +7,22 @@ import { Provider } from "react-redux";
 import { Store } from "./features";
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/auth.context";
+import { EditorProvider } from "react-simple-wysiwyg";
+import { SnackbarProvider } from "notistack";
 
 ReactDOM.render(
      <React.StrictMode>
           <Provider store={Store}>
                <AuthContextProvider>
                     <BrowserRouter>
-                         <App />
+                         <SnackbarProvider
+                              autoHideDuration={2000}
+                              anchorOrigin={{ horizontal: "right", vertical: "top" }}
+                         >
+                              <EditorProvider>
+                                   <App />
+                              </EditorProvider>
+                         </SnackbarProvider>
                     </BrowserRouter>
                </AuthContextProvider>
           </Provider>

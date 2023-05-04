@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { useSelector } from "react-redux";
-import { AccommodationProps } from "../../../interface";
-import { GetAllAccommodation, LoginAccount } from "../../action";
+import { LoginAccount } from "../../action";
 
 interface AuthProps {
      token: string;
@@ -46,7 +45,6 @@ const AuthSlice = createSlice({
           builder
                .addCase(LoginAccount.fulfilled, (state, action) => {
                     state.error = "";
-                    console.log("user login", action.payload);
                     state.loading = false;
                     state.data.token = action.payload.token;
                     state.data.user = action.payload.user;
@@ -58,7 +56,6 @@ const AuthSlice = createSlice({
                })
                .addCase(LoginAccount.rejected, (state, action) => {
                     state.loading = false;
-                    console.log("login data", action.payload);
 
                     state.error = action.payload as string;
                     state.data.isLoggedIn = false;

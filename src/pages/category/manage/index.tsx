@@ -42,7 +42,6 @@ export const ManageCategory = () => {
      useEffect(() => {
           (async () => {
                await dispatch(GetAllCategory());
-               console.log(categories.data);
           })();
      }, [dispatch]);
 
@@ -91,46 +90,41 @@ export const ManageCategory = () => {
                                    </TableRow>
                               </TableHead>
                               <TableBody>
-                                   {categories?.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
-                                        ({ name, createdAt, _id, parentCategory }: CategoriesProps, i: number) => (
-                                             console.log(name, parentCategory),
-                                             (
-                                                  <TableRow
-                                                       key={i}
-                                                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                                                  >
-                                                       <TableCell component="th" scope="row">
-                                                            {i + 1}
-                                                       </TableCell>
-                                                       <TableCell align="left">
-                                                            <Typography variant="body1" textTransform="capitalize">
-                                                                 {name}
-                                                            </Typography>
-                                                       </TableCell>
-                                                       <TableCell align="left">
-                                                            <Typography textTransform="capitalize">
-                                                                 {parentCategory?.displayName}
-                                                            </Typography>
-                                                       </TableCell>
-                                                       <TableCell align="left">
-                                                            {moment(createdAt).format("lll")}
-                                                       </TableCell>
-                                                       <TableCell align="left">
-                                                            <Box display="flex" flexDirection="row" gap={3}>
-                                                                 <AppButton startIcon={<AiFillEdit />}>edit</AppButton>
-                                                                 <AppButton
-                                                                      onClick={() => DeleteCategory(_id as string)}
-                                                                      startIcon={<AiFillDelete />}
-                                                                      color="error"
-                                                                 >
-                                                                      delete
-                                                                 </AppButton>
-                                                            </Box>
-                                                       </TableCell>
-                                                  </TableRow>
-                                             )
-                                        )
-                                   )}
+                                   {categories?.data
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map(({ name, createdAt, _id, parentCategory }: CategoriesProps, i: number) => (
+                                             <TableRow
+                                                  key={i}
+                                                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                                             >
+                                                  <TableCell component="th" scope="row">
+                                                       {i + 1}
+                                                  </TableCell>
+                                                  <TableCell align="left">
+                                                       <Typography variant="body1" textTransform="capitalize">
+                                                            {name}
+                                                       </Typography>
+                                                  </TableCell>
+                                                  <TableCell align="left">
+                                                       <Typography textTransform="capitalize">
+                                                            {parentCategory?.displayName}
+                                                       </Typography>
+                                                  </TableCell>
+                                                  <TableCell align="left">{moment(createdAt).format("lll")}</TableCell>
+                                                  <TableCell align="left">
+                                                       <Box display="flex" flexDirection="row" gap={3}>
+                                                            <AppButton startIcon={<AiFillEdit />}>edit</AppButton>
+                                                            <AppButton
+                                                                 onClick={() => DeleteCategory(_id as string)}
+                                                                 startIcon={<AiFillDelete />}
+                                                                 color="error"
+                                                            >
+                                                                 delete
+                                                            </AppButton>
+                                                       </Box>
+                                                  </TableCell>
+                                             </TableRow>
+                                        ))}
                               </TableBody>
                          </Table>
                          <TablePagination
@@ -149,7 +143,7 @@ export const ManageCategory = () => {
                )}
                {!categories.loading && !categories.data.length && (
                     <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-                         <Typography mt={3} variant="h6">
+                         <Typography mt={3} variant="h6" color={palette.grey[500]}>
                               No sub category found
                          </Typography>
 

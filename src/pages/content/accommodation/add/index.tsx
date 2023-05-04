@@ -1,23 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../../../layout";
-import { AppButton, AppInput, AppTitleBar } from "../../../../component";
+import { AppButton, AppImageView, AppInput, AppTitleBar } from "../../../../component";
 import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography, useTheme } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../features";
-import { useSubCategorySelector } from "../../../../features/slice";
+import {
+     addAccommodationImages,
+     removeAccommodationImage,
+     emptyAccommodationImage,
+     useAccommodationSelector,
+     useSubCategorySelector,
+} from "../../../../features/slice";
 import { AddNewAccommodation, GetAllSubCategory } from "../../../../features/action";
-import { AccommodationProps, SubCategoryProps } from "../../../../interface";
+import { SubCategoryProps } from "../../../../interface";
 
 import { useNavigate } from "react-router-dom";
+import {
+     BtnBold,
+     BtnBulletList,
+     BtnClearFormatting,
+     BtnItalic,
+     BtnLink,
+     BtnNumberedList,
+     BtnRedo,
+     BtnStrikeThrough,
+     BtnStyles,
+     BtnUnderline,
+     BtnUndo,
+     Editor,
+     Toolbar,
+} from "react-simple-wysiwyg";
+import { LabelOutlined } from "@mui/icons-material";
+import { enqueueSnackbar } from "notistack";
+
+export interface NewAccommodationFormProps {
+     city: string;
+     description: string;
+     displayName: string;
+     image: string;
+     title: string;
+     state: string;
+     SubCategory: string;
+}
 
 export const CreateAccommodation = () => {
      const dispatch = useDispatch<AppDispatch>();
      const subcategories = useSubCategorySelector();
-     const [accommodation, setAccommodation] = useState<AccommodationProps>({
+     const accommodationSelect = useAccommodationSelector();
+     const theme = useTheme();
+
+     const [accommodation, setAccommodation] = useState<NewAccommodationFormProps>({
           city: "",
           displayName: "",
           state: "",
           SubCategory: "",
+          image: "",
+          title: "",
+          description: "",
      });
      const { palette } = useTheme();
      const navigate = useNavigate();
@@ -33,8 +72,23 @@ export const CreateAccommodation = () => {
      }, [dispatch]);
 
      const handleSubmit = async () => {
-          await dispatch(AddNewAccommodation(accommodation));
-          navigate("/manage/accommodation", { replace: true });
+          const data = await dispatch(
+               AddNewAccommodation({
+                    city: accommodation.city,
+                    description: accommodation.description,
+                    displayName: accommodation.displayName,
+                    state: accommodation.state,
+                    SubCategory: accommodation.SubCategory,
+                    image: accommodationSelect.images,
+               })
+          );
+          if (data.type === "accommodation/new/fulfilled") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+               navigate("/manage/accommodation", { replace: true });
+               dispatch(emptyAccommodationImage());
+          } else if (data.type === "accommodation/new/rejected") {
+               enqueueSnackbar(data.payload, { variant: "error" });
+          }
      };
 
      return (
@@ -60,7 +114,7 @@ export const CreateAccommodation = () => {
                     ]}
                />
 
-               <Box width="60%" border={`2px solid ${palette.grey[400]}`} p={3} margin="auto" borderRadius={1} mt={5}>
+               <Box width="100%" border={`2px solid ${palette.grey[400]}`} p={3} margin="auto" borderRadius={1} mt={5}>
                     <Grid container spacing={3}>
                          <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
                               <Box>
@@ -72,39 +126,163 @@ export const CreateAccommodation = () => {
                                                   city: accommodation.city,
                                                   state: accommodation.state,
                                                   SubCategory: accommodation.SubCategory,
+                                                  description: accommodation.description,
+                                                  image: accommodation.image,
                                                   displayName: e.target.value,
+                                                  title: accommodation.title,
                                              });
                                         }}
                                    />
                               </Box>
                          </Grid>
                          <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
-                              <AppInput
-                                   label="Enter State"
-                                   value={accommodation?.state}
-                                   onChange={(e) => {
-                                        setAccommodation({
-                                             city: e.target.validationMessage,
-                                             state: e.target.value,
-                                             SubCategory: accommodation.SubCategory,
-                                             displayName: accommodation.displayName,
-                                        });
-                                   }}
-                              />
+                              <Grid container spacing={2}>
+                                   {accommodationSelect.images.map(({ image, title }: any, i: number) => (
+                                        <AppImageView
+                                             image={image}
+                                             title={title}
+                                             dispatch={dispatch}
+                                             i={i}
+                                             removeImage={removeAccommodationImage}
+                                        />
+                                   ))}
+                              </Grid>
+                              <Box>
+                                   <Box display="flex" gap={3}>
+                                        <AppInput
+                                             label="Add Image URL"
+                                             value={accommodation?.image}
+                                             onChange={(e) => {
+                                                  setAccommodation({
+                                                       city: accommodation.city,
+                                                       state: accommodation.state,
+                                                       SubCategory: accommodation.SubCategory,
+                                                       description: accommodation.description,
+                                                       image: e.target.value,
+                                                       displayName: accommodation.displayName,
+                                                       title: accommodation.title,
+                                                  });
+                                             }}
+                                        />
+                                        <AppInput
+                                             label="Add Image title"
+                                             value={accommodation?.title}
+                                             onChange={(e) => {
+                                                  setAccommodation({
+                                                       city: accommodation.city,
+                                                       state: accommodation.state,
+                                                       SubCategory: accommodation.SubCategory,
+                                                       description: accommodation.description,
+                                                       image: accommodation.image,
+                                                       displayName: accommodation.displayName,
+                                                       title: e.target.value,
+                                                  });
+                                             }}
+                                        />
+                                   </Box>
+                                   <AppButton
+                                        sx={{ mt: 2 }}
+                                        onClick={() => {
+                                             dispatch(
+                                                  addAccommodationImages({
+                                                       title: accommodation.title,
+                                                       image: accommodation.image,
+                                                  })
+                                             );
+                                             setAccommodation({
+                                                  city: accommodation.city,
+                                                  state: accommodation.state,
+                                                  SubCategory: accommodation.SubCategory,
+                                                  description: accommodation.description,
+                                                  image: accommodation.image,
+                                                  displayName: accommodation.displayName,
+                                                  title: accommodation.image,
+                                             });
+                                        }}
+                                        size="small"
+                                   >
+                                        add images
+                                   </AppButton>
+                              </Box>
                          </Grid>
+
                          <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
-                              <AppInput
-                                   label="Enter City"
-                                   value={accommodation?.city}
+                              <Box display="flex" alignItems="center" gap={2}>
+                                   <LabelOutlined style={{ color: theme.palette.grey[600] }} />
+                                   <label htmlFor="support" style={{ fontSize: 16, color: theme.palette.grey[600] }}>
+                                        Description
+                                   </label>
+                              </Box>
+                              <Editor
+                                   name="description"
                                    onChange={(e) => {
                                         setAccommodation({
-                                             city: e.target.value,
+                                             city: accommodation.city,
                                              state: accommodation.state,
                                              SubCategory: accommodation.SubCategory,
                                              displayName: accommodation.displayName,
+                                             description: e.target.value,
+                                             image: accommodation.image,
+                                             title: accommodation.title,
                                         });
                                    }}
-                              />
+                                   value={accommodation.description}
+                                   containerProps={{
+                                        style: {
+                                             height: "300px",
+                                             marginTop: theme.spacing(2),
+                                             borderRadius: 0,
+                                        },
+                                   }}
+                              >
+                                   <Toolbar>
+                                        <BtnBold />
+                                        <BtnItalic />
+                                        <BtnBulletList />
+                                        <BtnClearFormatting />
+                                        <BtnLink />
+                                        <BtnNumberedList />
+                                        <BtnRedo />
+                                        <BtnUndo />
+                                        <BtnStrikeThrough />
+                                        <BtnStyles />
+                                        <BtnUnderline />
+                                   </Toolbar>
+                              </Editor>
+                         </Grid>
+                         <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
+                              <Box display="flex" gap={3}>
+                                   <AppInput
+                                        label="Enter City"
+                                        value={accommodation?.city}
+                                        onChange={(e) => {
+                                             setAccommodation({
+                                                  city: e.target.value,
+                                                  state: accommodation.state,
+                                                  SubCategory: accommodation.SubCategory,
+                                                  displayName: accommodation.displayName,
+                                                  description: accommodation.description,
+                                                  image: accommodation.image,
+                                                  title: accommodation.title,
+                                             });
+                                        }}
+                                   />
+                                   <AppInput
+                                        label="Enter State"
+                                        value={accommodation?.state}
+                                        onChange={(e) => {
+                                             setAccommodation({
+                                                  city: accommodation.city,
+                                                  state: e.target.value,
+                                                  SubCategory: accommodation.SubCategory,
+                                                  displayName: accommodation.displayName,
+                                                  description: accommodation.description,
+                                                  image: accommodation.image,
+                                                  title: accommodation.title,
+                                             });
+                                        }}
+                                   />
+                              </Box>
                          </Grid>
 
                          <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
@@ -120,6 +298,9 @@ export const CreateAccommodation = () => {
                                                   state: accommodation.state,
                                                   SubCategory: e.target.value,
                                                   displayName: accommodation.displayName,
+                                                  description: accommodation.description,
+                                                  image: accommodation.image,
+                                                  title: accommodation.title,
                                              });
                                         }}
                                    >

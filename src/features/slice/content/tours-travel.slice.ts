@@ -9,6 +9,10 @@ interface InitialToursTravelProps {
      data: ToursTravelProps[];
      error: string;
      success: string;
+     images: {
+          title: string;
+          image: string;
+     }[];
 }
 
 const InitialToursTravelState: InitialToursTravelProps = {
@@ -16,12 +20,34 @@ const InitialToursTravelState: InitialToursTravelProps = {
      data: [],
      error: "",
      success: "",
+     images: [
+          {
+               image: "https://dummyimage.com/1260x720/000/fff",
+               title: "image size should be like this",
+          },
+     ],
 };
 
-const CarouselSlice = createSlice({
+const ToursPackagesSlice = createSlice({
      name: "toursTravel",
      initialState: InitialToursTravelState,
-     reducers: {},
+     reducers: {
+          addToursPackageImages: (state, action) => {
+               state.images.push({
+                    title: action.payload.title,
+                    image: action.payload.image,
+               });
+               console.log("data", state.images);
+          },
+          removeToursPackageImage: (state, action) => {
+               state.images.splice(action.payload, 1);
+          },
+          emptyToursPackageImage: (state) => {
+               state.images = [
+                    { image: "https://dummyimage.com/1260x720/000/fff", title: "image size should be like this" },
+               ];
+          },
+     },
      extraReducers(builder) {
           builder
                .addCase(GetAllToursTravel.fulfilled, (state, action) => {
@@ -37,8 +63,8 @@ const CarouselSlice = createSlice({
      },
 });
 
-export const ToursTravelReducer = CarouselSlice.reducer;
-// export const {} = CarouselSlice.actions
+export const ToursTravelReducer = ToursPackagesSlice.reducer;
+export const { addToursPackageImages, emptyToursPackageImage, removeToursPackageImage } = ToursPackagesSlice.actions;
 export const useToursTravelSelector = () =>
      useSelector((state: any) => {
           return state.toursTravel;

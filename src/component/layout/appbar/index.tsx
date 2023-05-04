@@ -122,8 +122,8 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
                               }}
                          >
                               <Box px={3} py={2}>
-                                   <Typography color="GrayText" variant="subtitle1">
-                                        Mistry Aakash
+                                   <Typography color="GrayText" textTransform="capitalize" variant="subtitle1">
+                                        {user?.user?.lname} {user?.user?.fname}
                                    </Typography>
                                    <Typography variant="subtitle2" color="grey">
                                         {user?.user?.email}

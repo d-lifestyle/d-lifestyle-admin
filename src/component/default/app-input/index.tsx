@@ -1,24 +1,22 @@
 import { TextField, TextFieldProps } from "@mui/material";
 import React from "react";
 
-export const AppInput: React.FC<TextFieldProps> = ({ ...rest }) => {
+export const AppInput: React.FC<TextFieldProps> = ({ inputProps, ...rest }) => {
      return (
           <TextField
-               InputLabelProps={{
-                    margin: "dense",
-               }}
                margin="dense"
                fullWidth
                FormHelperTextProps={{
                     style: {
-                         textTransform: "capitalize",
+                         textTransform: "uppercase",
                          marginTop: 10,
+                         fontSize: 10,
                          textAlign: "right",
                     },
                }}
-               InputProps={{
-                    color: "primary",
-               }}
+               inputProps={inputProps}
+               color="primary"
+               variant="outlined"
                {...rest}
           />
      );

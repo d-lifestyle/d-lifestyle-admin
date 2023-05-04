@@ -35,8 +35,6 @@ export const ManageMainCategory = () => {
      useEffect(() => {
           (async () => {
                await GetAllMain();
-               console.log(mainCategory.data);
-
           })();
      }, [dispatch]);
 
@@ -148,7 +146,7 @@ export const ManageMainCategory = () => {
                )}
                {!mainCategory.loading && mainCategory.data.length === 0 && (
                     <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-                         <Typography mt={3} variant="h6">
+                         <Typography mt={3} variant="h6" color={palette.grey[500]}>
                               No main category found
                          </Typography>
 

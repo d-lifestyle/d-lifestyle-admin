@@ -6,12 +6,14 @@ import { Appbar, DrawerItems } from "../../component";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../features";
 import {
+     GetAdminUsers,
      GetAllAccommodation,
      GetAllCarousel,
      GetAllCategory,
      GetAllMainCategory,
      GetAllSubCategory,
      GetAllToursTravel,
+     GetUserProfile,
 } from "../../features/action";
 import { useAuth } from "../../context/auth.context";
 import { getUser } from "../../utils";
@@ -30,12 +32,14 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
      const user = getUser();
      useEffect(() => {
           (async () => {
+               await dispatch(GetAdminUsers());
                await dispatch(GetAllCarousel());
                await dispatch(GetAllMainCategory());
                await dispatch(GetAllSubCategory());
                await dispatch(GetAllCategory());
                await dispatch(GetAllAccommodation());
                await dispatch(GetAllToursTravel());
+               await dispatch(GetUserProfile());
           })();
      }, []);
 

@@ -35,7 +35,6 @@ const AddNewCategory = createAsyncThunk("menu/new", async (props: NewCategoryPro
                name: props.name,
                parentCategory: props.parentCategory,
           });
-          console.log(data.data.data);
           return await data.data.data;
      } catch (err: any) {
           if (err.response) {
@@ -45,7 +44,6 @@ const AddNewCategory = createAsyncThunk("menu/new", async (props: NewCategoryPro
                     return rejectWithValue(await err.response.data.message);
                }
           } else {
-               console.log(err.message);
                return rejectWithValue(await err.message);
           }
      }

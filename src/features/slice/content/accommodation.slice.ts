@@ -9,6 +9,10 @@ interface InitialAccommodationProps {
      data: AccommodationProps[];
      error: string;
      success: string;
+     images: {
+          title: string;
+          image: string;
+     }[];
 }
 
 const InitialAccommodationState: InitialAccommodationProps = {
@@ -16,12 +20,34 @@ const InitialAccommodationState: InitialAccommodationProps = {
      data: [],
      error: "",
      success: "",
+     images: [
+          {
+               image: "https://dummyimage.com/1260x720/000/fff",
+               title: "image size should be like this",
+          },
+     ],
 };
 
-const CarouselSlice = createSlice({
+const AccommodationSlice = createSlice({
      name: "accommodation",
      initialState: InitialAccommodationState,
-     reducers: {},
+     reducers: {
+          addAccommodationImages: (state, action) => {
+               state.images.push({
+                    title: action.payload.title,
+                    image: action.payload.image,
+               });
+               console.log("data", state.images);
+          },
+          removeAccommodationImage: (state, action) => {
+               state.images.splice(action.payload, 1);
+          },
+          emptyAccommodationImage: (state) => {
+               state.images = [
+                    { image: "https://dummyimage.com/1260x720/000/fff", title: "image size should be like this" },
+               ];
+          },
+     },
      extraReducers(builder) {
           builder
                .addCase(GetAllAccommodation.fulfilled, (state, action) => {
@@ -37,8 +63,8 @@ const CarouselSlice = createSlice({
      },
 });
 
-export const AccommodationReducer = CarouselSlice.reducer;
-// export const {} = CarouselSlice.actions
+export const AccommodationReducer = AccommodationSlice.reducer;
+export const { addAccommodationImages, emptyAccommodationImage, removeAccommodationImage } = AccommodationSlice.actions;
 export const useAccommodationSelector = () =>
      useSelector((state: any) => {
           return state.accommodation;

@@ -23,6 +23,7 @@ import {
 import { AccommodationProps } from "../../../../interface";
 import moment from "moment";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { enqueueSnackbar } from "notistack";
 
 export const ManageAccommodation = () => {
      const navigate = useNavigate();
@@ -41,8 +42,14 @@ export const ManageAccommodation = () => {
      }, [dispatch]);
 
      const DeleteAccommodation = async (id: string) => {
-          await dispatch(DeleteAccommodationById(id));
-          await dispatch(GetAccommodation);
+          const data = await dispatch(DeleteAccommodationById(id));
+          console.log(data);
+          if (data.type === "accommodation/delete/fulfilled") {
+               await dispatch(GetAccommodation);
+               enqueueSnackbar(data.payload, { variant: "success" });
+          } else if (data.type === "accommodation/delete/rejected") {
+               enqueueSnackbar(data.payload, { variant: "error" });
+          }
      };
 
      const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -59,7 +66,7 @@ export const ManageAccommodation = () => {
      return (
           <DefaultLayout pagetitle="Manage accommodation">
                <AppTitleBar
-                    title="Manage Category"
+                    title="Manage Accommodation"
                     breadcrubms={[
                          {
                               pagepath: "/",
@@ -90,31 +97,27 @@ export const ManageAccommodation = () => {
                               <TableHead sx={{ bgcolor: palette.primary.light }}>
                                    <TableRow>
                                         <TableCell>Sr No.</TableCell>
+                                        <TableCell align="left">Images</TableCell>
                                         <TableCell align="left">Name</TableCell>
                                         <TableCell align="left">Category</TableCell>
-                                        <TableCell align="left">City, State</TableCell>
                                         <TableCell align="left">Uploaded At</TableCell>
                                         <TableCell align="left">Actions</TableCell>
                                    </TableRow>
                               </TableHead>
                               <TableBody>
-                                   {accommodation?.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
-                                        (
-                                             {
-                                                  createdAt,
-                                                  _id,
-                                                  SubCategory,
-                                                  city,
-                                                  displayName,
-                                                  state,
-                                             }: AccommodationProps,
-                                             i: number
-                                        ) => (
-                                             console.log(
-                                                  "to main category",
-                                                  SubCategory.CategoryId.parentCategory.displayName
-                                             ),
+                                   {accommodation?.data
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map(
                                              (
+                                                  {
+                                                       createdAt,
+                                                       _id,
+                                                       image,
+                                                       SubCategory,
+                                                       displayName,
+                                                  }: AccommodationProps,
+                                                  i: number
+                                             ) => (
                                                   <TableRow
                                                        key={_id}
                                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -122,7 +125,15 @@ export const ManageAccommodation = () => {
                                                        <TableCell component="th" scope="row">
                                                             {i + 1}
                                                        </TableCell>
-                                                       <TableCell align="left" width={300}>
+                                                       <TableCell align="left" width={400}>
+                                                            <img
+                                                                 style={{ borderRadius: 10 }}
+                                                                 src={image[0]?.image}
+                                                                 width="100%"
+                                                                 alt={image[0]?.title}
+                                                            />
+                                                       </TableCell>
+                                                       <TableCell align="left" width={250}>
                                                             <Typography
                                                                  noWrap
                                                                  variant="body1"
@@ -131,6 +142,7 @@ export const ManageAccommodation = () => {
                                                                  {displayName}
                                                             </Typography>
                                                        </TableCell>
+
                                                        <TableCell width={250}>
                                                             <Typography textTransform="capitalize" variant="caption">
                                                                  Child : {SubCategory?.name}
@@ -145,16 +157,11 @@ export const ManageAccommodation = () => {
                                                                  {SubCategory.CategoryId.parentCategory.displayName}
                                                             </Typography>
                                                        </TableCell>
-                                                       <TableCell width={250}>
-                                                            <Typography textTransform="capitalize">
-                                                                 State : {state}
-                                                            </Typography>
-                                                            <Typography textTransform="capitalize">
-                                                                 City : {city}
-                                                            </Typography>
-                                                       </TableCell>
+
                                                        <TableCell align="left" width={200}>
-                                                            <Typography>{moment(createdAt).format("lll")}</Typography>
+                                                            <Typography variant="caption">
+                                                                 {moment(createdAt).format("lll")}
+                                                            </Typography>
                                                        </TableCell>
                                                        <TableCell align="left">
                                                             <Box display="flex" flexDirection="row" gap={3}>
@@ -171,8 +178,7 @@ export const ManageAccommodation = () => {
                                                        </TableCell>
                                                   </TableRow>
                                              )
-                                        )
-                                   )}
+                                        )}
                               </TableBody>
                          </Table>
                          <TablePagination

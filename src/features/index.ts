@@ -7,6 +7,8 @@ import {
      SubCategoryReducer,
      ToursTravelReducer,
      AuthReducer,
+     UserReducer,
+     AdminReducer,
 } from "./slice";
 
 const rootReducer = combineReducers({
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
      toursTravel: ToursTravelReducer,
      // auth
      auth: AuthReducer,
+     user: UserReducer,
+     admin: AdminReducer,
 });
 
 const Store = configureStore({

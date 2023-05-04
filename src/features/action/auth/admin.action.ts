@@ -1,10 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import AuthService from "../../../services/auth.service";
+import AdminService from "../../../services/admin.service";
 
-const LoginAccount = createAsyncThunk("auth/login", async (props: any, { rejectWithValue }) => {
+const GetAdminUsers = createAsyncThunk("admin/user", async (_, { rejectWithValue }) => {
      try {
-          const data = await AuthService.Login(props.data);
-          props.navigate("/", { replace: true });
+          const data = await AdminService.GetAllUsers();
           return data.data.data;
      } catch (err: any) {
           if (err.response) {
@@ -15,17 +14,20 @@ const LoginAccount = createAsyncThunk("auth/login", async (props: any, { rejectW
      }
 });
 
-const Logout = createAsyncThunk("auth/logout", async ({}, { rejectWithValue }) => {
+const DeleteUser = createAsyncThunk("admin/delete", async (props: string, { rejectWithValue }) => {
      try {
-          const data = await AuthService.Logout();
+          console.log(props);
+          const data = await AdminService.DeleteUserAdmin(props);
           return data.data.data;
      } catch (err: any) {
           if (err.response) {
+               console.log(err.response.data.message);
                return rejectWithValue(err.response.data.message);
           } else {
+               console.log(err.message);
                return rejectWithValue(err.message);
           }
      }
 });
 
-export { LoginAccount, Logout };
+export { GetAdminUsers, DeleteUser };
