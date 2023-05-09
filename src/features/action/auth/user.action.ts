@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import AuthService from "../../../services/auth.service";
 import { UpdateProfileProps } from "../../../interface";
 
-const GetUserProfile = createAsyncThunk("user/profile", async (x, { rejectWithValue }) => {
+const GetUserProfile = createAsyncThunk("user/profile", async (_, { rejectWithValue }) => {
      try {
           const data = await AuthService.Profile();
           return data.data.data;

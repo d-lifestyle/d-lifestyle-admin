@@ -36,7 +36,11 @@ const AdminProfile = () => {
      useEffect(() => {
           (async () => {
                const data = await dispatch(GetUserProfile());
-               console.log(data);
+               if (data.type === "user/profile/fulfilled") {
+                    enqueueSnackbar(`Welcome ${user.data.firstName} ${user.data.lastName}`, { variant: "success" });
+               } else if (data.type === "user/profile/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
           })();
      }, [dispatch]);
 
