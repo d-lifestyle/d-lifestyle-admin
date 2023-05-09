@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { DefaultLayout } from "../../../layout";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
 import { useUserSelector } from "../../../features/slice";
 import { Box, Fab, Typography, useTheme } from "@mui/material";
-import { AppButton, AppInput, AppTitleBar } from "../../../component";
+import { AppInput, AppTitleBar } from "../../../component";
 import { Formik } from "formik";
-import { ProfileFormProps, ProfileValidationSchema } from "../../../validation";
-import { LabelOutlined, Navigation } from "@mui/icons-material";
+import { ProfileValidationSchema } from "../../../validation";
+import { LabelOutlined } from "@mui/icons-material";
 import {
      BtnBold,
      BtnItalic,
@@ -23,9 +23,9 @@ import {
      BtnUnderline,
      BtnUndo,
 } from "react-simple-wysiwyg";
-import { enqueueSnackbar } from "notistack";
 import { GetUserProfile, UpdateAdminProfile } from "../../../features/action";
 import moment from "moment";
+import { enqueueSnackbar } from "notistack";
 
 export const AdminProfile = () => {
      const dispatch = useDispatch<AppDispatch>();
@@ -37,15 +37,20 @@ export const AdminProfile = () => {
           (async () => {
                await dispatch(GetUserProfile());
           })();
-     }, []);
+     }, [dispatch]);
 
      const UpdateProfile = async (e: any) => {
-          await dispatch(
+          const data = await dispatch(
                UpdateAdminProfile({
                     data: e,
                     id: local.user.id,
                })
           );
+          if (data.type === "user/update/fulfilled") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+          } else if (data.type === "user/update/rejected") {
+               enqueueSnackbar(data.payload, { variant: "error" });
+          }
      };
 
      return (

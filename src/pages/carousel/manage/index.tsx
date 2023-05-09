@@ -32,7 +32,7 @@ export const ManageCarousel = () => {
 
      const [page, setPage] = React.useState(0);
 
-     const { palette, shadows, spacing } = useTheme();
+     const { palette, shadows } = useTheme();
      const getAllCarousel = async () => {
           await dispatch(GetAllCarousel());
      };
@@ -41,7 +41,7 @@ export const ManageCarousel = () => {
           (async () => {
                await getAllCarousel();
           })();
-     }, []);
+     }, [dispatch]);
 
      const handleChangePage = (event: unknown, newPage: number) => {
           setPage(newPage);

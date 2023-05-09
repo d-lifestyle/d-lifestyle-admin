@@ -70,7 +70,6 @@ const DeleteCategoryById = createAsyncThunk("menu/delete", async (props: string,
           if (err.response) {
                return rejectWithValue(err.response.data.message);
           } else {
-               console.log(err.message);
                return rejectWithValue(err.message);
           }
      }

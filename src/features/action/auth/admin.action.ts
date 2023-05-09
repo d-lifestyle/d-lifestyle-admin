@@ -16,15 +16,12 @@ const GetAdminUsers = createAsyncThunk("admin/user", async (_, { rejectWithValue
 
 const DeleteUser = createAsyncThunk("admin/delete", async (props: string, { rejectWithValue }) => {
      try {
-          console.log(props);
           const data = await AdminService.DeleteUserAdmin(props);
           return data.data.data;
      } catch (err: any) {
           if (err.response) {
-               console.log(err.response.data.message);
                return rejectWithValue(err.response.data.message);
           } else {
-               console.log(err.message);
                return rejectWithValue(err.message);
           }
      }

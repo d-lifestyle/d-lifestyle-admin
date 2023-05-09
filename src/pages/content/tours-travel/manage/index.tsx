@@ -19,7 +19,7 @@ import {
      TablePagination,
      useTheme,
 } from "@mui/material";
-import { AccommodationProps, ToursTravelProps } from "../../../../interface";
+import { ToursTravelProps } from "../../../../interface";
 import moment from "moment";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { enqueueSnackbar } from "notistack";

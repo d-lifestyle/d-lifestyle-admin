@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserDataProps } from "../../interface";
 import { DeleteUser, GetAdminUsers } from "../action";
 import { useSelector } from "react-redux";
 

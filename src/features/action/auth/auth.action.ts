@@ -15,7 +15,7 @@ const LoginAccount = createAsyncThunk("auth/login", async (props: any, { rejectW
      }
 });
 
-const Logout = createAsyncThunk("auth/logout", async ({}, { rejectWithValue }) => {
+const Logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
      try {
           const data = await AuthService.Logout();
           return data.data.data;

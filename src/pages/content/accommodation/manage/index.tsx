@@ -43,7 +43,6 @@ export const ManageAccommodation = () => {
 
      const DeleteAccommodation = async (id: string) => {
           const data = await dispatch(DeleteAccommodationById(id));
-          console.log(data);
           if (data.type === "accommodation/delete/fulfilled") {
                await dispatch(GetAccommodation);
                enqueueSnackbar(data.payload, { variant: "success" });
@@ -126,12 +125,14 @@ export const ManageAccommodation = () => {
                                                             {i + 1}
                                                        </TableCell>
                                                        <TableCell align="left" width={400}>
-                                                            <img
-                                                                 style={{ borderRadius: 10 }}
-                                                                 src={image[0]?.image}
-                                                                 width="100%"
-                                                                 alt={image[0]?.title}
-                                                            />
+                                                            {image.length && (
+                                                                 <img
+                                                                      style={{ borderRadius: 10 }}
+                                                                      src={image[0]?.image}
+                                                                      width="100%"
+                                                                      alt={image[0]?.title}
+                                                                 />
+                                                            )}
                                                        </TableCell>
                                                        <TableCell align="left" width={250}>
                                                             <Typography

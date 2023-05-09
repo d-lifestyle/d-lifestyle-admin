@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../../../layout";
 import { AppButton, AppImageView, AppInput, AppTitleBar } from "../../../../component";
-import { SubCategoryProps, ToursTravelProps } from "../../../../interface";
+import { SubCategoryProps } from "../../../../interface";
 import {
      addToursPackageImages,
      emptyToursPackageImage,
@@ -70,7 +70,6 @@ export const CreateToursTravel = () => {
           (async () => {
                await getSubCategory();
           })();
-          console.log(subcategories.data);
      }, [dispatch]);
 
      const handleSubmit = async () => {

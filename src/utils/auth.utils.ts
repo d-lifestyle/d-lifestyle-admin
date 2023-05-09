@@ -8,16 +8,19 @@ export const getUser = () => {
      return null;
 };
 
-export const logOutUser = async () => {
+export const logOutUser = async (props: any) => {
      try {
           localStorage.removeItem("token");
           const data = await AuthService.Logout();
           return data.data;
      } catch (err: any) {
-          if (err) {
-               console.log(err.response.data.message);
+          if (err.response) {
+               if (err.response.status === 403) {
+                    return 403;
+               }
+               return err.response.data.message;
           } else {
-               console.log(err.message);
+               return err.message;
           }
      }
 };

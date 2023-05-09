@@ -15,7 +15,6 @@ import {
      GetAllToursTravel,
      GetUserProfile,
 } from "../../features/action";
-import { useAuth } from "../../context/auth.context";
 import { getUser } from "../../utils";
 
 interface LayoutProps {
@@ -41,7 +40,7 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
                await dispatch(GetAllToursTravel());
                await dispatch(GetUserProfile());
           })();
-     }, []);
+     }, [dispatch]);
 
      const handleDrawerToggle = () => {
           setMobileOpen(!mobileOpen);

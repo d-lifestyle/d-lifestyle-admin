@@ -1,14 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { Grid, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import { Formik, replace } from "formik";
+import { Formik } from "formik";
 import { LoginInitialValues, LoginValidationSchema } from "../../validation";
 import { AppButton, AppInput } from "../../component";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../features";
-import { LoginAccount } from "../../features/action";
+import { useNavigate } from "react-router-dom";
 import { LoginProps } from "../../interface";
 import { useAuthSelector } from "../../features/slice";
 import AuthService from "../../services/auth.service";
@@ -16,7 +13,6 @@ import { useAuth } from "../../context/auth.context";
 import { enqueueSnackbar } from "notistack";
 
 export const Login = () => {
-     const dispatch = useDispatch<AppDispatch>();
      const auth = useAuthSelector();
      const navigate = useNavigate();
      const { setAuthorization, setUser } = useAuth();

@@ -1,6 +1,5 @@
-import React, { createContext, FC, useContext, useEffect, useLayoutEffect, useState } from "react";
-import { AuthContextProps, UserDataProps } from "../interface";
-import AuthService from "../services/auth.service";
+import React, { createContext, FC, useContext, useState } from "react";
+import { AuthContextProps } from "../interface";
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 

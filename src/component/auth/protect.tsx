@@ -19,7 +19,7 @@ export const RequireAuth = () => {
                dispatch(GetUserProfile());
                setUser(JSON.parse(localStore as any));
           }
-     }, []);
+     }, [localStore, dispatch, setAuthorization, setUser]);
 
      if (!localStore) {
           return <Navigate to="/login" state={{ replace: true, from: location }} />;

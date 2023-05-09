@@ -37,7 +37,6 @@ const ToursPackagesSlice = createSlice({
                     title: action.payload.title,
                     image: action.payload.image,
                });
-               console.log("data", state.images);
           },
           removeToursPackageImage: (state, action) => {
                state.images.splice(action.payload, 1);

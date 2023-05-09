@@ -27,7 +27,7 @@ export const ManageCategory = () => {
      const dispatch = useDispatch<AppDispatch>();
      const categories = useCategorySelector();
      const navigate = useNavigate();
-     const { palette, spacing } = useTheme();
+     const { palette } = useTheme();
      const [rowsPerPage, setRowsPerPage] = useState<number>(10);
      const [page, setPage] = React.useState(0);
      const handleChangePage = (event: unknown, newPage: number) => {

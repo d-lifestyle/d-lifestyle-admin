@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { DefaultLayout } from "../../../layout";
 import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { AppButton, AppTitleBar } from "../../../component";
@@ -12,9 +12,7 @@ export const AdminUser = () => {
      const users = useAdminSelector();
      const dispatch = useDispatch<AppDispatch>();
      const { shadows } = useTheme();
-     useEffect(() => {
-          console.log(users.data);
-     }, []);
+
      const DeleteAdminUser = async (id: string) => {
           await dispatch(DeleteUser(id));
      };

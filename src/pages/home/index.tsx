@@ -1,8 +1,7 @@
 import { Button, Grid, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import { LargeCard, MediumCard } from "../../component";
+import { MediumCard } from "../../component";
 import { DefaultLayout } from "../../layout";
-import { AiFillAlert } from "react-icons/ai";
 import {
      useAccommodationSelector,
      useCarouselSelector,
@@ -14,7 +13,6 @@ import {
 import { BiCarousel, BiCategoryAlt, BiJoystickAlt } from "react-icons/bi";
 import { MdOutlineCategory, MdTravelExplore } from "react-icons/md";
 import { BsCardChecklist } from "react-icons/bs";
-import { useAuth } from "../../context/auth.context";
 
 export const Dashboard = () => {
      const { palette, spacing } = useTheme();

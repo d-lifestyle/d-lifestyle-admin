@@ -36,10 +36,8 @@ const AddNewAccommodation = createAsyncThunk(
                return data.data.data;
           } catch (err: any) {
                if (err.response) {
-                    console.log(err.response.data.message);
                     return rejectWithValue(err.response.data.message);
                } else {
-                    console.log(err.message);
                     return rejectWithValue(err.message);
                }
           }

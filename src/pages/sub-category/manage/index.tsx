@@ -57,7 +57,6 @@ export const ManageSubCategory = () => {
           await dispatch(DeleteSubCategoryById(id));
           await getAllSubCategory();
      };
-     console.log(subcategories.data);
      return (
           <DefaultLayout pagetitle="Manage Sub Category">
                <AppTitleBar

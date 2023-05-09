@@ -36,7 +36,7 @@ export default function App() {
                setAuthorization(false);
                setUser("");
           }
-     }, []);
+     }, [setAuthorization, setUser]);
      return (
           <ThemeProvider theme={Theme}>
                <CssBaseline />
