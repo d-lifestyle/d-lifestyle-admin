@@ -9,7 +9,7 @@ import { AddNewCategory, GetAllMainCategory } from "../../../features/action";
 import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export const AddCategory = () => {
+const AddCategory = () => {
      const [category, setCategory] = useState<NewCategoryProps>({
           name: "",
           parentCategory: "",
@@ -112,3 +112,5 @@ export const AddCategory = () => {
           </DefaultLayout>
      );
 };
+
+export default AddCategory;

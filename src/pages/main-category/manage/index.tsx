@@ -23,7 +23,7 @@ import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 import { MainCategoryProps } from "../../../interface";
 
-export const ManageMainCategory = () => {
+const ManageMainCategory = () => {
      const dispatch = useDispatch<AppDispatch>();
      const mainCategory = useMainCategorySelector();
      const navigate = useNavigate();
@@ -158,3 +158,5 @@ export const ManageMainCategory = () => {
           </DefaultLayout>
      );
 };
+
+export default ManageMainCategory;

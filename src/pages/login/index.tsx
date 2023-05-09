@@ -12,7 +12,7 @@ import AuthService from "../../services/auth.service";
 import { useAuth } from "../../context/auth.context";
 import { enqueueSnackbar } from "notistack";
 
-export const Login = () => {
+const Login = () => {
      const auth = useAuthSelector();
      const navigate = useNavigate();
      const { setAuthorization, setUser } = useAuth();
@@ -130,3 +130,5 @@ export const Login = () => {
           </Box>
      );
 };
+
+export default Login;

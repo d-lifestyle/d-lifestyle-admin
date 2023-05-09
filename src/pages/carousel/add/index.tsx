@@ -10,7 +10,7 @@ import { AppDispatch } from "../../../features";
 import { AddNewCarousel } from "../../../features/action";
 import { useNavigate } from "react-router-dom";
 
-export const AddCarousel = () => {
+const AddCarousel = () => {
      const { shadows, palette } = useTheme();
      const dispatch = useDispatch<AppDispatch>();
      const navigate = useNavigate();
@@ -98,3 +98,5 @@ export const AddCarousel = () => {
           </DefaultLayout>
      );
 };
+
+export default AddCarousel;

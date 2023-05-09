@@ -25,7 +25,7 @@ import moment from "moment";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { enqueueSnackbar } from "notistack";
 
-export const ManageAccommodation = () => {
+const ManageAccommodation = () => {
      const navigate = useNavigate();
      const dispatch = useDispatch<AppDispatch>();
      const accommodation = useAccommodationSelector();
@@ -217,3 +217,5 @@ export const ManageAccommodation = () => {
           </DefaultLayout>
      );
 };
+
+export default ManageAccommodation;

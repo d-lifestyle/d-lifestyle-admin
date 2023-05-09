@@ -12,7 +12,7 @@ import { NewSubCategoryProps } from "../../../interface/sub-category.interface";
 import { CategoriesProps } from "../../../interface";
 import { useNavigate } from "react-router-dom";
 
-export const AddSubCategory = () => {
+const AddSubCategory = () => {
      const categories = useCategorySelector();
      const { palette } = useTheme();
      const dispatch = useDispatch<AppDispatch>();
@@ -136,3 +136,5 @@ export const AddSubCategory = () => {
           </DefaultLayout>
      );
 };
+
+export default AddSubCategory;

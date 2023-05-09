@@ -24,7 +24,7 @@ import { CarouselProps } from "../../../interface";
 import moment from "moment";
 import { AiFillDelete } from "react-icons/ai";
 
-export const ManageCarousel = () => {
+const ManageCarousel = () => {
      const carousel = useCarouselSelector();
      const dispatch = useDispatch<AppDispatch>();
      const navigate = useNavigate();
@@ -192,3 +192,5 @@ export const ManageCarousel = () => {
           </DefaultLayout>
      );
 };
+
+export default ManageCarousel;

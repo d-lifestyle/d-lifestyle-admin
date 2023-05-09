@@ -44,7 +44,7 @@ interface ToursTravelFormProps {
      title: string;
 }
 
-export const CreateToursTravel = () => {
+const CreateToursTravel = () => {
      const [toursPackage, setToursPackage] = useState<ToursTravelFormProps>({
           code: "",
           displayName: "",
@@ -371,3 +371,5 @@ export const CreateToursTravel = () => {
           </DefaultLayout>
      );
 };
+
+export default CreateToursTravel;

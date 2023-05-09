@@ -23,7 +23,7 @@ import moment from "moment";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-export const ManageCategory = () => {
+const ManageCategory = () => {
      const dispatch = useDispatch<AppDispatch>();
      const categories = useCategorySelector();
      const navigate = useNavigate();
@@ -155,3 +155,5 @@ export const ManageCategory = () => {
           </DefaultLayout>
      );
 };
+
+export default ManageCategory;

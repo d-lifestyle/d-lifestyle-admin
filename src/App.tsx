@@ -1,30 +1,32 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import { Theme } from "./theme";
-import {
-     Dashboard,
-     Login,
-     AddCarousel,
-     AddSubCategory,
-     CreateAccommodation,
-     CreateToursTravel,
-     AddCategory,
-     ManageAccommodation,
-     ManageToursTravel,
-     ManageCarousel,
-     ManageSubCategory,
-     ManageCategory,
-     DatabaseAnalytics,
-     WebPageAnalytics,
-     AddMainCategory,
-     ManageMainCategory,
-     AdminProfile,
-     AdminUser,
-} from "./pages";
+
 import { useAuth } from "./context/auth.context";
-import { RequireAuth } from "./component";
+import { Loader, RequireAuth } from "./component";
+
+import {
+     AddAccommodationPage,
+     AddCarouselPage,
+     AddCategoryPage,
+     AddMainCategoryPage,
+     AddSubCategoryPage,
+     AddToursTravelPage,
+     ManageAccommodationPage,
+     ManageCarouselPage,
+     ManageCategoryPage,
+     ManageMainCategoryPage,
+     ManageSubCategoryPage,
+     ManageToursTravelPage,
+     WebPageAnalyticsPage,
+     AdminProfilePage,
+     AdminUserPage,
+     DashboardPage,
+     DatabaseAnalyticsPage,
+     LoginPage,
+} from "./pages";
 
 export default function App() {
      const { setUser, setAuthorization } = useAuth();
@@ -42,34 +44,161 @@ export default function App() {
                <CssBaseline />
                <Routes>
                     <Route element={<RequireAuth />}>
-                         <Route path="/" element={<Dashboard />} />
+                         <Route
+                              path="/"
+                              element={
+                                   <Suspense fallback={<Loader />}>
+                                        <DashboardPage />
+                                   </Suspense>
+                              }
+                         />
+
                          <Route path="manage">
-                              <Route path="carousel" element={<ManageCarousel />} />
-                              <Route path="category" element={<ManageCategory />} />
-                              <Route path="main-category" element={<ManageMainCategory />} />
-                              <Route path="sub-category" element={<ManageSubCategory />} />
-                              <Route path="accommodation" element={<ManageAccommodation />} />
-                              <Route path="tours-travel" element={<ManageToursTravel />} />
-                              <Route path="users" element={<AdminUser />} />
+                              <Route
+                                   path="carousel"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageCarouselPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="category"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="main-category"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageMainCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="sub-category"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageSubCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="accommodation"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageAccommodationPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="tours-travel"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageToursTravelPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="users"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AdminUserPage />
+                                        </Suspense>
+                                   }
+                              />
                          </Route>
                          <Route path="add">
-                              <Route path="carousel" element={<AddCarousel />} />
-                              <Route path="category" element={<AddCategory />} />
-                              <Route path="main-category" element={<AddMainCategory />} />
-                              <Route path="sub-category" element={<AddSubCategory />} />
-                              <Route path="accommodation" element={<CreateAccommodation />} />
-                              <Route path="tours-travel" element={<CreateToursTravel />} />
+                              <Route
+                                   path="carousel"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddCarouselPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="category"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="main-category"
+                                   element={
+                                        <Suspense fallback={<div>loading</div>}>
+                                             <AddMainCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="sub-category"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddSubCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="accommodation"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddAccommodationPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="tours-travel"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddToursTravelPage />
+                                        </Suspense>
+                                   }
+                              />
                          </Route>
                          <Route path="analytics">
-                              <Route path="database" element={<DatabaseAnalytics />} />
-                              <Route path="webpage" element={<WebPageAnalytics />} />
+                              <Route
+                                   path="database"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <DatabaseAnalyticsPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="webpage"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <WebPageAnalyticsPage />
+                                        </Suspense>
+                                   }
+                              />
                          </Route>
                          <Route path="admin">
-                              <Route path="profile" element={<AdminProfile />} />
+                              <Route
+                                   path="profile"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AdminProfilePage />
+                                        </Suspense>
+                                   }
+                              />
                          </Route>
                     </Route>
 
-                    <Route path="/login" element={<Login />} />
+                    <Route
+                         path="/login"
+                         element={
+                              <Suspense fallback={<Loader />}>
+                                   <LoginPage />
+                              </Suspense>
+                         }
+                    />
                </Routes>
           </ThemeProvider>
      );

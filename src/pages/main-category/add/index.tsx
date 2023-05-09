@@ -10,7 +10,7 @@ import { AddNewMainCategory, GetAllMainCategory } from "../../../features/action
 import { NewMainCategoryProps } from "../../../interface";
 import { useNavigate } from "react-router-dom";
 
-export const AddMainCategory = () => {
+const AddMainCategory = () => {
      const dispatch = useDispatch<AppDispatch>();
      const { palette } = useTheme();
      const navigate = useNavigate();
@@ -90,3 +90,5 @@ export const AddMainCategory = () => {
           </DefaultLayout>
      );
 };
+
+export default AddMainCategory;

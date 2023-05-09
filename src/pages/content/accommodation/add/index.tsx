@@ -33,17 +33,16 @@ import {
 import { LabelOutlined } from "@mui/icons-material";
 import { enqueueSnackbar } from "notistack";
 
-export interface NewAccommodationFormProps {
-     city: string;
-     description: string;
-     displayName: string;
-     image: string;
-     title: string;
-     state: string;
-     SubCategory: string;
-}
-
-export const CreateAccommodation = () => {
+const CreateAccommodation = () => {
+     interface NewAccommodationFormProps {
+          city: string;
+          description: string;
+          displayName: string;
+          image: string;
+          title: string;
+          state: string;
+          SubCategory: string;
+     }
      const dispatch = useDispatch<AppDispatch>();
      const subcategories = useSubCategorySelector();
      const accommodationSelect = useAccommodationSelector();
@@ -330,3 +329,5 @@ export const CreateAccommodation = () => {
           </DefaultLayout>
      );
 };
+
+export default CreateAccommodation;

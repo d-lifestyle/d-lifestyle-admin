@@ -25,7 +25,7 @@ import { DeleteSubCategoryById, GetAllSubCategory } from "../../../features/acti
 import { SubCategoryProps } from "../../../interface/sub-category.interface";
 import { useNavigate } from "react-router-dom";
 
-export const ManageSubCategory = () => {
+const ManageSubCategory = () => {
      const subcategories = useSubCategorySelector();
      const navigate = useNavigate();
      const dispatch = useDispatch<AppDispatch>();
@@ -169,3 +169,5 @@ export const ManageSubCategory = () => {
           </DefaultLayout>
      );
 };
+
+export default ManageSubCategory;

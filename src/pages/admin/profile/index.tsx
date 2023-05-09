@@ -27,7 +27,7 @@ import { GetUserProfile, UpdateAdminProfile } from "../../../features/action";
 import moment from "moment";
 import { enqueueSnackbar } from "notistack";
 
-export const AdminProfile = () => {
+const AdminProfile = () => {
      const dispatch = useDispatch<AppDispatch>();
      const user = useUserSelector();
      const local = JSON.parse(localStorage.getItem("token") as any);
@@ -493,3 +493,5 @@ export const AdminProfile = () => {
           </DefaultLayout>
      );
 };
+
+export default AdminProfile;

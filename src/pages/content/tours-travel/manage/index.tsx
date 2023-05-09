@@ -24,7 +24,7 @@ import moment from "moment";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { enqueueSnackbar } from "notistack";
 
-export const ManageToursTravel = () => {
+const ManageToursTravel = () => {
      const navigate = useNavigate();
      const dispatch = useDispatch<AppDispatch>();
      const toursPackages = useToursTravelSelector();
@@ -189,3 +189,5 @@ export const ManageToursTravel = () => {
           </DefaultLayout>
      );
 };
+
+export default ManageToursTravel;

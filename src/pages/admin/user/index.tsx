@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
 import { DeleteUser } from "../../../features/action";
 
-export const AdminUser = () => {
+const AdminUser = () => {
      const users = useAdminSelector();
      const dispatch = useDispatch<AppDispatch>();
      const { shadows } = useTheme();
@@ -69,3 +69,5 @@ export const AdminUser = () => {
           </DefaultLayout>
      );
 };
+
+export default AdminUser;

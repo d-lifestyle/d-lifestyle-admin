@@ -14,7 +14,7 @@ import { BiCarousel, BiCategoryAlt, BiJoystickAlt } from "react-icons/bi";
 import { MdOutlineCategory, MdTravelExplore } from "react-icons/md";
 import { BsCardChecklist } from "react-icons/bs";
 
-export const Dashboard = () => {
+const Dashboard = () => {
      const { palette, spacing } = useTheme();
      const carousel = useCarouselSelector();
      const mainCategory = useMainCategorySelector();
@@ -114,3 +114,5 @@ export const Dashboard = () => {
           </DefaultLayout>
      );
 };
+
+export default Dashboard;
