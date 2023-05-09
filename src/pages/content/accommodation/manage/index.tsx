@@ -125,7 +125,7 @@ export const ManageAccommodation = () => {
                                                             {i + 1}
                                                        </TableCell>
                                                        <TableCell align="left" width={400}>
-                                                            {image.length && (
+                                                            {image?.length && (
                                                                  <img
                                                                       style={{ borderRadius: 10 }}
                                                                       src={image[0]?.image}
@@ -155,7 +155,7 @@ export const ManageAccommodation = () => {
                                                             <br />
                                                             <Typography textTransform="capitalize" variant="caption">
                                                                  Parent :
-                                                                 {SubCategory.CategoryId.parentCategory.displayName}
+                                                                 {SubCategory?.CategoryId?.parentCategory?.displayName}
                                                             </Typography>
                                                        </TableCell>
 

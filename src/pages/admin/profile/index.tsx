@@ -35,7 +35,8 @@ export const AdminProfile = () => {
 
      useEffect(() => {
           (async () => {
-               await dispatch(GetUserProfile());
+               const data = await dispatch(GetUserProfile());
+               console.log(data);
           })();
      }, [dispatch]);
 
