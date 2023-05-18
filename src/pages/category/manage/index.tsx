@@ -17,6 +17,7 @@ import {
      Typography,
      TablePagination,
      useTheme,
+     IconButton,
 } from "@mui/material";
 import { CategoriesProps } from "../../../interface";
 import moment from "moment";
@@ -113,7 +114,15 @@ const ManageCategory = () => {
                                                   <TableCell align="left">{moment(createdAt).format("lll")}</TableCell>
                                                   <TableCell align="left">
                                                        <Box display="flex" flexDirection="row" gap={3}>
-                                                            <AppButton startIcon={<AiFillEdit />}>edit</AppButton>
+                                                            <IconButton
+                                                                 onClick={() =>
+                                                                      navigate(`/add/category/${_id}`, {
+                                                                           replace: true,
+                                                                      })
+                                                                 }
+                                                            >
+                                                                 <AiFillEdit />
+                                                            </IconButton>
                                                             <AppButton
                                                                  onClick={() => DeleteCategory(_id as string)}
                                                                  startIcon={<AiFillDelete />}
