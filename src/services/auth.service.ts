@@ -4,7 +4,7 @@ import { AxiosOptions } from "../utils";
 
 class AuthServices {
      public async Login({ email, password }: LoginProps) {
-          return axios.post(`${process.env.REACT_APP_BACKEND}/login`, { email, password });
+          return axios.post(`${process.env.REACT_APP_BACKEND}/login`, { email, password }, AxiosOptions);
      }
      public async Logout() {
           return axios.post(`${process.env.REACT_APP_BACKEND}/logout`, {}, AxiosOptions);
