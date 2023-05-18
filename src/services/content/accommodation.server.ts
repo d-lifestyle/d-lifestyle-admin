@@ -20,7 +20,12 @@ class AccommodationServices {
                     description,
                     image,
                },
-               { withCredentials: true }
+               {
+                    withCredentials: true,
+                    headers: {
+                         "Access-Control-Allow-Credentials": true,
+                    },
+               }
           );
      }
      public async UpdateAccommodationById({ id, data }: UpdateAccommodationProps) {
@@ -36,6 +41,9 @@ class AccommodationServices {
                },
                {
                     withCredentials: true,
+                    headers: {
+                         "Access-Control-Allow-Credentials": true,
+                    },
                }
           );
      }
@@ -43,6 +51,9 @@ class AccommodationServices {
      public async DeleteAccommodationById(id: string) {
           return await axios.delete(`${process.env.REACT_APP_BACKEND}/accommodation/${id}`, {
                withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
           });
      }
 }

@@ -3,11 +3,21 @@ import { NewToursTravelProps, UpdateToursTravelProps } from "../../interface";
 
 class ToursTravelServices {
      public async GetToursTravel() {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/tours-travel`);
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/tours-travel`, {
+               withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
+          });
      }
 
      public async GetToursTravelById(id: string) {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/tours-travel/${id}`);
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/tours-travel/${id}`, {
+               withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
+          });
      }
      public async AddToursTravel({
           SubCategory,
@@ -34,6 +44,9 @@ class ToursTravelServices {
                },
                {
                     withCredentials: true,
+                    headers: {
+                         "Access-Control-Allow-Credentials": true,
+                    },
                }
           );
      }
@@ -52,6 +65,9 @@ class ToursTravelServices {
                },
                {
                     withCredentials: true,
+                    headers: {
+                         "Access-Control-Allow-Credentials": true,
+                    },
                }
           );
      }
@@ -59,6 +75,9 @@ class ToursTravelServices {
      public async DeleteToursTravelById(id: string) {
           return await axios.delete(`${process.env.REACT_APP_BACKEND}/tours-travel/${id}`, {
                withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
           });
      }
 }

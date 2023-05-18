@@ -3,11 +3,21 @@ import { NewCarouselProps, UpdateCarouselProps } from "../interface";
 
 class CarouselServices {
      public async GetCarousel() {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/carousel`);
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/carousel`, {
+               withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
+          });
      }
 
      public async GetCarouselById(id: string) {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/carousel/${id}`, { withCredentials: true });
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/carousel/${id}`, {
+               withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
+          });
      }
      public async AddCarousel(props: NewCarouselProps) {
           return await axios.post(
@@ -16,7 +26,12 @@ class CarouselServices {
                     dataAlt: props.dataAlt,
                     dataImage: props.dataImage,
                },
-               { withCredentials: true }
+               {
+                    withCredentials: true,
+                    headers: {
+                         "Access-Control-Allow-Credentials": true,
+                    },
+               }
           );
      }
 
@@ -27,11 +42,21 @@ class CarouselServices {
                     dataImage: props.data.dataImage,
                     dataAlt: props.data.dataAlt,
                },
-               { withCredentials: true }
+               {
+                    withCredentials: true,
+                    headers: {
+                         "Access-Control-Allow-Credentials": true,
+                    },
+               }
           );
      }
      public async DeleteCarouselById(id: string) {
-          return await axios.delete(`${process.env.REACT_APP_BACKEND}/carousel/${id}`, { withCredentials: true });
+          return await axios.delete(`${process.env.REACT_APP_BACKEND}/carousel/${id}`, {
+               withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
+          });
      }
 }
 

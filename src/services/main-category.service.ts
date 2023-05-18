@@ -28,12 +28,18 @@ class MainCategoryServices {
                },
                {
                     withCredentials: true,
+                    headers: {
+                         "Access-Control-Allow-Credentials": true,
+                    },
                }
           );
      }
      public async DeleteMainCategoryById(data: string) {
           return await axios.delete(`${process.env.REACT_APP_BACKEND}/main-categories/${data}`, {
                withCredentials: true,
+               headers: {
+                    "Access-Control-Allow-Credentials": true,
+               },
           });
      }
 }
