@@ -9,7 +9,7 @@ interface InitialToursTravelProps {
      data: ToursTravelProps[];
      error: string;
      success: string;
-     images: {
+     image: {
           title: string;
           image: string;
      }[];
@@ -20,7 +20,7 @@ const InitialToursTravelState: InitialToursTravelProps = {
      data: [],
      error: "",
      success: "",
-     images: [
+     image: [
           {
                image: "https://dummyimage.com/1260x720/000/fff",
                title: "image size should be like this",
@@ -33,16 +33,16 @@ const ToursPackagesSlice = createSlice({
      initialState: InitialToursTravelState,
      reducers: {
           addToursPackageImages: (state, action) => {
-               state.images.push({
+               state.image.push({
                     title: action.payload.title,
                     image: action.payload.image,
                });
           },
           removeToursPackageImage: (state, action) => {
-               state.images.splice(action.payload, 1);
+               state.image.splice(action.payload, 1);
           },
           emptyToursPackageImage: (state) => {
-               state.images = [
+               state.image = [
                     { image: "https://dummyimage.com/1260x720/000/fff", title: "image size should be like this" },
                ];
           },

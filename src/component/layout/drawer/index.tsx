@@ -80,12 +80,6 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                          </List>
                     </Box>
                     <Box mt={spacing(3)}>
-                         <List disablePadding>
-                              <MenuTitle title="Admin connected users" />
-                              <MenuItem path="/manage/users" title="users" icon={<BiUserCheck size={iconSize} />} />
-                         </List>
-                    </Box>
-                    <Box mt={spacing(3)}>
                          <MenuTitle title="content" />
                          <List disablePadding>
                               <MenuItem
@@ -98,6 +92,12 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                                    title="tours & travel"
                                    icon={<BiJoystickAlt size={iconSize} />}
                               />
+                         </List>
+                    </Box>
+                    <Box mt={spacing(3)}>
+                         <List disablePadding>
+                              <MenuTitle title="Admin connected users" />
+                              <MenuItem path="/manage/users" title="users" icon={<BiUserCheck size={iconSize} />} />
                          </List>
                     </Box>
                     <Box mt={spacing(3)}>

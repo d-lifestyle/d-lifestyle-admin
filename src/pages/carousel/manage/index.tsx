@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { CarouselProps } from "../../../interface";
 import moment from "moment";
 import { AiFillDelete } from "react-icons/ai";
+import { enqueueSnackbar } from "notistack";
 
 const ManageCarousel = () => {
      const carousel = useCarouselSelector();
@@ -52,8 +53,15 @@ const ManageCarousel = () => {
           setPage(0);
      };
      const deleteCarousel = async (id: string) => {
-          await dispatch(DeleteCarouselById(id));
-          await getAllCarousel();
+          const data = await dispatch(DeleteCarouselById(id));
+          if (data.type === "carousel/delete/rejected") {
+               return enqueueSnackbar(data.payload, { variant: "error" });
+          }
+
+          if (data.type === "carousel/delete/fulfilled") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+               await getAllCarousel();
+          }
      };
 
      return (
@@ -90,7 +98,7 @@ const ManageCarousel = () => {
                                    <TableHead sx={{ bgcolor: palette.primary.light }}>
                                         <TableRow>
                                              <TableCell>Sr No.</TableCell>
-                                             <TableCell align="left">Images</TableCell>
+                                             <TableCell align="left">Carousel</TableCell>
                                              <TableCell align="left">Title</TableCell>
                                              <TableCell align="left">Upload On</TableCell>
                                              <TableCell align="left">Actions</TableCell>
@@ -110,10 +118,10 @@ const ManageCarousel = () => {
                                                                  "&:last-child td, &:last-child th": { border: 0 },
                                                             }}
                                                        >
-                                                            <TableCell scope="row" width={50}>
+                                                            <TableCell scope="row" width={100}>
                                                                  {i + 1}
                                                             </TableCell>
-                                                            <TableCell align="left" width={150}>
+                                                            <TableCell align="left" width={200}>
                                                                  <img
                                                                       src={dataImage}
                                                                       width="100%"
@@ -125,14 +133,18 @@ const ManageCarousel = () => {
                                                                  />
                                                             </TableCell>
                                                             <TableCell align="left" width={400}>
-                                                                 <Typography variant="h6" fontWeight="300">
+                                                                 <Typography
+                                                                      variant="h6"
+                                                                      fontWeight="500"
+                                                                      textTransform="capitalize"
+                                                                 >
                                                                       {dataAlt}
                                                                  </Typography>
                                                             </TableCell>
                                                             <TableCell align="left" width={300}>
                                                                  <Typography
                                                                       fontWeight="300"
-                                                                      variant="subtitle1"
+                                                                      variant="body1"
                                                                       textTransform="capitalize"
                                                                  >
                                                                       {moment(createdAt).format("lll")}
@@ -155,19 +167,19 @@ const ManageCarousel = () => {
                                              )}
                                    </TableBody>
                               </Table>
-                              <TablePagination
-                                   rowsPerPageOptions={[5, 10, 25, 50, 75, 100]}
-                                   component="div"
-                                   count={carousel?.data?.length}
-                                   sx={{
-                                        bgcolor: palette.primary.light,
-                                   }}
-                                   rowsPerPage={rowsPerPage}
-                                   page={page}
-                                   onPageChange={handleChangePage}
-                                   onRowsPerPageChange={handleChangeRowsPerPage}
-                              />
                          </TableContainer>
+                         <TablePagination
+                              rowsPerPageOptions={[5, 10, 25, 50, 75, 100]}
+                              component="div"
+                              count={carousel?.data?.length}
+                              sx={{
+                                   bgcolor: palette.primary.light,
+                              }}
+                              rowsPerPage={rowsPerPage}
+                              page={page}
+                              onPageChange={handleChangePage}
+                              onRowsPerPageChange={handleChangeRowsPerPage}
+                         />
                     </Box>
                )}
 
@@ -179,7 +191,12 @@ const ManageCarousel = () => {
                          <Typography mt={2} variant="h5" color={palette.grey[500]}>
                               Start adding from following...
                          </Typography>
-                         <AppButton sx={{ mt: 2 }} onClick={() => navigate("/content/add-new/carousel")}>
+                         <AppButton
+                              sx={{ mt: 2 }}
+                              onClick={() => {
+                                   navigate("/add/carousel", { replace: true });
+                              }}
+                         >
                               create new carousel
                          </AppButton>
                     </Box>

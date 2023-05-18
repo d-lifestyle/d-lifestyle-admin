@@ -7,6 +7,7 @@ import {
      TableBody,
      TableCell,
      TableContainer,
+     TableFooter,
      TableHead,
      TablePagination,
      TableRow,
@@ -24,6 +25,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { DeleteSubCategoryById, GetAllSubCategory } from "../../../features/action";
 import { SubCategoryProps } from "../../../interface/sub-category.interface";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const ManageSubCategory = () => {
      const subcategories = useSubCategorySelector();
@@ -54,8 +56,14 @@ const ManageSubCategory = () => {
      };
 
      const DeleteSubCategory = async (id: string) => {
-          await dispatch(DeleteSubCategoryById(id));
-          await getAllSubCategory();
+          const data = await dispatch(DeleteSubCategoryById(id));
+          if (data.type === "subcategory/delete/fulfilled") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+               await getAllSubCategory();
+          }
+          if (data.type === "subcategory/delete/rejected") {
+               enqueueSnackbar(data.payload, { variant: "error" });
+          }
      };
      return (
           <DefaultLayout pagetitle="Manage Sub Category">
@@ -85,7 +93,7 @@ const ManageSubCategory = () => {
                     </AppButton>
                </Box>
                {subcategories.data.length !== 0 && (
-                    <TableContainer component={Paper} sx={{ mt: 5 }}>
+                    <TableContainer component={Paper} sx={{ mt: 5, width: "100%" }}>
                          <Table sx={{ minWidth: 650 }} aria-label="simple table">
                               <TableHead sx={{ bgcolor: palette.primary.light }}>
                                    <TableRow>
@@ -141,20 +149,20 @@ const ManageSubCategory = () => {
                                         ))}
                               </TableBody>
                          </Table>
-                         <TablePagination
-                              rowsPerPageOptions={[5, 10, 25]}
-                              component="div"
-                              count={subcategories.data.length}
-                              sx={{
-                                   bgcolor: palette.primary.light,
-                              }}
-                              rowsPerPage={rowsPerPage}
-                              page={page}
-                              onPageChange={handleChangePage}
-                              onRowsPerPageChange={handleChangeRowsPerPage}
-                         />
                     </TableContainer>
                )}
+               <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={subcategories.data.length}
+                    sx={{
+                         bgcolor: palette.primary.light,
+                    }}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+               />
                {!subcategories.loading && !subcategories.data.length && (
                     <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                          <Typography mt={3} variant="h6">

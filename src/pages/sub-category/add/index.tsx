@@ -11,6 +11,7 @@ import { AddNewSubCategory, GetAllCategory } from "../../../features/action";
 import { NewSubCategoryProps } from "../../../interface/sub-category.interface";
 import { CategoriesProps } from "../../../interface";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const AddSubCategory = () => {
      const categories = useCategorySelector();
@@ -34,13 +35,20 @@ const AddSubCategory = () => {
           if (!newSubCategory?.name || !newSubCategory?.CategoryId) {
                setError("all field is required");
           } else {
-               await dispatch(
+               const data = await dispatch(
                     AddNewSubCategory({
                          CategoryId: newSubCategory?.CategoryId as string,
                          name: newSubCategory?.name as string,
                     })
                );
-               navigate("/manage/sub-category", { replace: true });
+               console.log(data);
+               if (data.type === "subcategory/new/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    return navigate("/manage/sub-category", { replace: true });
+               }
+               if (data.type === "subcategory/new/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
           }
      };
 

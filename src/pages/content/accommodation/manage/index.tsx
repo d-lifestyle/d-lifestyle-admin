@@ -114,6 +114,8 @@ const ManageAccommodation = () => {
                                                        image,
                                                        SubCategory,
                                                        displayName,
+                                                       city,
+                                                       state,
                                                   }: AccommodationProps,
                                                   i: number
                                              ) => (
@@ -124,7 +126,7 @@ const ManageAccommodation = () => {
                                                        <TableCell component="th" scope="row">
                                                             {i + 1}
                                                        </TableCell>
-                                                       <TableCell align="left" width={400}>
+                                                       <TableCell align="left" width={250}>
                                                             {image?.length && (
                                                                  <img
                                                                       style={{ borderRadius: 10 }}
@@ -138,9 +140,18 @@ const ManageAccommodation = () => {
                                                             <Typography
                                                                  noWrap
                                                                  variant="body1"
+                                                                 fontWeight="600"
                                                                  textTransform="capitalize"
                                                             >
                                                                  {displayName}
+                                                            </Typography>
+                                                            <Typography
+                                                                 noWrap
+                                                                 variant="body2"
+                                                                 color="GrayText"
+                                                                 textTransform="capitalize"
+                                                            >
+                                                                 {city}, {state}
                                                             </Typography>
                                                        </TableCell>
 

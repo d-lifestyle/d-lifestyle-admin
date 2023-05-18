@@ -67,6 +67,7 @@ const CreateToursTravel = () => {
      };
 
      useEffect(() => {
+          console.log(toursPackageSelector.image);
           (async () => {
                await getSubCategory();
           })();
@@ -79,7 +80,7 @@ const CreateToursTravel = () => {
                     description: toursPackage.description,
                     displayName: toursPackage.displayName,
                     duration: toursPackage.duration,
-                    images: toursPackageSelector.images,
+                    image: toursPackageSelector.image,
                     place: toursPackage.place,
                     SubCategory: toursPackage.SubCategory,
                     theme: toursPackage.theme,
@@ -148,7 +149,7 @@ const CreateToursTravel = () => {
                               />
                          </Grid>
                          <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
-                              {toursPackageSelector.images.map(({ title, image }: any, i: number) => (
+                              {toursPackageSelector?.image?.map(({ title, image }: any, i: number) => (
                                    <AppImageView
                                         dispatch={dispatch}
                                         i={i}

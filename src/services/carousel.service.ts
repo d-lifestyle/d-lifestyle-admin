@@ -10,7 +10,14 @@ class CarouselServices {
           return await axios.get(`${process.env.REACT_APP_BACKEND}/carousel/${id}`, { withCredentials: true });
      }
      public async AddCarousel(props: NewCarouselProps) {
-          return await axios.post(`${process.env.REACT_APP_BACKEND}/carousel`, { withCredentials: true });
+          return await axios.post(
+               `${process.env.REACT_APP_BACKEND}/carousel`,
+               {
+                    dataAlt: props.dataAlt,
+                    dataImage: props.dataImage,
+               },
+               { withCredentials: true }
+          );
      }
 
      public async UpdateCarouselById(props: UpdateCarouselProps) {

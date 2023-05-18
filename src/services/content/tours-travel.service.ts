@@ -17,8 +17,9 @@ class ToursTravelServices {
           place,
           theme,
           description,
-          images,
+          image,
      }: NewToursTravelProps) {
+          console.log(image);
           return await axios.post(
                `${process.env.REACT_APP_BACKEND}/tours-travel/`,
                {
@@ -29,7 +30,7 @@ class ToursTravelServices {
                     place,
                     theme,
                     description,
-                    images,
+                    image,
                },
                {
                     withCredentials: true,
@@ -48,7 +49,6 @@ class ToursTravelServices {
                     theme: data.theme,
                     description: data.description,
                     image: data.image,
-                    moreItems: data.moreItems,
                },
                {
                     withCredentials: true,

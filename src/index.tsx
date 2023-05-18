@@ -9,6 +9,9 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/auth.context";
 import { EditorProvider } from "react-simple-wysiwyg";
 import { SnackbarProvider } from "notistack";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 ReactDOM.render(
      <React.StrictMode>

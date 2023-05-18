@@ -1,5 +1,10 @@
 export interface ToursTravelProps {
      displayName: string;
+     image: {
+          image: string;
+          title: string;
+     }[];
+     description: string;
      code: string;
      duration: string;
      place: string;
@@ -8,10 +13,6 @@ export interface ToursTravelProps {
      _id?: string;
      createdAt?: string;
      updatedAt?: string;
-
-     image: string;
-     description: string;
-     moreItems: string;
 }
 
 export interface NewToursTravelProps {
@@ -21,7 +22,7 @@ export interface NewToursTravelProps {
      place: string;
      theme: string;
      SubCategory: any;
-     images: {
+     image: {
           image: string;
           title: string;
      }[];

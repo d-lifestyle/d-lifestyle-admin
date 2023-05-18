@@ -53,7 +53,7 @@ const AddMainCategory = () => {
                          validationSchema={ValidationMainCategory}
                          onSubmit={NewMainCategory}
                     >
-                         {({ handleBlur, handleChange, handleSubmit, errors, values, touched }) => (
+                         {({ handleBlur, handleChange, handleSubmit, errors, values, touched, isSubmitting }) => (
                               <form onSubmit={handleSubmit}>
                                    <Grid container spacing={3}>
                                         <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
@@ -79,7 +79,13 @@ const AddMainCategory = () => {
                                         >
                                              back
                                         </AppButton>
-                                        <AppButton size="large" fullWidth type="button" onClick={() => handleSubmit()}>
+                                        <AppButton
+                                             size="large"
+                                             disabled={isSubmitting}
+                                             fullWidth
+                                             type="button"
+                                             onClick={() => handleSubmit()}
+                                        >
                                              Submit
                                         </AppButton>
                                    </Box>

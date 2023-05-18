@@ -8,6 +8,7 @@ import { useCategorySelector, useMainCategorySelector } from "../../../features/
 import { AddNewCategory, GetAllMainCategory } from "../../../features/action";
 import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const AddCategory = () => {
      const [category, setCategory] = useState<NewCategoryProps>({
@@ -27,8 +28,14 @@ const AddCategory = () => {
      }, [dispatch]);
 
      const handleSubmit = async () => {
-          await dispatch(AddNewCategory(category));
-          navigate("/manage/category", { replace: true });
+          const data = await dispatch(AddNewCategory(category));
+          if (data.type === "menu/new/fulfilled") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+               return navigate("/manage/category", { replace: true });
+          }
+          if (data.type === "menu/new/rejected") {
+               enqueueSnackbar(data.payload, { variant: "error" });
+          }
      };
 
      return (

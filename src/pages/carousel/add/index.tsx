@@ -9,14 +9,24 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
 import { AddNewCarousel } from "../../../features/action";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const AddCarousel = () => {
      const { shadows, palette } = useTheme();
+
      const dispatch = useDispatch<AppDispatch>();
      const navigate = useNavigate();
-     const CreateCarouselData = (e: NewCarouselProps) => {
-          dispatch(AddNewCarousel(e));
-          navigate("/content/manage/carousel", { replace: true });
+
+     const CreateCarouselData = async (e: NewCarouselProps) => {
+          const data = await dispatch(AddNewCarousel(e));
+          if (data.type === "carousel/new/rejected") {
+               enqueueSnackbar(data.payload, { variant: "error" });
+          }
+
+          if (data.type === "carousel/new/fulfilled") {
+               enqueueSnackbar(data.payload, { variant: "success" });
+               navigate("/manage/carousel", { replace: true });
+          }
      };
      return (
           <DefaultLayout pagetitle="Create new banner">
@@ -59,7 +69,7 @@ const AddCarousel = () => {
                               validationSchema={CarouselValidateSchema}
                               onSubmit={CreateCarouselData}
                          >
-                              {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
+                              {({ values, errors, touched, handleBlur, handleChange, handleSubmit, isSubmitting }) => (
                                    <form onSubmit={handleSubmit}>
                                         <Grid container spacing={0}>
                                              <Grid item xs={12} sm={12}>
@@ -88,7 +98,9 @@ const AddCarousel = () => {
                                              </Grid>
                                         </Grid>
                                         <Box mt={2} display="flex" flexDirection="row" justifyContent="end">
-                                             <AppButton type="submit">Create carousel</AppButton>
+                                             <AppButton disabled={isSubmitting} type="submit">
+                                                  Create carousel
+                                             </AppButton>
                                         </Box>
                                    </form>
                               )}

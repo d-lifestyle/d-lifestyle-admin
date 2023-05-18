@@ -84,7 +84,15 @@ const Login = () => {
                                         validationSchema={LoginValidationSchema}
                                         onSubmit={LoginToAccount}
                                    >
-                                        {({ handleBlur, handleChange, errors, handleSubmit, values, touched }) => (
+                                        {({
+                                             handleBlur,
+                                             handleChange,
+                                             errors,
+                                             handleSubmit,
+                                             values,
+                                             touched,
+                                             isSubmitting,
+                                        }) => (
                                              <form onSubmit={handleSubmit}>
                                                   <AppInput
                                                        sx={{
@@ -117,7 +125,13 @@ const Login = () => {
                                                        error={!values.password && touched.password}
                                                        helperText={touched.password && errors.password}
                                                   />
-                                                  <AppButton sx={{ mt: 3 }} fullWidth size="large" type="submit">
+                                                  <AppButton
+                                                       disabled={isSubmitting}
+                                                       sx={{ mt: 3 }}
+                                                       fullWidth
+                                                       size="large"
+                                                       type="submit"
+                                                  >
                                                        Login
                                                   </AppButton>
                                              </form>
