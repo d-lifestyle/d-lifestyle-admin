@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NewCategoryProps, UpdateCategoryProps } from "../interface";
 import { AxiosOptions } from "../utils";
+axios.defaults.withCredentials = true;
 
 class CategoryServices {
      public async GetCategory() {

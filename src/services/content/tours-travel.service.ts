@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NewToursTravelProps, UpdateToursTravelProps } from "../../interface";
+axios.defaults.withCredentials = true;
 
 class ToursTravelServices {
      public async GetToursTravel() {

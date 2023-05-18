@@ -1,6 +1,7 @@
 import axios from "axios";
 import { LoginProps, UpdateProfileProps } from "../interface";
 import { AxiosOptions } from "../utils";
+axios.defaults.withCredentials = true;
 
 class AuthServices {
      public async Login({ email, password }: LoginProps) {

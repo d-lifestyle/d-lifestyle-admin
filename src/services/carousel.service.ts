@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NewCarouselProps, UpdateCarouselProps } from "../interface";
 import { AxiosOptions } from "../utils";
+axios.defaults.withCredentials = true;
 
 class CarouselServices {
      public async GetCarousel() {

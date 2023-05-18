@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AccommodationProps, UpdateAccommodationProps } from "../../interface";
+axios.defaults.withCredentials = true;
 
 class AccommodationServices {
      public async GetAccommodation() {
