@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NewCategoryProps, NewMainCategoryProps, UpdateCategoryProps, UpdateMainCategoryProps } from "../interface";
-import { AxiosInstance, AxiosOptions } from "../utils";
+import { AxiosInstance } from "../utils";
 axios.defaults.withCredentials = true;
 
 class MainCategoryServices {

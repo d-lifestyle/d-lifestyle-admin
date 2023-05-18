@@ -26,10 +26,6 @@ export const logOutUser = async (props: any) => {
      }
 };
 
-export const AxiosOptions = {
-     withCredentials: true,
-};
-
 export const AxiosInstance = axios.create({
      withCredentials: true,
      baseURL: process.env.REACT_APP_BACKEND,

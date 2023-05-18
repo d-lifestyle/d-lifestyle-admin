@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AxiosInstance, AxiosOptions } from "../utils";
+import { AxiosInstance } from "../utils";
 
 axios.defaults.withCredentials = true;
 

@@ -31,14 +31,16 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
      const user = getUser();
      useEffect(() => {
           (async () => {
-               await dispatch(GetAdminUsers());
-               await dispatch(GetAllCarousel());
-               await dispatch(GetAllMainCategory());
-               await dispatch(GetAllSubCategory());
-               await dispatch(GetAllCategory());
-               await dispatch(GetAllAccommodation());
-               await dispatch(GetAllToursTravel());
-               await dispatch(GetUserProfile());
+               if (user) {
+                    await dispatch(GetAdminUsers());
+                    await dispatch(GetAllCarousel());
+                    await dispatch(GetAllMainCategory());
+                    await dispatch(GetAllSubCategory());
+                    await dispatch(GetAllCategory());
+                    await dispatch(GetAllAccommodation());
+                    await dispatch(GetAllToursTravel());
+                    await dispatch(GetUserProfile());
+               }
           })();
      }, [dispatch]);
 
