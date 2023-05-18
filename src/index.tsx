@@ -12,6 +12,11 @@ import { SnackbarProvider } from "notistack";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
+axios.interceptors.request.use(function (config: any) {
+     const token = localStorage.getItem("token");
+     config.headers.Authorization = token;
+     return config;
+});
 
 ReactDOM.render(
      <React.StrictMode>

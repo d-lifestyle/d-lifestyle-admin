@@ -133,7 +133,7 @@ const Login = () => {
                                                        size="large"
                                                        type="submit"
                                                   >
-                                                       Login
+                                                       {!isSubmitting ? "Login" : "please wait"}
                                                   </AppButton>
                                              </form>
                                         )}
