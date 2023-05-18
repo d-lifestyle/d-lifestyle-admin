@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NewCategoryProps, NewMainCategoryProps, UpdateCategoryProps, UpdateMainCategoryProps } from "../interface";
+import { AxiosOptions } from "../utils";
 
 class MainCategoryServices {
      public async GetMainCategory() {
@@ -15,32 +16,21 @@ class MainCategoryServices {
                {
                     displayName,
                },
-               {
-                    withCredentials: true,
-               }
+               AxiosOptions
           );
      }
      public async UpdateMainCategoryById({ data, id }: UpdateMainCategoryProps) {
           return await axios.put(
                `${process.env.REACT_APP_BACKEND}/main-categories/${id}`,
+
                {
                     displayName: data.displayName,
                },
-               {
-                    withCredentials: true,
-                    headers: {
-                         "Access-Control-Allow-Credentials": true,
-                    },
-               }
+               AxiosOptions
           );
      }
      public async DeleteMainCategoryById(data: string) {
-          return await axios.delete(`${process.env.REACT_APP_BACKEND}/main-categories/${data}`, {
-               withCredentials: true,
-               headers: {
-                    "Access-Control-Allow-Credentials": true,
-               },
-          });
+          return await axios.delete(`${process.env.REACT_APP_BACKEND}/main-categories/${data}`, AxiosOptions);
      }
 }
 

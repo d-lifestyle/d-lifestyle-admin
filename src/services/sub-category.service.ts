@@ -1,23 +1,14 @@
 import axios from "axios";
 import { NewSubCategoryProps, UpdateSubCategoryProps } from "../interface";
+import { AxiosOptions } from "../utils";
 
 class SubCategoryService {
      public async GetSubCategory() {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category`, {
-               withCredentials: true,
-               headers: {
-                    "Access-Control-Allow-Credentials": true,
-               },
-          });
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category`, AxiosOptions);
      }
 
      public async GetSubCategoryById(id: string) {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category/${id}`, {
-               withCredentials: true,
-               headers: {
-                    "Access-Control-Allow-Credentials": true,
-               },
-          });
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category/${id}`, AxiosOptions);
      }
 
      public async AddSubCategory({ CategoryId, name }: NewSubCategoryProps) {
@@ -27,12 +18,7 @@ class SubCategoryService {
                     CategoryId,
                     name,
                },
-               {
-                    withCredentials: true,
-                    headers: {
-                         "Access-Control-Allow-Credentials": true,
-                    },
-               }
+               AxiosOptions
           );
      }
 
@@ -43,30 +29,15 @@ class SubCategoryService {
                     CategoryId: data.CategoryId,
                     name: data.name,
                },
-               {
-                    withCredentials: true,
-                    headers: {
-                         "Access-Control-Allow-Credentials": true,
-                    },
-               }
+               AxiosOptions
           );
      }
      public async DeleteSubCategoryById(id: string) {
-          return await axios.delete(`${process.env.REACT_APP_BACKEND}/sub-category/${id}`, {
-               withCredentials: true,
-               headers: {
-                    "Access-Control-Allow-Credentials": true,
-               },
-          });
+          return await axios.delete(`${process.env.REACT_APP_BACKEND}/sub-category/${id}`, AxiosOptions);
      }
 
      public async GetSubCategoryWithCategoryId(id: string) {
-          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category/category/${id}`, {
-               withCredentials: true,
-               headers: {
-                    "Access-Control-Allow-Credentials": true,
-               },
-          });
+          return await axios.get(`${process.env.REACT_APP_BACKEND}/sub-category/category/${id}`, AxiosOptions);
      }
 }
 

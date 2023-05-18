@@ -19,7 +19,7 @@ export const RequireAuth = () => {
                } else {
                     setAuthorization(true);
                     await dispatch(GetUserProfile());
-                    setUser(JSON.parse(localStore as any));
+                    setUser(localStore as string);
                }
           })();
      }, [localStore, dispatch, setAuthorization, setUser]);

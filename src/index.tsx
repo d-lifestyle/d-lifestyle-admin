@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { Store } from "./features";
 import { BrowserRouter } from "react-router-dom";
@@ -12,33 +11,7 @@ import { SnackbarProvider } from "notistack";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-// For GET requests
-axios.interceptors.request.use(
-     (req) => {
-          // Add configurations here
-          return req;
-     },
-     (err) => {
-          return Promise.reject(err);
-     }
-);
 
-// For POST requests
-axios.interceptors.response.use(
-     (res) => {
-          res.headers = {
-               "set-cookie": [localStorage.getItem("token") as string] as any,
-          };
-          // Add configurations here
-          if (res.status === 201) {
-               console.log("Posted Successfully");
-          }
-          return res;
-     },
-     (err) => {
-          return Promise.reject(err);
-     }
-);
 ReactDOM.render(
      <React.StrictMode>
           <Provider store={Store}>

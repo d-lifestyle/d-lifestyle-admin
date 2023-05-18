@@ -3,7 +3,7 @@ import AuthService from "../services/auth.service";
 export const getUser = () => {
      const data = localStorage.getItem("token");
      if (data) {
-          return JSON.parse(data as string);
+          return data;
      }
      return null;
 };
@@ -23,4 +23,8 @@ export const logOutUser = async (props: any) => {
                return err.message;
           }
      }
+};
+
+export const AxiosOptions = {
+     withCredentials: true,
 };
