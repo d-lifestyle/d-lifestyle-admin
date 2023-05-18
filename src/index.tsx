@@ -12,12 +12,33 @@ import { SnackbarProvider } from "notistack";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-axios.interceptors.request.use(function (config: any) {
-     const token = localStorage.getItem("token");
-     config.headers.Authorization = token;
-     return config;
-});
+// For GET requests
+axios.interceptors.request.use(
+     (req) => {
+          // Add configurations here
+          return req;
+     },
+     (err) => {
+          return Promise.reject(err);
+     }
+);
 
+// For POST requests
+axios.interceptors.response.use(
+     (res) => {
+          res.headers = {
+               "set-cookie": [localStorage.getItem("token") as string] as any,
+          };
+          // Add configurations here
+          if (res.status === 201) {
+               console.log("Posted Successfully");
+          }
+          return res;
+     },
+     (err) => {
+          return Promise.reject(err);
+     }
+);
 ReactDOM.render(
      <React.StrictMode>
           <Provider store={Store}>
