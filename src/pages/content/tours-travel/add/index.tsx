@@ -67,7 +67,6 @@ const CreateToursTravel = () => {
      };
 
      useEffect(() => {
-          console.log(toursPackageSelector.image);
           (async () => {
                await getSubCategory();
           })();
@@ -154,6 +153,7 @@ const CreateToursTravel = () => {
                                         dispatch={dispatch}
                                         i={i}
                                         image={image}
+                                        key={i}
                                         removeImage={removeToursPackageImage}
                                         title={title}
                                    />

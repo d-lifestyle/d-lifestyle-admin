@@ -5,10 +5,10 @@ axios.defaults.withCredentials = true;
 
 class AdminServices {
      public async GetAllUsers() {
-          return AxiosInstance.get(`${process.env.REACT_APP_BACKEND}/my-user`);
+          return await AxiosInstance.get(`${process.env.REACT_APP_BACKEND}/my-user`);
      }
      public async DeleteUserAdmin(id: string) {
-          return AxiosInstance.delete(`${process.env.REACT_APP_BACKEND}/my-user/${id}`);
+          return await AxiosInstance.delete(`${process.env.REACT_APP_BACKEND}/my-user/${id}`);
      }
 }
 

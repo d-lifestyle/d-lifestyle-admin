@@ -21,7 +21,6 @@ class ToursTravelServices {
           description,
           image,
      }: NewToursTravelProps) {
-          console.log(image);
           return await AxiosInstance.post(`${process.env.REACT_APP_BACKEND}/tours-travel/`, {
                SubCategory,
                code,

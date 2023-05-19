@@ -21,11 +21,11 @@ const Login = () => {
      const LoginToAccount = async (e: LoginProps) => {
           try {
                const data = await AuthService.Login({ email: e.email, password: e.password });
-               localStorage.setItem("token", JSON.stringify(data.data.data.token));
-               setUser(JSON.stringify(data.data.data.token));
+               localStorage.setItem("token", JSON.stringify(await data.data.data.token));
+               setUser(JSON.stringify(await data.data.data.token));
                setAuthorization(true);
-               if (data.data.success) {
-                    enqueueSnackbar(data.data.data, { variant: "success" });
+               if (await data.data.success) {
+                    enqueueSnackbar(await data.data.data, { variant: "success" });
                     navigate("/", { replace: true });
                } else {
                     navigate("/login", { replace: true });

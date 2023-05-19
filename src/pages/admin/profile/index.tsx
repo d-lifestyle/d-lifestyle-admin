@@ -30,9 +30,7 @@ import { enqueueSnackbar } from "notistack";
 const AdminProfile = () => {
      const dispatch = useDispatch<AppDispatch>();
      const user = useUserSelector();
-     const local = JSON.parse(localStorage.getItem("token") as any);
      const theme = useTheme();
-
      useEffect(() => {
           (async () => {
                const data = await dispatch(GetUserProfile());

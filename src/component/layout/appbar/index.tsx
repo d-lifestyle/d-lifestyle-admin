@@ -28,7 +28,7 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
      const LogOutUser = async () => {
           handleClose();
           const data = await logOutUser(dispatch);
-          if (data.success) {
+          if (await data.success) {
                navigate("/", { replace: true });
           }
      };

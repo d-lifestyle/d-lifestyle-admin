@@ -138,6 +138,7 @@ const CreateAccommodation = () => {
                               <Grid container spacing={2}>
                                    {accommodationSelect.images.map(({ image, title }: any, i: number) => (
                                         <AppImageView
+                                             key={i}
                                              image={image}
                                              title={title}
                                              dispatch={dispatch}

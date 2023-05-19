@@ -41,7 +41,6 @@ const AddSubCategory = () => {
                          name: newSubCategory?.name as string,
                     })
                );
-               console.log(data);
                if (data.type === "subcategory/new/fulfilled") {
                     enqueueSnackbar(data.payload, { variant: "success" });
                     return navigate("/manage/sub-category", { replace: true });
@@ -118,7 +117,7 @@ const AddSubCategory = () => {
                                              <em>None</em>
                                         </MenuItem>
                                         {categories.data.map(({ _id, name }: CategoriesProps) => (
-                                             <MenuItem value={_id}>
+                                             <MenuItem value={_id} key={_id}>
                                                   <Typography textTransform="capitalize">{name}</Typography>
                                              </MenuItem>
                                         ))}

@@ -6,7 +6,7 @@ import { useAdminSelector } from "../../../features/slice";
 import { UserDataProps } from "../../../interface";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
-import { DeleteUser } from "../../../features/action";
+import { DeleteUser, GetAdminUsers } from "../../../features/action";
 
 const AdminUser = () => {
      const users = useAdminSelector();
@@ -14,7 +14,9 @@ const AdminUser = () => {
      const { shadows } = useTheme();
 
      const DeleteAdminUser = async (id: string) => {
-          await dispatch(DeleteUser(id));
+          const data = await dispatch(DeleteUser(id));
+          await dispatch(GetAdminUsers());
+          console.log(data);
      };
      return (
           <DefaultLayout pagetitle="Manage your users">
@@ -41,7 +43,7 @@ const AdminUser = () => {
                <Grid container spacing={3} mt={3}>
                     {users.data.map(
                          ({ firstName, lastName, email, isAdmin, createdAt, contactInfo, _id }: UserDataProps) => (
-                              <Grid item xs={12} sm={12} md={6} xl={3} lg={3}>
+                              <Grid item xs={12} sm={12} md={6} xl={3} lg={3} key={_id}>
                                    <Box boxShadow={shadows[20]} borderRadius={1} p={3}>
                                         <Typography variant="h6">
                                              {lastName} {firstName}
