@@ -20,6 +20,7 @@ const iconSize: number = 22;
 
 export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCollapsible, user }) => {
      const { spacing } = useTheme();
+
      return (
           <Fragment>
                <Box px={spacing(2)} pb={spacing(5)}>
@@ -35,8 +36,8 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                     <Link to="/admin/profile" style={{ textDecoration: "none", color: "inherit" }}>
                          <ProfileCard
                               image="https://res.cloudinary.com/minimal-ui/image/upload/v1614655910/upload_minimal/avatar/minimal_avatar.jpg"
-                              adminemail={user?.user?.email}
-                              adminname={`${user?.user?.lname} ${user?.user?.fname}`}
+                              adminemail={user?.data?.email}
+                              adminname={`${user?.data?.firstName} ${user?.data?.lastName}`}
                          />
                     </Link>
                     <Box mt={spacing(3)}>

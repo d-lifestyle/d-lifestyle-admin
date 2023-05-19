@@ -28,7 +28,6 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
      const LogOutUser = async () => {
           handleClose();
           const data = await logOutUser(dispatch);
-
           if (data.success) {
                navigate("/", { replace: true });
           }
@@ -115,10 +114,10 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
                          >
                               <Box px={3} py={2}>
                                    <Typography color="GrayText" textTransform="capitalize" variant="subtitle1">
-                                        {user?.user?.lname} {user?.user?.fname}
+                                        {user?.data?.firstName} {user?.data?.lastName}
                                    </Typography>
                                    <Typography variant="subtitle2" color="grey">
-                                        {user?.user?.email}
+                                        {user?.data?.email}
                                    </Typography>
                               </Box>
                          </Link>
@@ -128,14 +127,18 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
                                    <Typography color="GrayText">Home</Typography>
                               </MenuItem>
                          </Link>
-                         <Link to="/admin/profile" style={{ textDecoration: "none" }}>
-                              <MenuItem onClick={handleClose}>
-                                   <Typography color="GrayText">Profile</Typography>
-                              </MenuItem>
-                         </Link>
-                         <MenuItem onClick={handleClose}>
-                              <Typography color="GrayText">My Account</Typography>
+                         {/* <Link to="/admin/profile" style={{ textDecoration: "none" }}> */}
+
+                         <MenuItem
+                              onClick={() => {
+                                   navigate("/admin/profile");
+                                   handleClose();
+                              }}
+                         >
+                              <Typography color="GrayText">Profile</Typography>
                          </MenuItem>
+                         {/* </Link> */}
+
                          <Divider />
                          <MenuItem onClick={LogOutUser}>
                               <Typography color="GrayText">Logout</Typography>

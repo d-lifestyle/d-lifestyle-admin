@@ -16,6 +16,7 @@ import {
      GetUserProfile,
 } from "../../features/action";
 import { getUser } from "../../utils";
+import { useUserSelector } from "../../features/slice";
 
 interface LayoutProps {
      pagetitle: string;
@@ -28,7 +29,7 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
      const [mobileOpen, setMobileOpen] = useState<boolean>(false);
      const [collapsible, setCollapsible] = useState<boolean>(false);
      const dispatch = useDispatch<AppDispatch>();
-     const user = getUser();
+     const user = useUserSelector();
      useEffect(() => {
           (async () => {
                await dispatch(GetAdminUsers());

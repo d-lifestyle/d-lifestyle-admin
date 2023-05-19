@@ -36,9 +36,7 @@ const AdminProfile = () => {
      useEffect(() => {
           (async () => {
                const data = await dispatch(GetUserProfile());
-               if (data.type === "user/profile/fulfilled") {
-                    enqueueSnackbar(`Welcome ${user.data.firstName} ${user.data.lastName}`, { variant: "success" });
-               } else if (data.type === "user/profile/rejected") {
+               if (data.type === "user/profile/rejected") {
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           })();
@@ -48,10 +46,11 @@ const AdminProfile = () => {
           const data = await dispatch(
                UpdateAdminProfile({
                     data: e,
-                    id: local.user.id,
+                    id: user.data._id,
                })
           );
           if (data.type === "user/update/fulfilled") {
+               dispatch(GetUserProfile());
                enqueueSnackbar(data.payload, { variant: "success" });
           } else if (data.type === "user/update/rejected") {
                enqueueSnackbar(data.payload, { variant: "error" });

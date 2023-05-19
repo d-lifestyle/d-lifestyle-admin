@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DeleteUser, GetAdminUsers } from "../action";
 import { useSelector } from "react-redux";
+import { RootState } from "..";
 
 interface InitialUserProps {
      loading: boolean;
@@ -47,6 +48,6 @@ const AdminSlice = createSlice({
 
 export const AdminReducer = AdminSlice.reducer;
 export const useAdminSelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.admin;
      });

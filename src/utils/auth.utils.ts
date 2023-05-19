@@ -32,6 +32,6 @@ export const AxiosInstance = axios.create({
      baseURL: process.env.REACT_APP_BACKEND,
      headers: {
           "Access-Control-Allow-Origin": "*",
-          Authorization: data && data,
+          "Content-Type": "application/json",
      },
 });
