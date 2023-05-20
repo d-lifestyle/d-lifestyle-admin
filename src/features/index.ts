@@ -9,6 +9,7 @@ import {
      AuthReducer,
      UserReducer,
      AdminReducer,
+     GeneralReducer,
 } from "./slice";
 
 const rootReducer = combineReducers({
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
      auth: AuthReducer,
      user: UserReducer,
      admin: AdminReducer,
+     general: GeneralReducer,
 });
 
 const Store = configureStore({

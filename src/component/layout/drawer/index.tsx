@@ -5,7 +5,7 @@ import { useTheme, Box, List } from "@mui/material";
 import { MenuItem, MenuTitle } from "../";
 import { ProfileCard } from "../profile-card";
 import { Link } from "react-router-dom";
-import { AiOutlineDatabase, AiOutlineHome } from "react-icons/ai";
+import { AiOutlineDatabase, AiOutlineForm, AiOutlinePieChart, AiOutlineUserAdd } from "react-icons/ai";
 import { BsCardChecklist, BsWebcam } from "react-icons/bs";
 import { MdOutlineCategory, MdTravelExplore } from "react-icons/md";
 import { BiCarousel, BiCategoryAlt, BiJoystickAlt, BiUserCheck } from "react-icons/bi";
@@ -23,19 +23,10 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
 
      return (
           <Fragment>
-               <Box px={spacing(2)} pb={spacing(5)}>
-                    <img
-                         style={{
-                              paddingTop: spacing(2),
-                              paddingBottom: spacing(2),
-                         }}
-                         src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c747a562972803.5aa1729d2eaab.jpg"
-                         width={50}
-                         alt=""
-                    />
+               <Box px={spacing(2)} pb={spacing(5)} pt={spacing(5)}>
                     <Link to="/admin/profile" style={{ textDecoration: "none", color: "inherit" }}>
                          <ProfileCard
-                              image="https://res.cloudinary.com/minimal-ui/image/upload/v1614655910/upload_minimal/avatar/minimal_avatar.jpg"
+                              image={user.data.aboutInfo.logo}
                               adminemail={user?.data?.email}
                               adminname={`${user?.data?.firstName} ${user?.data?.lastName}`}
                          />
@@ -43,7 +34,17 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                     <Box mt={spacing(3)}>
                          <MenuTitle title="general" />
                          <List disablePadding>
-                              <MenuItem path="/" title="homepage" icon={<AiOutlineHome size={iconSize} />} />
+                              <MenuItem path="/" title="dashboard" icon={<AiOutlinePieChart size={iconSize} />} />
+                              <MenuItem
+                                   path="/general/contact"
+                                   title="customers"
+                                   icon={<AiOutlineUserAdd size={iconSize} />}
+                              />
+                              <MenuItem
+                                   path="/general/enquiry"
+                                   title="Enquiry"
+                                   icon={<AiOutlineForm size={iconSize} />}
+                              />
                          </List>
                     </Box>
                     <Box mt={spacing(3)}>
@@ -77,6 +78,17 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                                    path="/manage/sub-category"
                                    title="sub category"
                                    icon={<BiCategoryAlt size={iconSize} />}
+                              />
+                         </List>
+                    </Box>
+                    <Box mt={spacing(3)}>
+                         <MenuTitle title="blog" />
+                         <List disablePadding>
+                              <MenuItem path="/manage/blog" title="Blogs" icon={<MdTravelExplore size={iconSize} />} />
+                              <MenuItem
+                                   path="/add/blog"
+                                   title="Write new blog"
+                                   icon={<BiJoystickAlt size={iconSize} />}
                               />
                          </List>
                     </Box>

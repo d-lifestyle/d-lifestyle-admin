@@ -19,6 +19,7 @@ const GetAllCarousel = createAsyncThunk("carousel/all", async (state, { rejectWi
 const GetCarouselById = createAsyncThunk("carousel/by-id", async (props: string, { rejectWithValue }) => {
      try {
           const data = await carouselService.GetCarouselById(props);
+          console.log(data.data.data);
           return await data.data.data;
      } catch (err: any) {
           if (err.response) {

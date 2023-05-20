@@ -25,7 +25,7 @@ const Login = () => {
                setUser(JSON.stringify(await data.data.data.token));
                setAuthorization(true);
                if (await data.data.success) {
-                    enqueueSnackbar(await data.data.data, { variant: "success" });
+                    enqueueSnackbar(await data.data.data.message, { variant: "success" });
                     navigate("/", { replace: true });
                } else {
                     navigate("/login", { replace: true });

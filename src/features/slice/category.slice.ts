@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AddNewCategory, GetAllCategory, GetCategoryById } from "../action";
 import { CategoriesProps } from "../../interface";
 import { useSelector } from "react-redux";
+import { RootState } from "..";
 
 interface InitialMenuProps {
      loading: boolean;
@@ -16,51 +17,46 @@ const InitialMenuState: InitialMenuProps = {
      data: [],
      error: "",
      success: "",
+     single: {} as CategoriesProps,
 };
 
 const CategorySlice = createSlice({
      name: "category",
      initialState: InitialMenuState,
-     reducers: {},
-     extraReducers: {
-          [GetAllCategory.fulfilled.type]: (state, action) => {
-               state.data = action.payload;
-               state.loading = false;
+     reducers: {
+          clearSingleCategory: (state) => {
+               state.single = {} as CategoriesProps;
           },
-          [GetAllCategory.pending.type]: (state) => {
-               state.loading = true;
-          },
-          [GetAllCategory.rejected.type]: (state, action) => {
-               state.error = action.payload as string;
-          },
-          [GetCategoryById.fulfilled.type]: (state, action) => {
-               state.single = action.payload;
-               state.loading = true;
-          },
-          [GetCategoryById.pending.type]: (state) => {
-               state.loading = true;
-          },
-          [GetCategoryById.rejected.type]: (state, action) => {
-               state.error = action.payload as string;
-          },
-          [AddNewCategory.fulfilled.type]: (state, action) => {
-               state.success = action.payload;
-               state.loading = false;
-               state.error = "";
-          },
-          [AddNewCategory.pending.type]: (state) => {
-               state.loading = true;
-          },
-          [AddNewCategory.rejected.type]: (state, action) => {
-               state.error = action.payload;
-               state.loading = false;
-          },
+     },
+     extraReducers: (builder) => {
+          builder
+               .addCase(GetAllCategory.fulfilled, (state, action) => {
+                    state.data = action.payload;
+                    state.loading = false;
+               })
+               .addCase(GetAllCategory.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetAllCategory.rejected, (state, action) => {
+                    state.error = action.payload as string;
+               });
+          builder
+               .addCase(GetCategoryById.fulfilled, (state, action) => {
+                    state.single = {} as CategoriesProps;
+                    state.single = action.payload;
+               })
+               .addCase(GetCategoryById.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetCategoryById.rejected, (state, action) => {
+                    state.error = action.payload as string;
+               });
      },
 });
 
 export const CategoryReducer = CategorySlice.reducer;
-// export const {} = MenuSlice.actions
+export const { clearSingleCategory } = CategorySlice.actions;
 export const useCategorySelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.category;
      });

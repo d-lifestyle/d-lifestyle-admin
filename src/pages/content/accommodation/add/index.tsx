@@ -320,7 +320,7 @@ const CreateAccommodation = () => {
                     </Grid>
                     <Box display="flex" flexDirection="row" gap={3} mt={3}>
                          <AppButton fullWidth variant="text" color="error" type="button" onClick={() => navigate(-1)}>
-                              back
+                              cancel
                          </AppButton>
                          <AppButton size="large" fullWidth type="button" onClick={handleSubmit}>
                               Submit

@@ -139,7 +139,6 @@ const ManageToursTravel = () => {
                                                        </TableCell>
                                                        <TableCell align="left">
                                                             <Box display="flex" flexDirection="row" gap={3}>
-                                                                 <AppButton startIcon={<AiFillEdit />}>edit</AppButton>
                                                                  <AppButton
                                                                       onClick={() => DeleteAccommodation(_id as string)}
                                                                       startIcon={<AiFillDelete />}

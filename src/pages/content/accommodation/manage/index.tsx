@@ -87,7 +87,7 @@ const ManageAccommodation = () => {
 
                <Box mt={3} display="flex" flexDirection="row" gap={3} alignItems="center" justifyContent="end">
                     <AppButton onClick={() => navigate("/add/accommodation", { replace: true })}>
-                         Create new accommodation
+                         Upload new hotels / resorts
                     </AppButton>
                </Box>
                {accommodation.data.length !== 0 && (
@@ -139,7 +139,7 @@ const ManageAccommodation = () => {
                                                        <TableCell align="left" width={250}>
                                                             <Typography
                                                                  noWrap
-                                                                 variant="body1"
+                                                                 variant="h5"
                                                                  fontWeight="600"
                                                                  textTransform="capitalize"
                                                             >
@@ -177,9 +177,6 @@ const ManageAccommodation = () => {
                                                        </TableCell>
                                                        <TableCell align="left">
                                                             <Box display="flex" flexDirection="row" gap={3}>
-                                                                 <IconButton color="success">
-                                                                      <AiFillEdit />
-                                                                 </IconButton>
                                                                  <IconButton
                                                                       onClick={() => DeleteAccommodation(_id as string)}
                                                                       color="error"

@@ -3,9 +3,10 @@ import { DefaultLayout } from "../../../layout";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
 import { useMainCategorySelector } from "../../../features/slice";
-import { DeleteMainCategoryById, GetAllMainCategory } from "../../../features/action";
+import { DeleteMainCategoryById, GetAllMainCategory, GetMainCategoryWithId } from "../../../features/action";
 import {
      Box,
+     IconButton,
      Paper,
      Table,
      TableBody,
@@ -18,9 +19,9 @@ import {
      useTheme,
 } from "@mui/material";
 import { AppButton, AppTitleBar } from "../../../component";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiOutlineEdit } from "react-icons/ai";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { MainCategoryProps } from "../../../interface";
 
 const ManageMainCategory = () => {
@@ -116,7 +117,13 @@ const ManageMainCategory = () => {
                                                   </TableCell>
                                                   <TableCell align="left">
                                                        <Box display="flex" flexDirection="row" gap={3}>
-                                                            <AppButton startIcon={<AiFillEdit />}>edit</AppButton>
+                                                            <IconButton
+                                                                 onClick={() =>
+                                                                      navigate(`/update/main-category/${_id}`)
+                                                                 }
+                                                            >
+                                                                 <AiOutlineEdit />
+                                                            </IconButton>
                                                             <AppButton
                                                                  onClick={() => DeleteMainCategory(_id as string)}
                                                                  startIcon={<AiFillDelete />}

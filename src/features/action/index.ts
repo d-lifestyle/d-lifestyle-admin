@@ -6,3 +6,4 @@ export * from "./main-category.action";
 
 // auth
 export * from "./auth";
+export * from "./general.action";

@@ -3,12 +3,13 @@ import { SubCategoryProps } from "../../interface/sub-category.interface";
 import { GetAllMainCategory, GetMainCategoryWithId } from "../action";
 import { useSelector } from "react-redux";
 import { MainCategoryProps } from "../../interface";
+import { RootState } from "..";
 
 interface InitialMainCategoryProps {
      loading: boolean;
      data: MainCategoryProps[];
      error?: string;
-     single?: SubCategoryProps;
+     single?: MainCategoryProps;
      success?: string;
      categoryData?: SubCategoryProps[];
 }
@@ -52,6 +53,6 @@ const MainCategorySlice = createSlice({
 export const MainCategoryReducer = MainCategorySlice.reducer;
 // export const { } = SubCategorySlice.actions
 export const useMainCategorySelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.mainCategory;
      });

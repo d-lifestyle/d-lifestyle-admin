@@ -9,7 +9,7 @@ export const getUser = () => {
      return null;
 };
 
-export const logOutUser = async (props: any) => {
+export const logOutUser = async () => {
      try {
           localStorage.removeItem("token");
           const data = await AuthService.Logout();

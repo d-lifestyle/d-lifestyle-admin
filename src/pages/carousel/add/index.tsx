@@ -1,37 +1,63 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DefaultLayout } from "../../../layout";
 import { AppButton, AppInput, AppTitleBar } from "../../../component";
-import { Box, Grid, useTheme } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { Formik } from "formik";
 import { CarouselInitial, CarouselValidateSchema } from "../../../validation";
 import { NewCarouselProps } from "../../../interface";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
-import { AddNewCarousel } from "../../../features/action";
-import { useNavigate } from "react-router-dom";
+import { AddNewCarousel, GetCarouselById, GetCategoryById, UpdateCarouselById } from "../../../features/action";
+import { useNavigate, useParams } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
+import { useCarouselSelector } from "../../../features/slice";
 
 const AddCarousel = () => {
-     const { shadows, palette } = useTheme();
+     const { shadows, palette, breakpoints } = useTheme();
+     const params = useParams();
 
      const dispatch = useDispatch<AppDispatch>();
      const navigate = useNavigate();
+     const carousel = useCarouselSelector();
 
      const CreateCarouselData = async (e: NewCarouselProps) => {
-          const data = await dispatch(AddNewCarousel(e));
-          if (data.type === "carousel/new/rejected") {
-               enqueueSnackbar(data.payload, { variant: "error" });
-          }
+          if (params.id) {
+               const data = await dispatch(
+                    UpdateCarouselById({
+                         data: e,
+                         id: params.id,
+                    })
+               );
+               if (data.type === "carousel/update/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
+               if (data.type === "carousel/update/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    navigate("/manage/carousel", { replace: true });
+               }
+          } else {
+               const data = await dispatch(AddNewCarousel(e));
+               if (data.type === "carousel/new/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
 
-          if (data.type === "carousel/new/fulfilled") {
-               enqueueSnackbar(data.payload, { variant: "success" });
-               navigate("/manage/carousel", { replace: true });
+               if (data.type === "carousel/new/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    navigate("/manage/carousel", { replace: true });
+               }
           }
      };
+     useEffect(() => {
+          (async () => {
+               if (params.id) {
+                    await dispatch(GetCarouselById(params.id));
+               }
+          })();
+     }, []);
      return (
           <DefaultLayout pagetitle="Create new banner">
                <AppTitleBar
-                    title="create carousels for website"
+                    title={`${params.id ? "update" : "create"} carousels for website`}
                     breadcrubms={[
                          {
                               pagepath: "home",
@@ -57,7 +83,7 @@ const AddCarousel = () => {
                />
                <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
                     <Box
-                         width="60%"
+                         width={breakpoints.values.md ? "100%" : "70%"}
                          mt={5}
                          boxShadow={shadows[15]}
                          borderRadius={1}
@@ -65,13 +91,26 @@ const AddCarousel = () => {
                          border={`2px solid ${palette.grey[400]}`}
                     >
                          <Formik
-                              initialValues={CarouselInitial}
+                              enableReinitialize
+                              initialValues={{
+                                   dataAlt: carousel.single ? carousel.single.dataAlt : "",
+                                   dataImage: carousel.single ? carousel.single.dataImage : "",
+                              }}
                               validationSchema={CarouselValidateSchema}
                               onSubmit={CreateCarouselData}
                          >
                               {({ values, errors, touched, handleBlur, handleChange, handleSubmit, isSubmitting }) => (
                                    <form onSubmit={handleSubmit}>
                                         <Grid container spacing={0}>
+                                             <Box justifyContent="center" width="100%" alignItems="center">
+                                                  {values.dataImage ? (
+                                                       <img src={values.dataImage} alt={values.dataAlt} width="50%" />
+                                                  ) : (
+                                                       <Typography textAlign="center">
+                                                            Entered URL will preview here
+                                                       </Typography>
+                                                  )}
+                                             </Box>
                                              <Grid item xs={12} sm={12}>
                                                   <AppInput
                                                        fullWidth
@@ -99,7 +138,7 @@ const AddCarousel = () => {
                                         </Grid>
                                         <Box mt={2} display="flex" flexDirection="row" justifyContent="end">
                                              <AppButton disabled={isSubmitting} type="submit">
-                                                  Create carousel
+                                                  {!params.id ? "Create" : "update"} carousel
                                              </AppButton>
                                         </Box>
                                    </form>

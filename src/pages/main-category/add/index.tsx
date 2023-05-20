@@ -6,23 +6,55 @@ import { Formik } from "formik";
 import { InitialMainCategory, ValidationMainCategory } from "../../../validation";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
-import { AddNewMainCategory, GetAllMainCategory } from "../../../features/action";
+import {
+     AddNewMainCategory,
+     GetAllMainCategory,
+     GetMainCategoryWithId,
+     UpdateMainCategoryById,
+} from "../../../features/action";
 import { NewMainCategoryProps } from "../../../interface";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMainCategorySelector } from "../../../features/slice";
+import { enqueueSnackbar } from "notistack";
 
 const AddMainCategory = () => {
+     const params = useParams();
      const dispatch = useDispatch<AppDispatch>();
      const { palette } = useTheme();
      const navigate = useNavigate();
+     const mainCategory = useMainCategorySelector();
 
      useEffect(() => {
-          (() => {})();
+          console.log("main category page", params.id);
+          (async () => {
+               if (params.id) {
+                    const data = await dispatch(GetMainCategoryWithId(params.id));
+                    console.log(mainCategory.single);
+               }
+          })();
      }, [dispatch]);
 
      const NewMainCategory = async (e: NewMainCategoryProps) => {
-          await dispatch(AddNewMainCategory(e));
-          await dispatch(GetAllMainCategory());
-          navigate("/manage/main-category", { replace: true });
+          if (params.id) {
+               const data = await dispatch(
+                    UpdateMainCategoryById({
+                         data: e,
+                         id: params.id,
+                    })
+               );
+               if (data.type === "mainCategory/update/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    navigate("/manage/main-category", { replace: true });
+               }
+
+               if (data.type === "mainCategory/update/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+               }
+          } else {
+               await dispatch(AddNewMainCategory(e));
+               await dispatch(GetAllMainCategory());
+               navigate("/manage/main-category", { replace: true });
+          }
      };
 
      return (
@@ -49,7 +81,10 @@ const AddMainCategory = () => {
                />
                <Box width="60%" border={`2px solid ${palette.grey[400]}`} p={3} margin="auto" borderRadius={1} mt={5}>
                     <Formik
-                         initialValues={InitialMainCategory}
+                         enableReinitialize
+                         initialValues={{
+                              displayName: mainCategory.single ? mainCategory.single.displayName : "",
+                         }}
                          validationSchema={ValidationMainCategory}
                          onSubmit={NewMainCategory}
                     >

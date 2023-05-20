@@ -13,7 +13,7 @@ export interface AppImageViewProps {
 export const AppImageView: FC<AppImageViewProps> = ({ dispatch, image, removeImage, title, i }) => {
      return (
           <Grid item xs={12} sm={12} md={12} xl={6} lg={6}>
-               <Box position="relative">
+               <Box position="relative" mb={10}>
                     <img src={image} width="100%" alt={title} />
                     <Box
                          position="absolute"

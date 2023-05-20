@@ -13,10 +13,11 @@ import {
      GetAllMainCategory,
      GetAllSubCategory,
      GetAllToursTravel,
+     GetContactAction,
      GetUserProfile,
 } from "../../features/action";
-import { getUser } from "../../utils";
 import { useUserSelector } from "../../features/slice";
+import { GetAllEnquiryAction } from "../../features/action/enquiry.action";
 
 interface LayoutProps {
      pagetitle: string;
@@ -40,6 +41,8 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
                await dispatch(GetAllAccommodation());
                await dispatch(GetAllToursTravel());
                await dispatch(GetUserProfile());
+               await dispatch(GetContactAction());
+               await dispatch(GetAllEnquiryAction());
           })();
      }, [dispatch]);
 
@@ -53,7 +56,7 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
      return (
           <Box sx={{ display: "flex" }}>
                <Head>
-                    <title>{pagetitle} | BookMyLook</title>
+                    <title>{pagetitle} | DLifeStyle</title>
                </Head>
                <CssBaseline />
                <Appbar user={user} handleDrawerToggle={handleDrawerToggle} drawerWidth={drawerWidth} />

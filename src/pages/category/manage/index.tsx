@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../../layout";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
-import { useCategorySelector } from "../../../features/slice";
+import { clearSingleCategory, useCategorySelector } from "../../../features/slice";
 import { DeleteCategoryById, GetAllCategory } from "../../../features/action";
 import { AppButton, AppTitleBar } from "../../../component";
 import {
@@ -74,7 +74,12 @@ const ManageCategory = () => {
                     ]}
                />
                <Box mt={3} display="flex" flexDirection="row" gap={3} alignItems="center" justifyContent="end">
-                    <AppButton onClick={() => navigate("/add/category", { replace: true })}>
+                    <AppButton
+                         onClick={() => {
+                              navigate("/add/category", { replace: true });
+                              dispatch(clearSingleCategory());
+                         }}
+                    >
                          Create new sub category
                     </AppButton>
                </Box>
@@ -115,21 +120,21 @@ const ManageCategory = () => {
                                                   <TableCell align="left">
                                                        <Box display="flex" flexDirection="row" gap={3}>
                                                             <IconButton
+                                                                 color="primary"
                                                                  onClick={() =>
-                                                                      navigate(`/add/category/${_id}`, {
+                                                                      navigate(`/update/category/${_id}`, {
                                                                            replace: true,
                                                                       })
                                                                  }
                                                             >
                                                                  <AiFillEdit />
                                                             </IconButton>
-                                                            <AppButton
-                                                                 onClick={() => DeleteCategory(_id as string)}
-                                                                 startIcon={<AiFillDelete />}
+                                                            <IconButton
                                                                  color="error"
+                                                                 onClick={() => DeleteCategory(_id as string)}
                                                             >
-                                                                 delete
-                                                            </AppButton>
+                                                                 <AiFillDelete />
+                                                            </IconButton>
                                                        </Box>
                                                   </TableCell>
                                              </TableRow>

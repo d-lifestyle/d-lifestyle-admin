@@ -26,6 +26,10 @@ import {
      DashboardPage,
      DatabaseAnalyticsPage,
      LoginPage,
+     ManageBlogPage,
+     WriteBlogPage,
+     GetContactPage,
+     ManageEnquiryPage,
 } from "./pages";
 
 export default function App() {
@@ -103,6 +107,14 @@ export default function App() {
                                    }
                               />
                               <Route
+                                   path="blog"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageBlogPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
                                    path="users"
                                    element={
                                         <Suspense fallback={<Loader />}>
@@ -160,6 +172,40 @@ export default function App() {
                                         </Suspense>
                                    }
                               />
+                              <Route
+                                   path="blog"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <WriteBlogPage />
+                                        </Suspense>
+                                   }
+                              />
+                         </Route>
+                         <Route path="update">
+                              <Route
+                                   path="carousel/:id"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddCarouselPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="main-category/:id"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddMainCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="category/:id"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddCategoryPage />
+                                        </Suspense>
+                                   }
+                              />
                          </Route>
                          <Route path="analytics">
                               <Route
@@ -175,6 +221,24 @@ export default function App() {
                                    element={
                                         <Suspense fallback={<Loader />}>
                                              <WebPageAnalyticsPage />
+                                        </Suspense>
+                                   }
+                              />
+                         </Route>
+                         <Route path="general">
+                              <Route
+                                   path="contact"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <GetContactPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="enquiry"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <ManageEnquiryPage />
                                         </Suspense>
                                    }
                               />

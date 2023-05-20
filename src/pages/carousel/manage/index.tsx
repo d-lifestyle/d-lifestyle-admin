@@ -14,11 +14,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../../layout";
 import { AppButton, AppTitleBar } from "../../../component";
-import { useCarouselSelector } from "../../../features/slice";
+import { ClearSingleState, useCarouselSelector } from "../../../features/slice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
 import { DeleteCarouselById, GetAllCarousel } from "../../../features/action";
-
 import { useNavigate } from "react-router-dom";
 import { CarouselProps } from "../../../interface";
 import moment from "moment";
@@ -30,17 +29,13 @@ const ManageCarousel = () => {
      const dispatch = useDispatch<AppDispatch>();
      const navigate = useNavigate();
      const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-
      const [page, setPage] = React.useState(0);
 
      const { palette, shadows } = useTheme();
-     const getAllCarousel = async () => {
-          await dispatch(GetAllCarousel());
-     };
 
      useEffect(() => {
           (async () => {
-               await getAllCarousel();
+               await dispatch(GetAllCarousel());
           })();
      }, [dispatch]);
 
@@ -60,7 +55,7 @@ const ManageCarousel = () => {
 
           if (data.type === "carousel/delete/fulfilled") {
                enqueueSnackbar(data.payload, { variant: "success" });
-               await getAllCarousel();
+               await dispatch(GetAllCarousel());
           }
      };
 
@@ -87,7 +82,12 @@ const ManageCarousel = () => {
                     ]}
                />
                <Box mt={3} display="flex" flexDirection="row" gap={3} alignItems="center" justifyContent="end">
-                    <AppButton onClick={() => navigate("/add/carousel", { replace: true })}>
+                    <AppButton
+                         onClick={() => {
+                              dispatch(ClearSingleState());
+                              navigate("/add/carousel", { replace: true });
+                         }}
+                    >
                          Create new carousel
                     </AppButton>
                </Box>
@@ -99,7 +99,6 @@ const ManageCarousel = () => {
                                         <TableRow>
                                              <TableCell>Sr No.</TableCell>
                                              <TableCell align="left">Carousel</TableCell>
-                                             <TableCell align="left">Title</TableCell>
                                              <TableCell align="left">Upload On</TableCell>
                                              <TableCell align="left">Actions</TableCell>
                                         </TableRow>
@@ -118,21 +117,16 @@ const ManageCarousel = () => {
                                                                  "&:last-child td, &:last-child th": { border: 0 },
                                                             }}
                                                        >
-                                                            <TableCell scope="row" width={100}>
-                                                                 {i + 1}
-                                                            </TableCell>
-                                                            <TableCell align="left" width={200}>
+                                                            <TableCell scope="row">{i + 1}</TableCell>
+                                                            <TableCell align="left" width={400}>
                                                                  <img
                                                                       src={dataImage}
                                                                       width="100%"
                                                                       style={{
-                                                                           borderRadius: 10,
                                                                            boxShadow: shadows[15],
                                                                       }}
                                                                       alt={dataAlt}
                                                                  />
-                                                            </TableCell>
-                                                            <TableCell align="left" width={400}>
                                                                  <Typography
                                                                       variant="h6"
                                                                       fontWeight="500"
@@ -141,7 +135,7 @@ const ManageCarousel = () => {
                                                                       {dataAlt}
                                                                  </Typography>
                                                             </TableCell>
-                                                            <TableCell align="left" width={300}>
+                                                            <TableCell align="left">
                                                                  <Typography
                                                                       fontWeight="300"
                                                                       variant="body1"
@@ -152,7 +146,13 @@ const ManageCarousel = () => {
                                                             </TableCell>
                                                             <TableCell align="left">
                                                                  <Box display="flex" flexDirection="row" gap={3}>
-                                                                      <AppButton>edit</AppButton>
+                                                                      <AppButton
+                                                                           onClick={() => {
+                                                                                navigate(`/update/carousel/${_id}`);
+                                                                           }}
+                                                                      >
+                                                                           edit
+                                                                      </AppButton>
                                                                       <AppButton
                                                                            onClick={() => deleteCarousel(_id as string)}
                                                                            startIcon={<AiFillDelete />}

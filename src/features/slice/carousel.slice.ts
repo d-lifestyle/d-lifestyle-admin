@@ -1,13 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CarouselProps } from "../../interface";
-import { GetAllCarousel } from "../action";
+import { GetAllCarousel, GetCarouselById, UpdateCarouselById } from "../action";
 import { useSelector } from "react-redux";
+import { RootState } from "..";
 
 interface InitialMenuProps {
      loading: boolean;
      data: CarouselProps[];
      error: string;
      success: string;
+     single?: CarouselProps;
 }
 
 const InitialCarouselState: InitialMenuProps = {
@@ -15,12 +17,17 @@ const InitialCarouselState: InitialMenuProps = {
      data: [],
      error: "",
      success: "",
+     single: {} as CarouselProps,
 };
 
 const CarouselSlice = createSlice({
      name: "carousel",
      initialState: InitialCarouselState,
-     reducers: {},
+     reducers: {
+          ClearSingleState: (state) => {
+               state.single = {} as CarouselProps;
+          },
+     },
      extraReducers(builder) {
           builder
                .addCase(GetAllCarousel.fulfilled, (state, action) => {
@@ -34,12 +41,18 @@ const CarouselSlice = createSlice({
                     state.error = action.payload as string;
                     state.loading = false;
                });
+          builder.addCase(GetCarouselById.fulfilled, (state, action) => {
+               state.single = action.payload;
+          });
+          builder.addCase(UpdateCarouselById.fulfilled, (state) => {
+               state.single = {} as CarouselProps;
+          });
      },
 });
 
 export const CarouselReducer = CarouselSlice.reducer;
-// export const {} = CarouselSlice.actions
+export const { ClearSingleState } = CarouselSlice.actions;
 export const useCarouselSelector = () =>
-     useSelector((state: any) => {
+     useSelector((state: RootState) => {
           return state.carousel;
      });

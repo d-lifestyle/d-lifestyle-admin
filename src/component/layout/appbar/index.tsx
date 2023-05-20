@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logOutUser } from "../../../utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../features";
+import { PullOutUser } from "../../../features/slice";
 
 export interface AppBarProps {
      drawerWidth: string | number;
@@ -27,7 +28,8 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
      };
      const LogOutUser = async () => {
           handleClose();
-          const data = await logOutUser(dispatch);
+          const data = await logOutUser();
+          dispatch(PullOutUser());
           if (await data.success) {
                navigate("/", { replace: true });
           }
@@ -92,7 +94,7 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
                               <Notifications fontSize="medium" />
                          </IconButton>
                          <IconButton size="small" onClick={handleClick}>
-                              <Avatar alt="Cindy Baker" src="https://mui.com/static/images/avatar/3.jpg" />
+                              <Avatar alt="Cindy Baker" src={user.data.aboutInfo.logo} />
                          </IconButton>
                     </Box>
                     <Menu
@@ -122,12 +124,14 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
                               </Box>
                          </Link>
                          <Divider />
-                         <Link to="/" style={{ textDecoration: "none" }}>
-                              <MenuItem onClick={handleClose}>
-                                   <Typography color="GrayText">Home</Typography>
-                              </MenuItem>
-                         </Link>
-                         {/* <Link to="/admin/profile" style={{ textDecoration: "none" }}> */}
+                         <MenuItem
+                              onClick={() => {
+                                   navigate("/");
+                                   handleClose();
+                              }}
+                         >
+                              <Typography color="GrayText">Home</Typography>
+                         </MenuItem>
 
                          <MenuItem
                               onClick={() => {

@@ -8,7 +8,7 @@ export interface CategoriesProps {
 
 export interface NewCategoryProps {
      name: string;
-     parentCategory: string;
+     parentCategory: any;
 }
 
 export interface UpdateCategoryProps {

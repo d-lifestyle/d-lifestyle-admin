@@ -26,11 +26,7 @@ const InitialLoginState: InitialLoginProps = {
      loading: false,
      data: {
           isLoggedIn: false,
-          user: {
-               _id: "",
-               email: "",
-               password: "",
-          },
+          user: {} as UserProps,
           token: "",
      },
      error: "",
@@ -40,7 +36,15 @@ const InitialLoginState: InitialLoginProps = {
 const AuthSlice = createSlice({
      name: "auth",
      initialState: InitialLoginState,
-     reducers: {},
+     reducers: {
+          PullOutUser: (state) => {
+               state.data = {
+                    isLoggedIn: false,
+                    user: {} as UserProps,
+                    token: "",
+               };
+          },
+     },
      extraReducers(builder) {
           builder
                .addCase(LoginAccount.fulfilled, (state, action) => {
@@ -64,7 +68,7 @@ const AuthSlice = createSlice({
 });
 
 export const AuthReducer = AuthSlice.reducer;
-// export const { KeepLogin, PullOutUser } = AuthSlice.actions;
+export const { PullOutUser } = AuthSlice.actions;
 export const useAuthSelector = () =>
      useSelector((state: any) => {
           return state.auth;

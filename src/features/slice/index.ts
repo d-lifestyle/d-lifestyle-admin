@@ -7,3 +7,4 @@ export * from "./content";
 // auth
 export * from "./auth";
 export * from "./admin.slice";
+export * from "./general.slice";

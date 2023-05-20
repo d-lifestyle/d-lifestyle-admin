@@ -18,6 +18,10 @@ const AdminUserPage = React.lazy(() => import("./pages/admin/user/index"));
 const DatabaseAnalyticsPage = React.lazy(() => import("./pages/analytics/database/index"));
 const WebPageAnalyticsPage = React.lazy(() => import("./pages/analytics/webpage/index"));
 const AdminProfilePage = React.lazy(() => import("./pages/admin/profile/index"));
+const WriteBlogPage = React.lazy(() => import("./pages/blog/write/index"));
+const ManageBlogPage = React.lazy(() => import("./pages/blog/manage/index"));
+const GetContactPage = React.lazy(() => import("./pages/contacts/index"));
+const ManageEnquiryPage = React.lazy(() => import("./pages/enquiry/index"));
 
 export {
      AddAccommodationPage,
@@ -38,4 +42,8 @@ export {
      ManageSubCategoryPage,
      ManageToursTravelPage,
      WebPageAnalyticsPage,
+     WriteBlogPage,
+     ManageBlogPage,
+     GetContactPage,
+     ManageEnquiryPage,
 };

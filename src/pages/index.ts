@@ -7,3 +7,6 @@ export * from "./content";
 export * from "./analytics";
 export * from "./main-category";
 export * from "./admin";
+export * from "./blog";
+export * from "./enquiry";
+export * from "./contacts";
