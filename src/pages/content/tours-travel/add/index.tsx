@@ -11,9 +11,15 @@ import {
 } from "../../../../features/slice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../features";
-import { AddNewToursTravel, GetAllToursTravel } from "../../../../features/action";
+import {
+     AddNewToursTravel,
+     GetAccommodationById,
+     GetAllToursTravel,
+     GetToursTravelById,
+     UpdateToursTravelById,
+} from "../../../../features/action";
 import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography, useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
      BtnBold,
      BtnBulletList,
@@ -45,22 +51,25 @@ interface ToursTravelFormProps {
 }
 
 const CreateToursTravel = () => {
-     const [toursPackage, setToursPackage] = useState<ToursTravelFormProps>({
-          code: "",
-          displayName: "",
-          duration: "",
-          place: "",
-          SubCategory: "",
-          theme: "",
-          description: "",
-          images: "",
-          title: "",
-     });
+     const params = useParams();
+
      const navigate = useNavigate();
      const { palette, spacing } = useTheme();
      const subcategories = useSubCategorySelector();
      const toursPackageSelector = useToursTravelSelector();
      const dispatch = useDispatch<AppDispatch>();
+
+     const [toursPackage, setToursPackage] = useState<ToursTravelFormProps>({
+          code: toursPackageSelector.single ? toursPackageSelector.single.code : "",
+          displayName: toursPackageSelector.single ? toursPackageSelector.single.displayName : "",
+          duration: toursPackageSelector.single ? toursPackageSelector.single.duration : "",
+          place: toursPackageSelector.single ? toursPackageSelector.single.place : "",
+          SubCategory: toursPackageSelector.single ? toursPackageSelector.single.SubCategory : "",
+          theme: toursPackageSelector.single ? toursPackageSelector.single.theme : "",
+          description: toursPackageSelector.single ? toursPackageSelector.single.description : "",
+          images: "",
+          title: "",
+     });
 
      const getSubCategory = async () => {
           return await dispatch(GetAllToursTravel());
@@ -68,29 +77,58 @@ const CreateToursTravel = () => {
 
      useEffect(() => {
           (async () => {
+               if (params.id) {
+                    await dispatch(GetToursTravelById(params.id));
+               }
                await getSubCategory();
           })();
      }, [dispatch]);
+     console.log("single data", toursPackageSelector.single);
 
      const handleSubmit = async () => {
-          const data = await dispatch(
-               AddNewToursTravel({
-                    code: toursPackage.code,
-                    description: toursPackage.description,
-                    displayName: toursPackage.displayName,
-                    duration: toursPackage.duration,
-                    image: toursPackageSelector.image,
-                    place: toursPackage.place,
-                    SubCategory: toursPackage.SubCategory,
-                    theme: toursPackage.theme,
-               })
-          );
-          if (data.type === "toursTravel/new/fulfilled") {
-               enqueueSnackbar(data.payload, { variant: "success" });
-               dispatch(emptyToursPackageImage());
-               navigate("/manage/tours-travel", { replace: true });
-          } else if (data.type === "toursTravel/new/rejected") {
-               enqueueSnackbar(data.payload, { variant: "error" });
+          if (params.id) {
+               const data = await dispatch(
+                    UpdateToursTravelById({
+                         data: {
+                              code: toursPackage.code,
+                              description: toursPackage.description,
+                              displayName: toursPackage.displayName,
+                              duration: toursPackage.duration,
+                              image: toursPackageSelector.image,
+                              place: toursPackage.place,
+                              SubCategory: toursPackage.SubCategory,
+                              theme: toursPackage.theme,
+                         },
+                         id: params.id,
+                    })
+               );
+               if (data.type === "toursTravel/update/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    dispatch(emptyToursPackageImage());
+                    navigate("/manage/tours-travel", { replace: true });
+               } else if (data.type === "toursTravel/update/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
+          } else {
+               const data = await dispatch(
+                    AddNewToursTravel({
+                         code: toursPackage.code,
+                         description: toursPackage.description,
+                         displayName: toursPackage.displayName,
+                         duration: toursPackage.duration,
+                         image: toursPackageSelector.image,
+                         place: toursPackage.place,
+                         SubCategory: toursPackage.SubCategory,
+                         theme: toursPackage.theme,
+                    })
+               );
+               if (data.type === "toursTravel/new/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    dispatch(emptyToursPackageImage());
+                    navigate("/manage/tours-travel", { replace: true });
+               } else if (data.type === "toursTravel/new/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
           }
      };
 

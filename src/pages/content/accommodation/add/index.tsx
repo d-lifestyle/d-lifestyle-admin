@@ -11,10 +11,15 @@ import {
      useAccommodationSelector,
      useSubCategorySelector,
 } from "../../../../features/slice";
-import { AddNewAccommodation, GetAllSubCategory } from "../../../../features/action";
+import {
+     AddNewAccommodation,
+     GetAccommodationById,
+     GetAllSubCategory,
+     UpdateAccommodationById,
+} from "../../../../features/action";
 import { SubCategoryProps } from "../../../../interface";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
      BtnBold,
      BtnBulletList,
@@ -34,6 +39,8 @@ import { LabelOutlined } from "@mui/icons-material";
 import { enqueueSnackbar } from "notistack";
 
 const CreateAccommodation = () => {
+     const params = useParams();
+     console.log(params.id);
      interface NewAccommodationFormProps {
           city: string;
           description: string;
@@ -49,13 +56,13 @@ const CreateAccommodation = () => {
      const theme = useTheme();
 
      const [accommodation, setAccommodation] = useState<NewAccommodationFormProps>({
-          city: "",
-          displayName: "",
-          state: "",
-          SubCategory: "",
+          city: accommodationSelect.single ? accommodationSelect.single.city : "",
+          displayName: accommodationSelect.single ? accommodationSelect.single.displayName : "",
+          state: accommodationSelect.single ? accommodationSelect.single.state : "",
+          SubCategory: accommodationSelect.single ? accommodationSelect.single.SubCategory : "",
           image: "",
           title: "",
-          description: "",
+          description: accommodationSelect.single ? accommodationSelect.single.description : "",
      });
      const { palette } = useTheme();
      const navigate = useNavigate();
@@ -66,27 +73,54 @@ const CreateAccommodation = () => {
 
      useEffect(() => {
           (async () => {
+               if (params.id) {
+                    await dispatch(GetAccommodationById(params.id));
+                    console.log("IMAGES LOG", accommodationSelect.single);
+               }
                await getSubCategory();
           })();
      }, [dispatch]);
 
      const handleSubmit = async () => {
-          const data = await dispatch(
-               AddNewAccommodation({
-                    city: accommodation.city,
-                    description: accommodation.description,
-                    displayName: accommodation.displayName,
-                    state: accommodation.state,
-                    SubCategory: accommodation.SubCategory,
-                    image: accommodationSelect.images,
-               })
-          );
-          if (data.type === "accommodation/new/fulfilled") {
-               enqueueSnackbar(data.payload, { variant: "success" });
-               navigate("/manage/accommodation", { replace: true });
-               dispatch(emptyAccommodationImage());
-          } else if (data.type === "accommodation/new/rejected") {
-               enqueueSnackbar(data.payload, { variant: "error" });
+          if (params.id) {
+               const data = await dispatch(
+                    UpdateAccommodationById({
+                         data: {
+                              city: accommodation.city,
+                              description: accommodation.description,
+                              displayName: accommodation.displayName,
+                              state: accommodation.state,
+                              SubCategory: accommodation.SubCategory,
+                              image: accommodationSelect.images,
+                         },
+                         id: params.id,
+                    })
+               );
+               if (data.type === "accommodation/update/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    navigate("/manage/accommodation", { replace: true });
+                    dispatch(emptyAccommodationImage());
+               } else if (data.type === "accommodation/update/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
+          } else {
+               const data = await dispatch(
+                    AddNewAccommodation({
+                         city: accommodation.city,
+                         description: accommodation.description,
+                         displayName: accommodation.displayName,
+                         state: accommodation.state,
+                         SubCategory: accommodation.SubCategory,
+                         image: accommodationSelect.images,
+                    })
+               );
+               if (data.type === "accommodation/new/fulfilled") {
+                    enqueueSnackbar(data.payload, { variant: "success" });
+                    navigate("/manage/accommodation", { replace: true });
+                    dispatch(emptyAccommodationImage());
+               } else if (data.type === "accommodation/new/rejected") {
+                    enqueueSnackbar(data.payload, { variant: "error" });
+               }
           }
      };
 
@@ -136,7 +170,7 @@ const CreateAccommodation = () => {
                          </Grid>
                          <Grid item xs={12} sm={12} md={12} xl={12} lg={12}>
                               <Grid container spacing={2}>
-                                   {accommodationSelect.images.map(({ image, title }: any, i: number) => (
+                                   {accommodationSelect?.images?.map(({ image, title }: any, i: number) => (
                                         <AppImageView
                                              key={i}
                                              image={image}

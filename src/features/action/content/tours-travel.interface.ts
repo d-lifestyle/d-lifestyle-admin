@@ -15,7 +15,7 @@ const GetAllToursTravel = createAsyncThunk("toursTravel/all", async (state, { re
      }
 });
 
-const GetToursTravelById = createAsyncThunk("toursTravel/by-id", async (props: string, { rejectWithValue }) => {
+const GetToursTravelById = createAsyncThunk("toursTravel/by_id", async (props: string, { rejectWithValue }) => {
      try {
           const data = await toursTravelServices.GetToursTravelById(props);
           return data.data.data;

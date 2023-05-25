@@ -4,7 +4,7 @@ import AdminService from "../../../services/admin.service";
 const GetAdminUsers = createAsyncThunk("admin/user", async (_, { rejectWithValue }) => {
      try {
           const data = await AdminService.GetAllUsers();
-          return data.data.data;
+          return await data.data.data;
      } catch (err: any) {
           if (err.response) {
                return rejectWithValue(err.response.data.message);

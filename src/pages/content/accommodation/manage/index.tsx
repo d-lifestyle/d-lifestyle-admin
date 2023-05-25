@@ -123,7 +123,7 @@ const ManageAccommodation = () => {
                                                        key={_id}
                                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                                   >
-                                                       <TableCell component="th" scope="row">
+                                                       <TableCell component="th" scope="row" width={100}>
                                                             {i + 1}
                                                        </TableCell>
                                                        <TableCell align="left" width={250}>
@@ -177,6 +177,16 @@ const ManageAccommodation = () => {
                                                        </TableCell>
                                                        <TableCell align="left">
                                                             <Box display="flex" flexDirection="row" gap={3}>
+                                                                 <IconButton
+                                                                      onClick={() =>
+                                                                           navigate(`/update/accommodation/${_id}`, {
+                                                                                replace: true,
+                                                                           })
+                                                                      }
+                                                                      color="success"
+                                                                 >
+                                                                      <AiFillEdit />
+                                                                 </IconButton>
                                                                  <IconButton
                                                                       onClick={() => DeleteAccommodation(_id as string)}
                                                                       color="error"

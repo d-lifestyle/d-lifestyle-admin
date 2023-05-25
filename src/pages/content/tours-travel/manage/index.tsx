@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../../../layout";
 import { AppButton, AppTitleBar } from "../../../../component";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../features";
 import { useToursTravelSelector } from "../../../../features/slice";
@@ -18,6 +18,7 @@ import {
      Typography,
      TablePagination,
      useTheme,
+     IconButton,
 } from "@mui/material";
 import { ToursTravelProps } from "../../../../interface";
 import moment from "moment";
@@ -139,6 +140,16 @@ const ManageToursTravel = () => {
                                                        </TableCell>
                                                        <TableCell align="left">
                                                             <Box display="flex" flexDirection="row" gap={3}>
+                                                                 <IconButton
+                                                                      onClick={() =>
+                                                                           navigate(`/update/tours-travel/${_id}`, {
+                                                                                replace: true,
+                                                                           })
+                                                                      }
+                                                                      color="success"
+                                                                 >
+                                                                      <AiFillEdit />
+                                                                 </IconButton>
                                                                  <AppButton
                                                                       onClick={() => DeleteAccommodation(_id as string)}
                                                                       startIcon={<AiFillDelete />}

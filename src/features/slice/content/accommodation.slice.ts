@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { useSelector } from "react-redux";
 import { AccommodationProps } from "../../../interface";
-import { GetAllAccommodation } from "../../action";
+import { GetAccommodationById, GetAllAccommodation } from "../../action";
 
 interface InitialAccommodationProps {
      loading: boolean;
@@ -13,6 +13,7 @@ interface InitialAccommodationProps {
           title: string;
           image: string;
      }[];
+     single: AccommodationProps;
 }
 
 const InitialAccommodationState: InitialAccommodationProps = {
@@ -26,6 +27,7 @@ const InitialAccommodationState: InitialAccommodationProps = {
                title: "image size should be like this",
           },
      ],
+     single: {} as AccommodationProps,
 };
 
 const AccommodationSlice = createSlice({
@@ -57,6 +59,18 @@ const AccommodationSlice = createSlice({
                     state.loading = true;
                })
                .addCase(GetAllAccommodation.rejected, (state, action) => {
+                    state.error = action.payload as string;
+               });
+          builder
+               .addCase(GetAccommodationById.fulfilled, (state, action) => {
+                    state.single = action.payload;
+                    state.images = action.payload?.image;
+                    state.loading = false;
+               })
+               .addCase(GetAccommodationById.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetAccommodationById.rejected, (state, action) => {
                     state.error = action.payload as string;
                });
      },

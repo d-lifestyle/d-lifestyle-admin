@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { useSelector } from "react-redux";
 import { ToursTravelProps } from "../../../interface";
-import { GetAllToursTravel } from "../../action";
+import { GetAllToursTravel, GetToursTravelById } from "../../action";
 
 interface InitialToursTravelProps {
      loading: boolean;
@@ -13,6 +13,7 @@ interface InitialToursTravelProps {
           title: string;
           image: string;
      }[];
+     single: ToursTravelProps;
 }
 
 const InitialToursTravelState: InitialToursTravelProps = {
@@ -26,6 +27,7 @@ const InitialToursTravelState: InitialToursTravelProps = {
                title: "image size should be like this",
           },
      ],
+     single: {} as ToursTravelProps,
 };
 
 const ToursPackagesSlice = createSlice({
@@ -57,6 +59,18 @@ const ToursPackagesSlice = createSlice({
                     state.loading = true;
                })
                .addCase(GetAllToursTravel.rejected, (state, action) => {
+                    state.error = action.payload as string;
+               });
+          builder
+               .addCase(GetToursTravelById.fulfilled, (state, action) => {
+                    state.single = action.payload;
+                    state.image = action.payload.image;
+                    state.loading = false;
+               })
+               .addCase(GetToursTravelById.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetToursTravelById.rejected, (state, action) => {
                     state.error = action.payload as string;
                });
      },

@@ -12,22 +12,14 @@ class AccommodationServices {
           return await AxiosInstance.get(`${process.env.REACT_APP_BACKEND}/accommodation/${id}`);
      }
      public async AddAccommodation({ SubCategory, city, displayName, state, description, image }: AccommodationProps) {
-          return await AxiosInstance.post(
-               `${process.env.REACT_APP_BACKEND}/accommodation`,
-               {
-                    SubCategory,
-                    city,
-                    displayName,
-                    state,
-                    description,
-                    image,
-               },
-               {
-                    headers: {
-                         Authorization: localStorage.getItem("token") as string,
-                    },
-               }
-          );
+          return await AxiosInstance.post(`${process.env.REACT_APP_BACKEND}/accommodation`, {
+               SubCategory,
+               city,
+               displayName,
+               state,
+               description,
+               image,
+          });
      }
      public async UpdateAccommodationById({ id, data }: UpdateAccommodationProps) {
           return await AxiosInstance.put(`${process.env.REACT_APP_BACKEND}/accommodation/${id}`, {

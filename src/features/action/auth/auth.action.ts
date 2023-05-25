@@ -5,7 +5,7 @@ const LoginAccount = createAsyncThunk("auth/login", async (props: any, { rejectW
      try {
           const data = await AuthService.Login(props.data);
           props.navigate("/", { replace: true });
-          return data.data.data;
+          return await data.data.data;
      } catch (err: any) {
           if (err.response) {
                return rejectWithValue(err.response.data.message);

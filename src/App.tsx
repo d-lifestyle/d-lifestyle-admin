@@ -206,6 +206,22 @@ export default function App() {
                                         </Suspense>
                                    }
                               />
+                              <Route
+                                   path="accommodation/:id"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddAccommodationPage />
+                                        </Suspense>
+                                   }
+                              />
+                              <Route
+                                   path="tours-travel/:id"
+                                   element={
+                                        <Suspense fallback={<Loader />}>
+                                             <AddToursTravelPage />
+                                        </Suspense>
+                                   }
+                              />
                          </Route>
                          <Route path="analytics">
                               <Route
