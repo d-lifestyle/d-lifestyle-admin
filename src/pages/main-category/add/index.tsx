@@ -25,11 +25,9 @@ const AddMainCategory = () => {
      const mainCategory = useMainCategorySelector();
 
      useEffect(() => {
-          console.log("main category page", params.id);
           (async () => {
                if (params.id) {
                     const data = await dispatch(GetMainCategoryWithId(params.id));
-                    console.log(mainCategory.single);
                }
           })();
      }, [dispatch]);

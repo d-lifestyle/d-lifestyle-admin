@@ -26,7 +26,7 @@ export const logOutUser = async () => {
      }
 };
 
-const data = JSON.parse(localStorage.getItem("token") as any) as any;
+const data = JSON.parse(localStorage.getItem("token") as string);
 export const AxiosInstance = axios.create({
      withCredentials: true,
      baseURL: process.env.REACT_APP_BACKEND,

@@ -83,7 +83,6 @@ const CreateToursTravel = () => {
                await getSubCategory();
           })();
      }, [dispatch]);
-     console.log("single data", toursPackageSelector.single);
 
      const handleSubmit = async () => {
           if (params.id) {

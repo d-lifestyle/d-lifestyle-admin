@@ -14,9 +14,8 @@ const AdminUser = () => {
      const { shadows } = useTheme();
 
      const DeleteAdminUser = async (id: string) => {
-          const data = await dispatch(DeleteUser(id));
+          await dispatch(DeleteUser(id));
           await dispatch(GetAdminUsers());
-          console.log(data);
      };
      return (
           <DefaultLayout pagetitle="Manage your users">

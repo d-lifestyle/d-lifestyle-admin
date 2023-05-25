@@ -40,7 +40,7 @@ import { enqueueSnackbar } from "notistack";
 
 const CreateAccommodation = () => {
      const params = useParams();
-     console.log(params.id);
+
      interface NewAccommodationFormProps {
           city: string;
           description: string;
@@ -75,7 +75,6 @@ const CreateAccommodation = () => {
           (async () => {
                if (params.id) {
                     await dispatch(GetAccommodationById(params.id));
-                    console.log("IMAGES LOG", accommodationSelect.single);
                }
                await getSubCategory();
           })();
