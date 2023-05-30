@@ -35,6 +35,12 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ collapsible, handleCol
                          <MenuTitle title="general" />
                          <List disablePadding>
                               <MenuItem path="/" title="dashboard" icon={<AiOutlinePieChart size={iconSize} />} />
+                         </List>
+                    </Box>
+
+                    <Box mt={spacing(3)}>
+                         <MenuTitle title="Customer Support" />
+                         <List disablePadding>
                               <MenuItem
                                    path="/general/contact"
                                    title="customers"

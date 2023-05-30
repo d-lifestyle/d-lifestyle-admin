@@ -7,3 +7,4 @@ export * from "./login.interface";
 export * from "./main-category.interface";
 export * from "./auth.interface";
 export * from "./contact.interface";
+export * from "./blog.interface";

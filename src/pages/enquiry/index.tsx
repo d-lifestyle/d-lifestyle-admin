@@ -84,7 +84,7 @@ const ManageEnquiry = () => {
      return (
           <DefaultLayout pagetitle="Manage your customer enquiries">
                <AppTitleBar
-                    title="Customer's have raised Query for you"
+                    title="Customer needs information"
                     breadcrubms={[
                          {
                               pagepath: "/",
@@ -155,7 +155,7 @@ const ManageEnquiry = () => {
                                                                  Location:- {dataId.city}, {dataId.state}
                                                             </Typography>
                                                             <Typography mt={2} variant="body1" color="primary">
-                                                                 Check Offer's date
+                                                                 Check In / Out date
                                                             </Typography>
                                                             <Typography>
                                                                  From :- {moment(checkIn).format("LLLL")}
