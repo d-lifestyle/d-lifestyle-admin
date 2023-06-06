@@ -17,3 +17,11 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
      -moz-appearance: textfield;
 }
+
+
+.loading{
+     animation: mymove 0.5s infinite;
+}
+@keyframes mymove {
+     100% {transform: rotate(360deg);}
+   }

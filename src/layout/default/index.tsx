@@ -4,20 +4,7 @@ import { Toolbar, Drawer, CssBaseline, Box, useTheme } from "@mui/material";
 import Head from "react-helmet";
 import { Appbar, DrawerItems } from "../../component";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../features";
-import {
-     GetAdminUsers,
-     GetAllAccommodation,
-     GetAllCarousel,
-     GetAllCategory,
-     GetAllMainCategory,
-     GetAllSubCategory,
-     GetAllToursTravel,
-     GetContactAction,
-     GetUserProfile,
-} from "../../features/action";
-import { useUserSelector } from "../../features/slice";
-import { GetAllEnquiryAction } from "../../features/action/enquiry.action";
+import { useAuthSelector } from "../../redux";
 
 interface LayoutProps {
      pagetitle: string;
@@ -29,22 +16,7 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
      const { spacing } = useTheme();
      const [mobileOpen, setMobileOpen] = useState<boolean>(false);
      const [collapsible, setCollapsible] = useState<boolean>(false);
-     const dispatch = useDispatch<AppDispatch>();
-     const user = useUserSelector();
-     useEffect(() => {
-          (async () => {
-               await dispatch(GetAdminUsers());
-               await dispatch(GetAllCarousel());
-               await dispatch(GetAllMainCategory());
-               await dispatch(GetAllSubCategory());
-               await dispatch(GetAllCategory());
-               await dispatch(GetAllAccommodation());
-               await dispatch(GetAllToursTravel());
-               await dispatch(GetUserProfile());
-               await dispatch(GetContactAction());
-               await dispatch(GetAllEnquiryAction());
-          })();
-     }, [dispatch]);
+     const auth = useAuthSelector();
 
      const handleDrawerToggle = () => {
           setMobileOpen(!mobileOpen);
@@ -59,7 +31,7 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
                     <title>{pagetitle} | DLifeStyle</title>
                </Head>
                <CssBaseline />
-               <Appbar user={user} handleDrawerToggle={handleDrawerToggle} drawerWidth={drawerWidth} />
+               <Appbar handleDrawerToggle={handleDrawerToggle} drawerWidth={drawerWidth} />
                <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
                     <Drawer
                          variant="temporary"
@@ -76,7 +48,11 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
                               },
                          }}
                     >
-                         <DrawerItems user={user} collapsible={collapsible} handleCollapsible={handleCollapsible} />
+                         <DrawerItems
+                              user={{ email: auth.user.email, name: `${auth.user.firstName} ${auth.user.lastName}` }}
+                              collapsible={collapsible}
+                              handleCollapsible={handleCollapsible}
+                         />
                     </Drawer>
                     <Drawer
                          variant="permanent"
@@ -91,7 +67,11 @@ export const DefaultLayout: React.FC<LayoutProps> = ({ children, pagetitle }) =>
                          }}
                          open
                     >
-                         <DrawerItems user={user} collapsible={collapsible} handleCollapsible={handleCollapsible} />
+                         <DrawerItems
+                              user={{ email: auth.user.email, name: `${auth.user.firstName} ${auth.user.lastName}` }}
+                              collapsible={collapsible}
+                              handleCollapsible={handleCollapsible}
+                         />
                     </Drawer>
                </Box>
                <Box

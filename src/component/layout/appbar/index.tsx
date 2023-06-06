@@ -3,22 +3,16 @@ import React from "react";
 import { Home, Notifications, MenuOpen } from "@mui/icons-material";
 import { AppBar, useTheme, IconButton, Box, Toolbar, Avatar, Menu, MenuItem, Divider, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { logOutUser } from "../../../utils";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../features";
-import { PullOutUser } from "../../../features/slice";
 
 export interface AppBarProps {
      drawerWidth: string | number;
      handleDrawerToggle: () => void;
-     user: any;
 }
 
-export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle, user }) => {
+export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle }) => {
      const { spacing, palette } = useTheme();
      const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
      const open = Boolean(anchorEl);
-     const dispatch = useDispatch<AppDispatch>();
      const navigate = useNavigate();
      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
           setAnchorEl(event.currentTarget);
@@ -28,11 +22,6 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
      };
      const LogOutUser = async () => {
           handleClose();
-          const data = await logOutUser();
-          dispatch(PullOutUser());
-          if (await data.success) {
-               navigate("/", { replace: true });
-          }
      };
      return (
           <AppBar
@@ -94,7 +83,10 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
                               <Notifications fontSize="medium" />
                          </IconButton>
                          <IconButton size="small" onClick={handleClick}>
-                              <Avatar alt="Cindy Baker" src={user.data.aboutInfo.logo} />
+                              <Avatar
+                                   alt="Cindy Baker"
+                                   src="https://png.pngtree.com/png-clipart/20220806/ourmid/pngtree-bearded-man-logo-png-image_6100735.png"
+                              />
                          </IconButton>
                     </Box>
                     <Menu
@@ -116,10 +108,10 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle,
                          >
                               <Box px={3} py={2}>
                                    <Typography color="GrayText" textTransform="capitalize" variant="subtitle1">
-                                        {user?.data?.firstName} {user?.data?.lastName}
+                                        dinesh salian
                                    </Typography>
                                    <Typography variant="subtitle2" color="grey">
-                                        {user?.data?.email}
+                                        dineshsalian541@gmail.com
                                    </Typography>
                               </Box>
                          </Link>

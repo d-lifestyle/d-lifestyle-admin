@@ -1,18 +1,16 @@
 import { CategoriesProps } from "./category.interface";
 
 export interface SubCategoryProps {
-     name: string;
-     CategoryId: CategoriesProps;
+     displayName: string;
+     CategoryId: any;
 
      _id?: string;
      createdAt?: string;
      updatedAt?: string;
 }
 
-
-
 export interface NewSubCategoryProps {
-     name: string;
+     displayName: string;
      CategoryId: string;
 }
 

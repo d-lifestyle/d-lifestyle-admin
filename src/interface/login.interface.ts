@@ -4,6 +4,7 @@ export interface LoginProps {
 }
 
 export interface UserProps {
+     name: string;
      token: string;
      email: string;
      password: string;

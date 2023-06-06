@@ -1,130 +1,155 @@
-import { Grid, Typography, useTheme } from "@mui/material";
-import { Box } from "@mui/system";
-import { MediumCard } from "../../component";
+import React, { useEffect } from "react";
 import { DefaultLayout } from "../../layout";
+import { Box, Grid, Typography } from "@mui/material";
 import {
-  useAccommodationSelector,
-  useCarouselSelector,
-  useCategorySelector,
-  useMainCategorySelector,
-  useSubCategorySelector,
-  useToursTravelSelector,
-  useUserSelector,
-} from "../../features/slice";
-import { BiCarousel, BiCategoryAlt, BiJoystickAlt } from "react-icons/bi";
-import { MdOutlineCategory, MdTravelExplore } from "react-icons/md";
-import { BsCardChecklist } from "react-icons/bs";
+     useAccommodationSelector,
+     useCarouselSelector,
+     useCategorySelector,
+     useCruiseSelector,
+     useSubCategorySelector,
+     useTourPackageSelector,
+     useContactSelector,
+     useAppDispatch,
+     ListCategoryAction,
+     ListSubCategoryAction,
+     ListAccommodationAction,
+     ListToursPackageAction,
+     ListCruiseAction,
+     GetContactAction,
+     useBlogSelector,
+} from "../../redux";
+import { MediumCard } from "../../component";
+import { BiCarousel, BiHotel, BiMessageAlt } from "react-icons/bi";
+import { MdTravelExplore } from "react-icons/md";
+import { RiShipLine } from "react-icons/ri";
+import { AiOutlineOrderedList, AiOutlineUnorderedList } from "react-icons/ai";
+import { BsListStars, BsPen } from "react-icons/bs";
+import { batch } from "react-redux";
+import { ListCarouselAction } from "../../redux/action/carousel.action";
+import { ListBlogByIdAction, ListBlogsAction } from "../../redux/action/blog.action";
 
-const Dashboard = () => {
-  const { palette, spacing } = useTheme();
-  const carousel = useCarouselSelector();
-  const mainCategory = useMainCategorySelector();
-  const category = useCategorySelector();
-  const subCategory = useSubCategorySelector();
-  const accommodation = useAccommodationSelector();
-  const toursPackage = useToursTravelSelector();
-  const user = useUserSelector();
+export const Homepage = () => {
+     const dispatch = useAppDispatch();
 
+     const carousel = useCarouselSelector();
+     const category = useCategorySelector();
+     const subCategory = useSubCategorySelector();
+     const accommodation = useAccommodationSelector();
+     const toursPackage = useTourPackageSelector();
+     const cruise = useCruiseSelector();
+     const contactQueries = useContactSelector();
+     const blog = useBlogSelector();
 
-  return (
-    <DefaultLayout pagetitle="Homepage">
-      <Grid container sm={12} rowGap={spacing(3)} spacing={3}>
-        <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-          <Box
-            bgcolor={palette.primary.light}
-            px={spacing(5)}
-            py={spacing(6)}
-            borderRadius={spacing(2)}
-            display="flex"
-            alignItems="center"
-            gap={spacing(5)}
-          >
-            <Box flex={1}>
-              <Box display="flex" flexDirection="row" alignItems="center" gap={1} width="100%">
-                <Typography variant="h4">Welcome Back, </Typography>
-                <Typography variant="h4" textTransform="capitalize">
-                  {user.data?.lastName} {user.data?.firstName}
-                </Typography>
-              </Box>
-              <Box my={spacing(3)}>
-                <Typography variant="body2">
-                  To sculpt a head of hair with scissors is an art form. It’s in pursuit of
-                  art.
-                </Typography>
-              </Box>
-            </Box>
-            <img
-              width="30%"
-              src="https://minimal-assets-api.vercel.app/assets/illustrations/illustration_components.png"
-              alt=""
-            />
-          </Box>
-        </Grid>
+     useEffect(() => {
+          (async () => {
+               batch(() => {
+                    dispatch(ListCarouselAction());
+                    dispatch(ListCategoryAction());
+                    dispatch(ListSubCategoryAction());
+                    dispatch(ListAccommodationAction());
+                    dispatch(ListToursPackageAction());
+                    dispatch(ListCruiseAction());
+                    dispatch(GetContactAction());
+                    dispatch(ListBlogsAction());
+               });
+          })();
+     }, [dispatch]);
 
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}></Grid>
-        <Grid container>
-          <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-            <Box mt={5} pl={4}>
-              <Typography variant="h5">CMS</Typography>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-          <MediumCard
-            path="/manage/carousel"
-            icon={<BiCarousel size={50} />}
-            title="Carousel items"
-            value={carousel?.data.length}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-          <MediumCard
-            path="/manage/main-category"
-            icon={<MdOutlineCategory size={50} />}
-            title="Parent Category items"
-            value={mainCategory.data.length}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-          <MediumCard
-            path="/manage/category"
-            icon={<BsCardChecklist size={50} />}
-            title="Category items"
-            value={category.data.length}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-          <MediumCard
-            path="/manage/sub-category"
-            icon={<BiCategoryAlt size={50} />}
-            title="Sub Category items"
-            value={subCategory.data.length}
-          />
-        </Grid>
-      </Grid>
-      <Box mt={5}>
-        <Typography variant="h5">Content</Typography>
-      </Box>
-      <Grid container spacing={3} mt={1}>
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-          <MediumCard
-            path="/manage/accommodation"
-            icon={<MdTravelExplore size={50} />}
-            title="Accommodations"
-            value={accommodation.data.length}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-          <MediumCard
-            path="/manage/tours-travel"
-            icon={<BiJoystickAlt size={50} />}
-            title="Tour Packages"
-            value={toursPackage.data.length}
-          />
-        </Grid>
-      </Grid>
-    </DefaultLayout>
-  );
+     return (
+          <DefaultLayout pagetitle="Dashboard">
+               <Box mt={3} mb={2}>
+                    <Typography variant="body1" textTransform="uppercase" color="gray">
+                         general content
+                    </Typography>
+               </Box>
+               <Grid container spacing={3}>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/table/slider"
+                              title="website slider"
+                              value={carousel.data.length}
+                              icon={<BiCarousel size={75} />}
+                         />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/table/blogs"
+                              title="website blogs"
+                              value={blog.data.length}
+                              icon={<BsPen size={75} />}
+                         />
+                    </Grid>
+               </Grid>
+               <Box mt={3} mb={2}>
+                    <Typography variant="body1" textTransform="uppercase" color="gray">
+                         Content
+                    </Typography>
+               </Box>
+               <Grid container spacing={3}>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/table/accommodations"
+                              title="accommodations"
+                              value={accommodation.data.length}
+                              icon={<BiHotel size={75} />}
+                         />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/table/travel-packages"
+                              title="tours packages"
+                              value={toursPackage.data.length}
+                              icon={<MdTravelExplore size={75} />}
+                         />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/table/cruise"
+                              title="Cruise"
+                              value={cruise.data.length}
+                              icon={<RiShipLine size={75} />}
+                         />
+                    </Grid>
+               </Grid>
+
+               <Box mt={3} mb={2}>
+                    <Typography variant="body1" textTransform="uppercase" color="gray">
+                         categories
+                    </Typography>
+               </Box>
+               <Grid container spacing={3}>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/table/normal-category"
+                              title="normal category"
+                              value={category.data.length}
+                              icon={<AiOutlineOrderedList size={75} />}
+                         />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/table/sub-category"
+                              title="Sub category"
+                              value={subCategory.data.length}
+                              icon={<BsListStars size={75} />}
+                         />
+                    </Grid>
+               </Grid>
+               <Box mt={3} mb={2}>
+                    <Typography variant="body1" textTransform="uppercase" color="gray">
+                         enquiries
+                    </Typography>
+               </Box>
+               <Grid container spacing={3}>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                         <MediumCard
+                              path="/enquiry/user-contacts"
+                              title="contact enquiry"
+                              value={contactQueries.data.length}
+                              icon={<BiMessageAlt size={75} />}
+                         />
+                    </Grid>
+               </Grid>
+          </DefaultLayout>
+     );
 };
-
-export default Dashboard;

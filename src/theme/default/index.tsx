@@ -1,4 +1,4 @@
-import { PaletteMode, createTheme } from "@mui/material";
+import { createTheme } from "@mui/material";
 import { Palette } from "./palette";
 import { Shadow } from "./shadow";
 import { Typography } from "./typography";
@@ -71,6 +71,21 @@ export const Theme = createTheme({
                styleOverrides: {
                     indicator: {
                          border: `2px solid #00AB55`,
+                    },
+               },
+          },
+          MuiTableContainer: {
+               styleOverrides: {
+                    root: {
+                         borderRadius: 0,
+                    },
+               },
+          },
+          MuiTableCell: {
+               styleOverrides: {
+                    root: {
+                         paddingTop: "5px",
+                         paddingBottom: "5px",
                     },
                },
           },

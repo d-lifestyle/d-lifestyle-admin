@@ -1,31 +1,24 @@
-import { Navigate, Outlet, useLocation, } from "react-router-dom";
-import { useAuth } from "../../context/auth.context";
-import { useLayoutEffect } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../features";
-import { GetUserProfile, Logout } from "../../features/action";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+
 import { getUser } from "../../utils";
+import { useEffect } from "react";
+import { GlobalLogin, useAppDispatch, useAuthSelector } from "../../redux";
 
 export const RequireAuth = () => {
-  const { setAuthorization, setUser } = useAuth();
-  let location = useLocation();
-  const localStore = getUser()
-  const dispatch = useDispatch<AppDispatch>();
-  useLayoutEffect(() => {
-    (async () => {
-      if (!localStore.length) {
-        setAuthorization(false);
-        setUser("");
-        await dispatch(Logout());
-      } else {
-        setAuthorization(true);
-        await dispatch(GetUserProfile());
-        setUser(localStore as string);
-      }
-    })();
-  }, [localStore, dispatch, setAuthorization, setUser]);
+     let location = useLocation();
+     const dispatch = useAppDispatch();
+     const localStore = getUser();
+     const auth = useAuthSelector();
+     useEffect(() => {
+          dispatch(
+               GlobalLogin({
+                    token: localStorage.getItem("token"),
+                    user: localStorage.getItem("user"),
+               })
+          );
+     }, []);
 
-  if (!localStore) {
-    return <Navigate to="/login" state={{ replace: true, from: location }} />;
-  } else return <Outlet />;
+     if (!localStore) {
+          return <Navigate to="/login" state={{ replace: true, from: location }} />;
+     } else return <Outlet />;
 };

@@ -2,13 +2,11 @@ export interface CategoriesProps {
      _id?: string;
      createdAt?: string;
      updatedAt?: string;
-     name: string;
-     parentCategory: any;
+     displayName: string;
 }
 
 export interface NewCategoryProps {
-     name: string;
-     parentCategory: any;
+     displayName: string;
 }
 
 export interface UpdateCategoryProps {

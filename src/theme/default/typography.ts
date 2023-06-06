@@ -6,28 +6,28 @@ export const Typography: TypographyOptions = {
      },
      h1: {
           fontSize: 64,
-          fontWeight: 700,
+          // fontWeight: 700,
      },
 
      h2: {
           fontSize: 48,
-          fontWeight: 700,
+          // fontWeight: 700,
      },
      h3: {
           fontSize: 32,
-          fontWeight: 700,
+          // fontWeight: 700,
      },
      h4: {
           fontSize: 24,
-          fontWeight: 700,
+          // fontWeight: 700,
      },
      h5: {
           fontSize: 20,
-          fontWeight: 700,
+          // fontWeight: 700,
      },
      h6: {
           fontSize: 18,
-          fontWeight: 600,
+          // fontWeight: 600,
      },
      subtitle1: {
           fontSize: 16,
