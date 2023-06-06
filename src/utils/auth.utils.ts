@@ -10,7 +10,7 @@ export const getUser = () => {
 
 const data = getUser();
 export const AxiosInstance = () => {
-     if (data.length) {
+     if (data) {
           return axios.create({
                // withCredentials: true,
                baseURL: process.env.REACT_APP_BACKEND,
