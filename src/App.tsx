@@ -25,6 +25,7 @@ import {
      RentalTable,
      NewRental,
      AdminProfile,
+     FlightTable,
 } from "./pages";
 import { BlogDetails } from "./pages/table/blog/blog.details";
 import { useEffect } from "react";
@@ -50,6 +51,7 @@ export default function App() {
                               <Route path="blogs" element={<BlogTable />} />
                               <Route path="rental" element={<RentalTable />} />
                               <Route path="blogs/:id" element={<BlogDetails />} />
+                              <Route path="flight" element={<FlightTable />} />
                          </Route>
 
                          {/* Enquiries */}

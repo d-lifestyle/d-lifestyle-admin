@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { DefaultLayout } from "../../../layout";
 import { GetAdminContentAction, useAppDispatch, useAuthSelector } from "../../../redux";
 import { AppContainer, AppInput, AppTitleBar } from "../../../component";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 export const AdminProfile = () => {
      const dispatch = useAppDispatch();
@@ -13,7 +13,6 @@ export const AdminProfile = () => {
                await dispatch(GetAdminContentAction());
           })();
      }, []);
-     console.log("got admin data", auth.content);
 
      return (
           <DefaultLayout pagetitle="Manage your admin profile">

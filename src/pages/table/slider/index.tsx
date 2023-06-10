@@ -98,6 +98,9 @@ export const SliderTable = () => {
                                                   </Typography>
                                              </Box>
                                         </Box>
+                                        <IconButton onClick={() => DeleteCarousel(_id as string)}>
+                                             <AiFillDelete />
+                                        </IconButton>
                                    </Grid>
                               ))}
                          </Grid>

@@ -6,3 +6,4 @@ export * from "./sub-category.action";
 export * from "./tours-package.action";
 export * from "./auth.action";
 export * from "./cruise.action";
+export * from "./flight.action";

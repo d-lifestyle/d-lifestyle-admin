@@ -274,7 +274,8 @@ export const NewToursTravel = () => {
                                              <MenuItem value="" selected>
                                                   <em>None</em>
                                              </MenuItem>
-                                             {subCategory?.data.map(({ displayName, _id, CategoryId }) => (
+                                             {subCategory?.data.map(({ displayName, _id, CategoryId
+                                              }) => (
                                                   <MenuItem key={_id} value={_id}>
                                                        <Typography textTransform="capitalize">
                                                             {displayName} {CategoryId.displayName}

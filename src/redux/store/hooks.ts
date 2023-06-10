@@ -10,6 +10,7 @@ import {
      CruiseReducer,
      BlogReducer,
      RentalReducer,
+     FlightReducer,
 } from "../slice";
 import { useDispatch } from "react-redux";
 import { AuthReducer } from "../slice/auth.slice";
@@ -25,6 +26,7 @@ export const rootReducer = combineReducers({
      cruise: CruiseReducer,
      blog: BlogReducer,
      rental: RentalReducer,
+     flight: FlightReducer,
 });
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

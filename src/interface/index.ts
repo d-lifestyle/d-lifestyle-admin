@@ -9,3 +9,4 @@ export * from "./contact.interface";
 export * from "./blog.interface";
 export * from "./data.interface";
 export * from "./rental.interface";
+export * from "./flight.interface";

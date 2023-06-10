@@ -13,7 +13,7 @@ import {
      AiOutlineUserSwitch,
 } from "react-icons/ai";
 import { BsFileEarmarkPerson, BsListStars, BsPen } from "react-icons/bs";
-import { MdTravelExplore } from "react-icons/md";
+import { MdFlight, MdTravelExplore } from "react-icons/md";
 import { BiCarousel, BiHotel, BiMessageAlt } from "react-icons/bi";
 
 import { RiShipLine } from "react-icons/ri";
@@ -88,6 +88,7 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ user }) => {
                                    icon={<RiShipLine size={iconSize} />}
                               />
                               <MenuItem path="/table/rental" title="Rentals" icon={<AiOutlineCar size={iconSize} />} />
+                              <MenuItem path="/table/flight" title="Flights" icon={<MdFlight size={iconSize} />} />
                          </List>
                     </Box>
                     {/* CMS */}

@@ -5,3 +5,4 @@ export * from "./category";
 export * from "./slider";
 export * from "./blog";
 export * from "./rental";
+export * from "./flight";

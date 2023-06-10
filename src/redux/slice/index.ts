@@ -8,3 +8,4 @@ export * from "./contact.slice";
 export * from "./cruise.slice";
 export * from "./blog.slice";
 export * from "./rental.slice";
+export * from "./flight.slice";

@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CarouselProps, DataStateProps, NewCarouselProps } from "../../interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { DeleteCarouselByIdAction, ListCarouselAction, ListCarouselByIdAction, UpdateCarouselByIdAction } from "../action/carousel.action";
+import {
+     DeleteCarouselByIdAction,
+     ListCarouselAction,
+     ListCarouselByIdAction,
+     UpdateCarouselByIdAction,
+} from "../action/carousel.action";
 
 const InitialState: DataStateProps<CarouselProps> = {
      data: [] as CarouselProps[],
@@ -38,14 +43,16 @@ const CarouselSlice = createSlice({
                .addCase(ListCarouselByIdAction.rejected, (state, action) => {
                     state.error = action.payload as string;
                });
-          builder.addCase(UpdateCarouselByIdAction.fulfilled, (state,) => {
-               state.single = {} as NewCarouselProps
-          }).addCase(UpdateCarouselByIdAction.pending, (state) => {
-               state.loading = true
-          })
+          builder
+               .addCase(UpdateCarouselByIdAction.fulfilled, (state) => {
+                    state.single = {} as NewCarouselProps;
+               })
+               .addCase(UpdateCarouselByIdAction.pending, (state) => {
+                    state.loading = true;
+               });
           builder.addCase(DeleteCarouselByIdAction.fulfilled, (state) => {
-               state.loading = true
-          })
+               state.loading = true;
+          });
      },
 });
 
