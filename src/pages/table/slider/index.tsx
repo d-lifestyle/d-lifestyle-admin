@@ -76,23 +76,26 @@ export const SliderTable = () => {
                          </Box>
                          <Grid container spacing={3} mt={5}>
                               {carousel.data.map(({ dataAlt, dataImage, _id }) => (
-                                   <Grid item xs={12} sm={12} md={6} xl={4} lg={4}>
-                                        <Box boxShadow={shadows[10]}>
+                                   <Grid item key={_id} xs={12} sm={12} md={6} xl={4} lg={4}>
+                                        <Box
+                                             boxShadow={shadows[10]}
+                                             display="flex"
+                                             justifyContent="center"
+                                             alignItems="center"
+                                             position="relative"
+                                        >
                                              <img src={dataImage} width="100%" alt={dataImage} />
-                                             <Box px={1}>
-                                                  <Typography my={2}>{dataAlt}</Typography>
-                                                  <Box
-                                                       display="flex"
-                                                       py={1}
-                                                       borderTop={`1px dashed ${palette.primary.main}`}
-                                                  >
-                                                       <IconButton onClick={() => navigate(`/update/slider/${_id}`)}>
-                                                            <AiFillEdit />
-                                                       </IconButton>
-                                                       <IconButton onClick={() => DeleteCarousel(_id as string)}>
-                                                            <AiFillDelete />
-                                                       </IconButton>
-                                                  </Box>
+                                             <Box
+                                                  position="absolute"
+                                                  bottom={10}
+                                                  right={10}
+                                                  px={5}
+                                                  py={2}
+                                                  bgcolor="rgba(0,0,0,0.5)"
+                                             >
+                                                  <Typography textTransform="capitalize" color="#fff">
+                                                       {dataAlt}
+                                                  </Typography>
                                              </Box>
                                         </Box>
                                    </Grid>

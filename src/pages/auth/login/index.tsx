@@ -1,8 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { Formik } from "formik";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { LoginInitialValues, LoginValidationSchema } from "../../../validation";
-import { GlobalLogin, LoginAction, useAppDispatch, useAuthSelector } from "../../../redux";
+import { GetAdminContentAction, GlobalLogin, LoginAction, useAppDispatch, useAuthSelector } from "../../../redux";
 import { LoginProps } from "../../../interface";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
@@ -13,6 +13,14 @@ export const LoginPage = () => {
      const dispatch = useAppDispatch();
      const auth = useAuthSelector();
      const navigate = useNavigate();
+     const content = useAuthSelector();
+     const { palette } = useTheme();
+
+     useEffect(() => {
+          (async () => {
+               dispatch(GetAdminContentAction());
+          })();
+     }, []);
 
      const LoginUser = useCallback(async (e: LoginProps) => {
           const data = await dispatch(LoginAction(e));
@@ -44,10 +52,11 @@ export const LoginPage = () => {
 
      return (
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" height="100vh">
-               <Box width="40%" p={2} border="1px solid" display="flex" flexDirection="column" gap={3}>
-                    <Typography variant="h6">Hello admin provide your information to login</Typography>
+               <Box width="40%" p={2} border={`2px dashed ${palette.primary.main}`}>
+                    <Box display="flex" justifyContent="center" flexDirection="column" alignItems="center">
+                         <img src={content.content.aboutInfo.logo} alt="DLifeStyle" width="30%" />
+                    </Box>
                     <Typography variant="caption">{auth.error}</Typography>
-
                     <Formik
                          enableReinitialize
                          initialValues={LoginInitialValues}
@@ -55,7 +64,7 @@ export const LoginPage = () => {
                          onSubmit={LoginUser}
                     >
                          {({ handleBlur, handleChange, handleSubmit, errors, values, touched, isSubmitting }) => (
-                              <form onSubmit={handleSubmit}>
+                              <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
                                    <Box>
                                         <AppInput
                                              onChange={handleChange("email")}

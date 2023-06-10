@@ -3,6 +3,8 @@ import React from "react";
 import { Home, Notifications, MenuOpen } from "@mui/icons-material";
 import { AppBar, useTheme, IconButton, Box, Toolbar, Avatar, Menu, MenuItem, Divider, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { LogOutAction, useAppDispatch } from "../../../redux";
+import { enqueueSnackbar } from "notistack";
 
 export interface AppBarProps {
      drawerWidth: string | number;
@@ -11,6 +13,7 @@ export interface AppBarProps {
 
 export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle }) => {
      const { spacing, palette } = useTheme();
+     const dispatch = useAppDispatch();
      const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
      const open = Boolean(anchorEl);
      const navigate = useNavigate();
@@ -20,8 +23,15 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle 
      const handleClose = () => {
           setAnchorEl(null);
      };
-     const LogOutUser = async () => {
-          handleClose();
+     const LogoutUser = async () => {
+          const data = await dispatch(LogOutAction());
+          if (data.type === "auth/logout/fulfilled") {
+               navigate("/", { replace: true });
+               return enqueueSnackbar(data.payload);
+          }
+          if (data.type === "auth/logout/fulfilled") {
+               return enqueueSnackbar(data.payload, { variant: "error" });
+          }
      };
      return (
           <AppBar
@@ -136,7 +146,7 @@ export const Appbar: React.FC<AppBarProps> = ({ drawerWidth, handleDrawerToggle 
                          {/* </Link> */}
 
                          <Divider />
-                         <MenuItem onClick={LogOutUser}>
+                         <MenuItem onClick={LogoutUser}>
                               <Typography color="GrayText">Logout</Typography>
                          </MenuItem>
                     </Menu>
