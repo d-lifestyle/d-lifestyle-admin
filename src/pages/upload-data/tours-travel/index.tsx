@@ -20,6 +20,7 @@ import {
 } from "../../../redux";
 import { enqueueSnackbar } from "notistack";
 import { Editor } from "react-simple-wysiwyg";
+import { AuthValidations } from "../../../utils";
 
 export const NewToursTravel = () => {
      const params = useParams();
@@ -54,6 +55,7 @@ export const NewToursTravel = () => {
                     return navigate("/table/travel-packages", { replace: true });
                }
                if (data.type === "tours_package/update/rejected") {
+                    AuthValidations(data);
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           } else {
@@ -74,6 +76,7 @@ export const NewToursTravel = () => {
                     return navigate("/table/travel-packages", { replace: true });
                }
                if (data.type === "tours_package/new/rejected") {
+                    AuthValidations(data);
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           }

@@ -1,13 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../../layout";
 import { AppButton, AppContainer, AppInput, AppTitleBar } from "../../../component";
-import { Box, MenuItem, Typography } from "@mui/material";
+import { Box, Grid, IconButton, MenuItem, Typography } from "@mui/material";
 import { Formik } from "formik";
 import { NewRentalFormProps, RentalValidationSchema } from "../../../validation";
-import { ListSubCategoryAction, useAppDispatch, useRentalSelector, useSubCategorySelector } from "../../../redux";
+import {
+     ListSubCategoryAction,
+     addRentalImage,
+     removeRentalImage,
+     useAppDispatch,
+     useRentalSelector,
+     useSubCategorySelector,
+} from "../../../redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdateRentalAction, UploadRentalAction } from "../../../redux/action/rental.action";
 import { enqueueSnackbar } from "notistack";
+import { AuthValidations } from "../../../utils";
+import { AiFillDelete } from "react-icons/ai";
 
 export const NewRental = () => {
      const dispatch = useAppDispatch();
@@ -15,6 +24,10 @@ export const NewRental = () => {
      const navigate = useNavigate();
      const rental = useRentalSelector();
      const subCategory = useSubCategorySelector();
+     const [imageValue, setImage] = useState({
+          title: "",
+          image: "",
+     });
 
      useEffect(() => {
           (async () => {
@@ -45,6 +58,7 @@ export const NewRental = () => {
                     return navigate("/table/rental", { replace: true });
                }
                if (data.type === "rental/update/rejected") {
+                    AuthValidations(data);
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           } else {
@@ -64,6 +78,7 @@ export const NewRental = () => {
                     return navigate("/table/rental", { replace: true });
                }
                if (data.type === "rental/new/rejected") {
+                    AuthValidations(data);
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           }
@@ -134,6 +149,66 @@ export const NewRental = () => {
                                              error={touched?.to && !values?.to}
                                              helperText={touched?.to && errors?.to}
                                         />
+                                   </Box>
+                                   {rental?.image?.length !== 0 && (
+                                        <Grid container spacing={3}>
+                                             {rental?.image?.map(({ image, title }, i) => (
+                                                  <Grid item xs={12} sm={12} key={i} md={6} xl={3} lg={3}>
+                                                       <img width="100%" src={image} alt={title} />
+                                                       <IconButton
+                                                            onClick={() => {
+                                                                 dispatch(removeRentalImage(i));
+                                                            }}
+                                                       >
+                                                            <AiFillDelete />
+                                                       </IconButton>
+                                                  </Grid>
+                                             ))}
+                                        </Grid>
+                                   )}
+                                   <Box display="flex" alignItems="center" my={2} gap={3}>
+                                        <AppInput
+                                             label="Enter image URL"
+                                             value={imageValue.image}
+                                             onChange={(e) =>
+                                                  setImage({
+                                                       ...imageValue,
+                                                       image: e.target.value as string,
+                                                  })
+                                             }
+                                        />
+                                        <AppInput
+                                             label="Enter image title"
+                                             value={imageValue.title}
+                                             onChange={(e) =>
+                                                  setImage({
+                                                       ...imageValue,
+                                                       title: e.target.value as string,
+                                                  })
+                                             }
+                                        />
+                                        <AppButton
+                                             onClick={() => {
+                                                  if (!imageValue.image || !imageValue.title) {
+                                                       enqueueSnackbar("all image field is required", {
+                                                            variant: "error",
+                                                       });
+                                                  } else
+                                                       dispatch(
+                                                            addRentalImage({
+                                                                 title: imageValue.title,
+                                                                 image: imageValue.image,
+                                                            })
+                                                       );
+                                                  setImage({
+                                                       image: "",
+                                                       title: "",
+                                                  });
+                                             }}
+                                             style={{ width: "50%" }}
+                                        >
+                                             add image
+                                        </AppButton>
                                    </Box>
                                    <Box display="flex" gap={2}>
                                         <AppInput

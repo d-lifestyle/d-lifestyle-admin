@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import {
      ListCategoryAction,
      ListSubCategoryAction,
+     ListSubCategoryByIdAction,
      UpdateSubCategoryAction,
      UploadSubCategoryAction,
      useAppDispatch,
@@ -16,6 +17,7 @@ import { NewSubCategoryProps } from "../../../interface";
 import { SubCategoryValidationSchema } from "../../../validation/sub-category.validation";
 import { useNavigate, useParams } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
+import { AuthValidations } from "../../../utils";
 
 export const NewSubCategory = () => {
      const subCategory = useSubCategorySelector();
@@ -32,6 +34,8 @@ export const NewSubCategory = () => {
                     return navigate("/table/sub-category", { replace: true });
                }
                if (data.type === "sub_category/update/rejected") {
+                    AuthValidations(data);
+
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           } else {
@@ -41,6 +45,8 @@ export const NewSubCategory = () => {
                     return navigate("/table/sub-category", { replace: true });
                }
                if (data.type === "sub_category/new/rejected") {
+                    AuthValidations(data);
+
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           }
@@ -49,8 +55,12 @@ export const NewSubCategory = () => {
      useEffect(() => {
           (async () => {
                await dispatch(ListCategoryAction());
+               if (params.id) {
+                    await dispatch(ListSubCategoryByIdAction(params.id));
+               }
           })();
      }, [dispatch]);
+     console.log(subCategory.single);
 
      return (
           <DefaultLayout pagetitle="upload sub category">
@@ -76,6 +86,7 @@ export const NewSubCategory = () => {
                />
                <AppContainer>
                     <Formik
+                         enableReinitialize
                          initialValues={
                               {
                                    displayName: subCategory.single.displayName ? subCategory.single.displayName : "",

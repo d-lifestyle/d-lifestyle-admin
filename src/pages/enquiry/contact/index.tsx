@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../../layout";
-import { GetContactAction, useAppDispatch, useContactSelector } from "../../../redux";
+import { GetContactAction, MakeContactFavoriteAction, useAppDispatch, useContactSelector } from "../../../redux";
 import { AppTitleBar, Loader } from "../../../component";
 import { Card, CardActions, CardContent, Grid, IconButton, TablePagination, Typography, useTheme } from "@mui/material";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { enqueueSnackbar } from "notistack";
 
 export const ContactEnquiry = () => {
      const contact = useContactSelector();
@@ -28,6 +29,17 @@ export const ContactEnquiry = () => {
                await dispatch(GetContactAction());
           })();
      }, []);
+
+     const MakeFavorite = async (id: string) => {
+          const data = await dispatch(MakeContactFavoriteAction(id));
+          if (data.type === "contact/favorite/fulfilled") {
+               enqueueSnackbar(data.payload.data, { variant: "success" });
+               await dispatch(GetContactAction());
+          }
+          if (data.type === "contact/favorite/rejected") {
+               enqueueSnackbar(data.type, { variant: "error" });
+          }
+     };
 
      return (
           <DefaultLayout pagetitle="Manage contact of your customer's">
@@ -55,7 +67,7 @@ export const ContactEnquiry = () => {
                     {contact.data
                          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                          .map(({ email, favorite, name, phone, _id, body, createdAt, placeToVisit }) => (
-                              <Grid item xs={12} sm={12} md={6} xl={4} lg={4}>
+                              <Grid item xs={12} sm={12} md={6} xl={4} lg={4} key={_id}>
                                    <Card>
                                         <CardContent>
                                              <Typography sx={{ fontSize: 14 }} color="primary" gutterBottom>
@@ -71,7 +83,11 @@ export const ContactEnquiry = () => {
                                              </Typography>
                                         </CardContent>
                                         <CardActions>
-                                             <IconButton>
+                                             <IconButton
+                                                  onClick={() => {
+                                                       MakeFavorite(_id as string);
+                                                  }}
+                                             >
                                                   {favorite ? (
                                                        <AiFillHeart color={palette.primary.main} />
                                                   ) : (

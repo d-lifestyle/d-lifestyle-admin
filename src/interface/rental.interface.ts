@@ -35,3 +35,11 @@ export interface UpdateRentalProps {
      id: string;
      data: RentalProps;
 }
+
+export interface RentalEnquiryProps {
+     rentalId: any;
+     custName: string;
+     custMessage: string;
+     custEmail: string;
+     custContact: string;
+}

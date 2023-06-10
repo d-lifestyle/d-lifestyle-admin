@@ -20,6 +20,7 @@ import Editor from "react-simple-wysiwyg";
 import { enqueueSnackbar } from "notistack";
 import { AiFillDelete } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthValidations } from "../../../utils";
 
 export const NewAccommodation = () => {
      const subcategory = useSubCategorySelector();
@@ -61,6 +62,7 @@ export const NewAccommodation = () => {
                     return navigate("/table/accommodations", { replace: true });
                }
                if (data.type === "accommodation/update/rejected") {
+                    AuthValidations(data);
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
                dispatch(clearImages());

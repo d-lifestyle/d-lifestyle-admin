@@ -30,3 +30,16 @@ export const LogOutAction = createAsyncThunk("auth/logout", async (_, { rejectWi
           }
      }
 });
+
+export const GetAdminContentAction = createAsyncThunk("auth/content", async (_, { rejectWithValue }) => {
+     try {
+          const data = await AuthService.GetAdminContent();
+          return data.data;
+     } catch (err: any) {
+          if (err.response) {
+               return rejectWithValue(err.response.data.message);
+          } else {
+               return rejectWithValue(err.message);
+          }
+     }
+});

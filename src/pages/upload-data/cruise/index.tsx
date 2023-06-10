@@ -17,6 +17,7 @@ import {
 } from "../../../redux";
 import { Editor } from "react-simple-wysiwyg";
 import { enqueueSnackbar } from "notistack";
+import { AuthValidations } from "../../../utils";
 
 export const NewCruise = () => {
      const params = useParams();
@@ -48,6 +49,7 @@ export const NewCruise = () => {
                     return enqueueSnackbar(data.payload.data, { variant: "success" });
                }
                if (data.type === "cruise/update/rejected") {
+                    AuthValidations(data);
                     return enqueueSnackbar(data.payload.data, { variant: "error" });
                }
           } else {
@@ -70,6 +72,7 @@ export const NewCruise = () => {
                     return enqueueSnackbar(data.payload.data, { variant: "success" });
                }
                if (data.type === "cruise/new/rejected") {
+                    AuthValidations(data);
                     return enqueueSnackbar(data.payload.data, { variant: "error" });
                }
           }

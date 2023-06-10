@@ -7,6 +7,7 @@ import { LoginProps } from "../../../interface";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { AppButton, AppInput } from "../../../component";
+import { AuthValidations } from "../../../utils";
 
 export const LoginPage = () => {
      const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ export const LoginPage = () => {
                return navigate("/", { replace: true });
           }
           if (data.type === "auth/login/rejected") {
+               AuthValidations(data);
                return enqueueSnackbar(data.payload, { variant: "error" });
           }
      }, []);

@@ -42,15 +42,15 @@ export const Homepage = () => {
 
      useEffect(() => {
           (async () => {
-               batch(() => {
-                    dispatch(ListCarouselAction());
-                    dispatch(ListCategoryAction());
-                    dispatch(ListSubCategoryAction());
-                    dispatch(ListAccommodationAction());
-                    dispatch(ListToursPackageAction());
-                    dispatch(ListCruiseAction());
-                    dispatch(GetContactAction());
-                    dispatch(ListBlogsAction());
+               batch(async () => {
+                    await dispatch(ListCarouselAction());
+                    await dispatch(ListCategoryAction());
+                    await dispatch(ListSubCategoryAction());
+                    await dispatch(ListAccommodationAction());
+                    await dispatch(ListToursPackageAction());
+                    await dispatch(ListCruiseAction());
+                    await dispatch(GetContactAction());
+                    await dispatch(ListBlogsAction());
                });
           })();
      }, [dispatch]);

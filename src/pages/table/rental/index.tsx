@@ -85,8 +85,14 @@ export const RentalTable = () => {
                     <Box mt={5}>
                          <Typography>Actions : </Typography>
                          <Box display="flex" gap={3} mt={3}>
-                              <AppButton onClick={() => navigate("/new/accommodation")}>New Accommodation</AppButton>
-                              <AppButton>Export CSV / Excel</AppButton>
+                              <AppButton onClick={() => navigate("/new/rental")}>New Car record</AppButton>
+                              <AppButton
+                                   onClick={() => {
+                                        navigate("/enquiry/car-enquiries");
+                                   }}
+                              >
+                                   View Records
+                              </AppButton>
                               <AppButton color="error">Delete All Records</AppButton>
                          </Box>
                          <TableContainer component={Paper} sx={{ mt: 5 }}>

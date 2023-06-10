@@ -24,8 +24,12 @@ import {
      NewBlog,
      RentalTable,
      NewRental,
+     AdminProfile,
 } from "./pages";
 import { BlogDetails } from "./pages/table/blog/blog.details";
+import { useEffect } from "react";
+import { useAppDispatch } from "./redux";
+import { RentalEnquiry } from "./pages/table/rental/rental-enquiry";
 
 export default function App() {
      return (
@@ -52,6 +56,7 @@ export default function App() {
                          <Route path="enquiry">
                               <Route path="user-contacts" element={<ContactEnquiry />} />
                               <Route path="user-enquiries" element={<OtherEnquiry />} />
+                              <Route path="car-enquiries" element={<RentalEnquiry />} />
                          </Route>
 
                          {/* Upload */}
@@ -75,6 +80,9 @@ export default function App() {
                               <Route path="slider/:id" element={<NewCarousel />} />
                               <Route path="tours-travel/:id" element={<NewToursTravel />} />
                               <Route path="blogs/:id" element={<NewBlog />} />
+                         </Route>
+                         <Route path="admin">
+                              <Route path="profile" element={<AdminProfile />} />
                          </Route>
                     </Route>
                     <Route path="/login" element={<LoginPage />} />

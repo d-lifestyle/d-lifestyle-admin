@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RentalProps } from "../../interface";
-import { ListRentalAction, ListRentalByIdAction } from "../action/rental.action";
+import { RentalEnquiryProps, RentalProps } from "../../interface";
+import { GetRentalEnquiryAction, ListRentalAction, ListRentalByIdAction } from "../action/rental.action";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
 
@@ -11,6 +11,7 @@ export interface RentalDataStateProps<T> {
      success: string;
      loading: boolean;
      image: imageProps[];
+     EnquiryData?: RentalEnquiryProps[];
 }
 
 interface imageProps {
@@ -62,6 +63,17 @@ const RentalSlice = createSlice({
                })
                .addCase(ListRentalByIdAction.rejected, (state, action) => {
                     state.error = action.payload as string;
+               });
+          builder
+               .addCase(GetRentalEnquiryAction.fulfilled, (state, action) => {
+                    state.EnquiryData = action.payload.data;
+                    state.loading = false;
+               })
+               .addCase(GetRentalEnquiryAction.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetRentalEnquiryAction.rejected, (state, action) => {
+                    state.error = (action.payload as any).data as string;
                });
      },
 });

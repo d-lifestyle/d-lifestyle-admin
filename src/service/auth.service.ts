@@ -12,6 +12,10 @@ class AuthServices {
      public async Logout() {
           return await AxiosInstance().post(`${process.env.REACT_APP_BACKEND}/logout`);
      }
+
+     public async GetAdminContent() {
+          return await AxiosInstance().get(`${process.env.REACT_APP_BACKEND}/admin-content`);
+     }
 }
 
 const AuthService = new AuthServices();

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LogOutAction, LoginAction } from "../action";
+import { GetAdminContentAction, LogOutAction, LoginAction } from "../action";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
 
@@ -16,6 +16,7 @@ export interface AuthSliceProps {
      token: string;
      loading?: boolean;
      error: string;
+     content: any;
 }
 
 const InitialAuthState: AuthSliceProps = {
@@ -23,6 +24,7 @@ const InitialAuthState: AuthSliceProps = {
      user: {} as Props,
      token: "",
      error: "",
+     content: {} as any,
 };
 
 const AuthSlice = createSlice({
@@ -62,6 +64,17 @@ const AuthSlice = createSlice({
                localStorage.removeItem("user");
                localStorage.removeItem("token");
           });
+          builder
+               .addCase(GetAdminContentAction.fulfilled, (state, action) => {
+                    state.content = action.payload.data;
+                    state.loading = false;
+               })
+               .addCase(GetAdminContentAction.pending, (state) => {
+                    state.loading = true;
+               })
+               .addCase(GetAdminContentAction.rejected, (state, action) => {
+                    state.error = (action.payload as any).data as string;
+               });
      },
 });
 

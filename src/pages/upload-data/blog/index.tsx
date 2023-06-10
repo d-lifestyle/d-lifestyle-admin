@@ -15,6 +15,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from "html-react-parser";
 import { Editor } from "react-simple-wysiwyg";
+import { AuthValidations } from "../../../utils";
 
 export const NewBlog = () => {
      const dispatch = useAppDispatch();
@@ -48,8 +49,7 @@ export const NewBlog = () => {
                     return enqueueSnackbar(data.payload.data, { variant: "success" });
                }
                if (data.type === "blog/update/rejected") {
-                    console.log(data.payload);
-
+                    AuthValidations(data);
                     return enqueueSnackbar(data.payload.data, { variant: "success" });
                }
           } else {

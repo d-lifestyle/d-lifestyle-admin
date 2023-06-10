@@ -7,15 +7,17 @@ import { CategoryValidationSchema } from "../../../validation";
 import {
      ListCategoryAction,
      ListCategoryByIdAction,
+     LogOutAction,
      UpdateCategoryAction,
      UploadCategoryAction,
      callInitialState,
      useAppDispatch,
      useCategorySelector,
 } from "../../../redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { Typography } from "@mui/material";
+import { AuthValidations } from "../../../utils";
 
 export const NewNormalCategory = () => {
      const dispatch = useAppDispatch();
@@ -32,6 +34,7 @@ export const NewNormalCategory = () => {
                     return navigate("/table/normal-category", { replace: true });
                }
                if (data.type === "category/update/rejected") {
+                    AuthValidations(data);
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           } else {
@@ -41,6 +44,7 @@ export const NewNormalCategory = () => {
                     return navigate("/table/normal-category", { replace: true });
                }
                if (data.type === "category/new/rejected") {
+                    AuthValidations(data);
                     enqueueSnackbar(data.payload, { variant: "error" });
                }
           }

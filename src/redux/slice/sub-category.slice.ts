@@ -30,7 +30,8 @@ const SubCategorySlice = createSlice({
                });
           builder
                .addCase(ListSubCategoryByIdAction.fulfilled, (state, action) => {
-                    state.single = action.payload;
+                    console.log(action.payload.data);
+                    state.single = action.payload.data;
                })
                .addCase(ListSubCategoryByIdAction.pending, (state) => {
                     state.loading = true;

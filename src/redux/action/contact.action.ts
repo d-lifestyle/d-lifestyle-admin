@@ -14,3 +14,19 @@ export const GetContactAction = createAsyncThunk("contact/make", async (_, { rej
           }
      }
 });
+
+export const MakeContactFavoriteAction = createAsyncThunk(
+     "contact/favorite",
+     async (props: string, { rejectWithValue }) => {
+          try {
+               const data = await ContactService.MakeFavoriteContact(props);
+               return await data.data;
+          } catch (err: any) {
+               if (err.response) {
+                    return rejectWithValue(err.response.data.message);
+               } else {
+                    return rejectWithValue(err.message);
+               }
+          }
+     }
+);

@@ -10,7 +10,7 @@ import {
      AiOutlineMessage,
      AiOutlineOrderedList,
      AiOutlinePieChart,
-     AiOutlineUnorderedList,
+     AiOutlineUserSwitch,
 } from "react-icons/ai";
 import { BsFileEarmarkPerson, BsListStars, BsPen } from "react-icons/bs";
 import { MdTravelExplore } from "react-icons/md";
@@ -139,8 +139,14 @@ export const DrawerItems: React.FC<DrawerItemsProps> = ({ user }) => {
                     </Box>
 
                     <Box mt={spacing(3)}>
-                         <MenuTitle title="Account settings" />
+                         <MenuTitle title="Account & web content" />
                          <List disablePadding>
+                              <MenuItem
+                                   path="/admin/profile"
+                                   title="my profile"
+                                   icon={<AiOutlineUserSwitch size={iconSize} />}
+                              />
+
                               <ListItemButton
                                    onClick={LogoutUser}
                                    sx={{

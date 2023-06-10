@@ -141,7 +141,7 @@ export const SubCategoryTable = () => {
                                                                  <IconButton
                                                                       color="primary"
                                                                       onClick={() =>
-                                                                           navigate(`/update/category/${_id}`, {
+                                                                           navigate(`/update/sub-category/${_id}`, {
                                                                                 replace: true,
                                                                            })
                                                                       }

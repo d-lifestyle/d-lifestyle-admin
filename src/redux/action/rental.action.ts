@@ -79,3 +79,16 @@ export const DeleteRentalAction = createAsyncThunk("rental/delete", async (props
           }
      }
 });
+
+export const GetRentalEnquiryAction = createAsyncThunk("rental/data", async (_, { rejectWithValue }) => {
+     try {
+          const data = await RentalService.GetRentalEnquiry();
+          return await data.data;
+     } catch (err: any) {
+          if (err.response) {
+               return rejectWithValue(err.response.data.message);
+          } else {
+               return rejectWithValue(err.message);
+          }
+     }
+});

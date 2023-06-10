@@ -22,6 +22,10 @@ class RentalServices {
                ...data,
           });
      }
+
+     public async GetRentalEnquiry() {
+          return await AxiosInstance().get(`${process.env.REACT_APP_BACKEND}/rental-enquiry`);
+     }
 }
 
 const RentalService = new RentalServices();
