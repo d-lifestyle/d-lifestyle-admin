@@ -54,7 +54,7 @@ export const LoginPage = () => {
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" height="100vh">
                <Box width="40%" p={2} border={`2px dashed ${palette.primary.main}`}>
                     <Box display="flex" justifyContent="center" flexDirection="column" alignItems="center">
-                         <img src={content.content.aboutInfo.logo} alt="DLifeStyle" width="30%" />
+                         <img src={content?.content?.aboutInfo?.logo} alt="DLifeStyle" width="30%" />
                     </Box>
                     <Typography variant="caption">{auth.error}</Typography>
                     <Formik
