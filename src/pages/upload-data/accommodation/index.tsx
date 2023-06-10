@@ -251,9 +251,11 @@ export const NewAccommodation = () => {
                                              <MenuItem value="" selected>
                                                   <em>None</em>
                                              </MenuItem>
-                                             {subcategory?.data.map(({ displayName, _id }) => (
+                                             {subcategory?.data.map(({ displayName, _id, CategoryId }) => (
                                                   <MenuItem key={_id} value={_id}>
-                                                       <Typography textTransform="capitalize">{displayName}</Typography>
+                                                       <Typography textTransform="capitalize">
+                                                            {displayName} {CategoryId.displayName}
+                                                       </Typography>
                                                   </MenuItem>
                                              ))}
                                         </AppInput>
